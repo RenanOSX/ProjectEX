@@ -1,93 +1,68 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-    }
+plugins {
+    id 'com.gtnewhorizons.gtnhgradle'
 }
 
-apply plugin: 'forge'
-
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 version = "${projecte_version}"
 group= "java.moze_intel" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ProjectE"
 
 minecraft {
-    version = "${minecraft_version}-${forge_version}"
-    runDir = "eclipse"
+    mcVersion = "${minecraft_version}"
+    extraTweakClasses = ["org.spongepowered.asm.launch.MixinTweaker"]
+    // runDir = "run"
 
-    replace "@VERSION@", project.version
-    replaceIn "PECore.java"
+    // replace "@VERSION@", project.version
+    // replaceIn "PECore.java"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 repositories {
-    maven { //Waila Repo
-        name "Mobius Repo"
-        url "http://mobiusstrip.eu/maven"
-    }
-    maven { //NEI Repo
-        name 'CB Repo'
-        url "http://chickenbones.net/maven/"
+    maven {
+        // RetroFuturaGradle
+        name "GTNH Maven"
+        url "https://nexus.gtnewhorizons.com/repository/public/"
     }
     maven {
-        name 'Chisel'
-        url "http://maven.tterrag.com/"
+        name "JitPack"
+        url "https://jitpack.io"
     }
-    ivy {
-        name "MineTweaker3"
-        artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-([classifier]-)[revision].[ext]"
-    }
+    gradlePluginPortal()
+    mavenCentral()
+    mavenLocal()
 }
  
 dependencies {
-    testCompile group: 'junit', name: 'junit', version:'4.11'
+    testImplementation group: 'junit', name: 'junit', version:'4.12'
 
-    compile "com.cricketcraft.chisel:Chisel2:2.5.0.2:api"
-	
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev"
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev"
+    implementation "com.github.GTNewHorizons:Chisel:2.17.8-GTNH-pre"
+    implementation "com.github.GTNewHorizons:GTNHLib:0.8.0:dev"
+    implementation "com.github.GTNewHorizons:CodeChickenCore:1.4.10"
+    implementation "com.github.GTNewHorizons:CodeChickenLib:1.3.0"
+    implementation "com.github.GTNewHorizons:NotEnoughItems:2.8.40-GTNH"
 
-    compile name: 'MineTweaker3', version: 'Dev-1.7.10-3.0.9C', ext: 'jar'
+    implementation "com.github.GTNewHorizons:CraftTweaker:3.4.2"
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
+processResources {
     inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property "mcversion", minecraft_version
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+    filesMatching('mcmod.info') {
+        expand 'version':project.version, 'mcversion':minecraft_version
     }
 }
 
 // Dev jar (deobfuscated)
 task devJar(type: Jar) {
     from sourceSets.main.output
-    classifier = 'dev'
-    version = "${project.version}"
+    archiveClassifier = 'dev'
+    archiveVersion = "${project.version}"
 }
 
 artifacts {
@@ -95,3 +70,5 @@ artifacts {
 }
 
 idea.module.inheritOutputDirs = true
+
+tasks.named('reobfJar') { dependsOn devJar }

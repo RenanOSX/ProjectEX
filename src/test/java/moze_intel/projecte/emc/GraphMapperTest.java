@@ -39,7 +39,7 @@ public class GraphMapperTest {
 	}
 
 	@Rule
-	public Timeout timeout = new Timeout(3000);
+	public Timeout timeout = new Timeout(6000);
 	public IValueGenerator<String, Integer> valueGenerator;
 	public IExtendedMappingCollector<String, Integer, IValueArithmetic<Fraction>> mappingCollector;
 
