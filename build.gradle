@@ -7,7 +7,7 @@ targetCompatibility = 1.8
 
 version = "${projecte_version}"
 group= "java.moze_intel" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "ProjectE"
+archivesBaseName = "ProjectEX"
 
 minecraft {
     mcVersion = "${minecraft_version}"
@@ -72,3 +72,7 @@ artifacts {
 idea.module.inheritOutputDirs = true
 
 tasks.named('reobfJar') { dependsOn devJar }
+
+tasks.named('runClient') {
+    dependsOn devJar
+}
