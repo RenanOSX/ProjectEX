@@ -53,7 +53,7 @@ public class HarvestGoddess extends RingToggle implements IPedestalItem
 			else
 			{
 				WorldHelper.growNearbyRandomly(true, world, player.posX, player.posY, player.posZ, player);
-				removeEmc(stack, 0.32F);
+				removeEmc(stack, 0);
 			}
 		}
 		else

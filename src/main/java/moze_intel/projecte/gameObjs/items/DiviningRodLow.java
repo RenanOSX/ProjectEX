@@ -20,6 +20,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentTranslation;
+import moze_intel.projecte.NumberFormatter;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
@@ -69,7 +70,7 @@ public class DiviningRodLow extends ItemPE implements IModeChanger
 		if (mop != null && mop.typeOfHit.equals(MovingObjectType.BLOCK))
 		{
 			PlayerHelper.swingItem(player);
-			List<Integer> emcValues = Lists.newArrayList();
+			List<Long> emcValues = Lists.newArrayList();
 			long totalEmc = 0;
 			int numBlocks = 0;
 
@@ -96,7 +97,7 @@ public class DiviningRodLow extends ItemPE implements IModeChanger
 						}
 
 						ItemStack blockStack = drops.get(0);
-						int blockEmc = EMCHelper.getEmcValue(blockStack);
+						long blockEmc = EMCHelper.getEmcValue(blockStack);
 
 						if (blockEmc == 0)
 						{
@@ -111,7 +112,7 @@ public class DiviningRodLow extends ItemPE implements IModeChanger
 
 								if (ItemHelper.areItemStacksEqualIgnoreNBT(entry.getKey(), blockStack))
 								{
-									int currentValue = EMCHelper.getEmcValue(entry.getValue());
+									long currentValue = EMCHelper.getEmcValue(entry.getValue());
 
 									if (currentValue != 0)
 									{
@@ -144,14 +145,14 @@ public class DiviningRodLow extends ItemPE implements IModeChanger
 				return stack;
 			}
 			
-			int[] maxValues = new int[3];
+			long[] maxValues = new long[3];
 
 			for (int i = 0; i < 3; i++)
 			{
 				maxValues[i] = 1;
 			}
 
-			Collections.sort(emcValues, Comparators.INT_DESCENDING);
+			Collections.sort(emcValues, Comparators.LONG_DESCENDING);
 
 			int num = emcValues.size() >= 3 ? 3 : emcValues.size();
 
@@ -160,16 +161,16 @@ public class DiviningRodLow extends ItemPE implements IModeChanger
 				maxValues[i] = emcValues.get(i);
 			}
 
-			player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.avgemc", numBlocks, (totalEmc / numBlocks)));
+player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.avgemc", numBlocks, NumberFormatter.format(totalEmc / numBlocks)));
 
 			if (this instanceof DiviningRodMedium)
 			{
-				player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.maxemc", maxValues[0]));
+				player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.maxemc", NumberFormatter.format(maxValues[0])));
 			}
 			if (this instanceof DiviningRodHigh)
 			{
-				player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.secondmax", maxValues[1]));
-				player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.thirdmax", maxValues[2]));
+				player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.secondmax", NumberFormatter.format(maxValues[1])));
+				player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.thirdmax", NumberFormatter.format(maxValues[2])));
 			}
 		}
 

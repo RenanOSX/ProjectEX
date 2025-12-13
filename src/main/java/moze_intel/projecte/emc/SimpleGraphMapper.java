@@ -35,7 +35,7 @@ public class SimpleGraphMapper<T, V extends Comparable<V>, A extends IValueArith
 	}
 
 	protected static<K, V extends Comparable<V>> boolean updateMapWithMinimum(Map<K,V> m, K key, V value) {
-		if (!hasSmaller(m,key,value)) {
+		if (!hasSmallerOrEqual(m,key,value)) {
 			//No Value or a value that is smaller than this
 			m.put(key, value);
 			return true;

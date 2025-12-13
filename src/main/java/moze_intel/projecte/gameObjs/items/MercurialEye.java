@@ -64,8 +64,8 @@ public class MercurialEye extends ItemMode implements IExtraFunction
 
 			int newMeta = inventory[1].getItemDamage();
 
-			double kleinEmc = ItemPE.getEmc(inventory[0]);
-			int reqEmc = EMCHelper.getEmcValue(inventory[1]);
+			long kleinEmc = ItemPE.getEmc(inventory[0]);
+			long reqEmc = EMCHelper.getEmcValue(inventory[1]);
 
 			byte charge = getCharge(stack);
 			byte mode = this.getMode(stack);
@@ -170,20 +170,20 @@ public class MercurialEye extends ItemMode implements IExtraFunction
 									continue;
 								}
 
-								int emc = EMCHelper.getEmcValue(new ItemStack(oldBlock, 1, oldMeta));
+								long emc = EMCHelper.getEmcValue(new ItemStack(oldBlock, 1, oldMeta));
 
 								if (emc > reqEmc)
 								{
 									if (PlayerHelper.checkedReplaceBlock(((EntityPlayerMP) player), x, y, z, newBlock, newMeta))
 									{
-										int difference = emc - reqEmc;
-										kleinEmc += MathHelper.clamp_double(kleinEmc, 0, EMCHelper.getKleinStarMaxEmc(inventory[0]));
+										long difference = emc - reqEmc;
+										kleinEmc += difference;
 										addKleinEMC(stack, difference);
 									}
 								}
 								else if (emc < reqEmc)
 								{
-									int difference = reqEmc - emc;
+									long difference = reqEmc - emc;
 
 									if (kleinEmc >= difference)
 									{
@@ -209,7 +209,7 @@ public class MercurialEye extends ItemMode implements IExtraFunction
 		return stack;
 	}
 
-	private void addKleinEMC(ItemStack eye, int amount)
+	private void addKleinEMC(ItemStack eye, long amount)
 	{
 		NBTTagList list = eye.stackTagCompound.getTagList("Items", NBT.TAG_COMPOUND);
 
@@ -223,15 +223,15 @@ public class MercurialEye extends ItemMode implements IExtraFunction
 
 				NBTTagCompound tag = nbt.getCompoundTag("tag");
 
-				double newEmc = MathHelper.clamp_double(tag.getDouble("StoredEMC") + amount, 0, EMCHelper.getKleinStarMaxEmc(kleinStar));
+				long newEmc = Math.min(tag.getLong("StoredEMC") + amount, EMCHelper.getKleinStarMaxEmc(kleinStar));
 
-				tag.setDouble("StoredEMC", newEmc);
+				tag.setLong("StoredEMC", newEmc);
 				break;
 			}
 		}
 	}
 
-	private void removeKleinEMC(ItemStack eye, int amount)
+	private void removeKleinEMC(ItemStack eye, long amount)
 	{
 		NBTTagList list = eye.stackTagCompound.getTagList("Items", NBT.TAG_COMPOUND);
 
@@ -242,7 +242,7 @@ public class MercurialEye extends ItemMode implements IExtraFunction
 			if (nbt.getByte("Slot") == 0)
 			{
 				NBTTagCompound tag = nbt.getCompoundTag("tag");
-				tag.setDouble("StoredEMC", tag.getDouble("StoredEMC") - amount);
+				tag.setLong("StoredEMC", tag.getLong("StoredEMC") - amount);
 				break;
 			}
 		}

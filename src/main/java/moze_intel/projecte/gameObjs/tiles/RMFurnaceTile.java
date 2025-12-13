@@ -21,7 +21,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class RMFurnaceTile extends TileEmc implements IInventory, ISidedInventory, IEmcAcceptor
 {
-	private final float EMC_CONSUMPTION = 1.6f;
+	private final long EMC_CONSUMPTION = 1;
 	public ItemStack[] inventory = new ItemStack[27];
 	public int outputSlot = 14;
 	public int[] inputStorage = new int[] {2, 13};

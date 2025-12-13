@@ -118,7 +118,7 @@ public class RecipeShapelessHidden implements IRecipe
 	{
 		ArrayList<Object> required = new ArrayList<Object>(input);
 
-		double storedEMC = 0;
+		long storedEMC = 0;
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
 			ItemStack stack = inv.getStackInSlot(i);

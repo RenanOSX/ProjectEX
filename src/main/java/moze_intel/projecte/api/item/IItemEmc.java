@@ -15,7 +15,7 @@ public interface IItemEmc
 	 * @param toAdd The maximum amount to add
 	 * @return The amount that was actually added
 	 */
-	double addEmc(ItemStack stack, double toAdd);
+	long addEmc(ItemStack stack, long toAdd);
 
 	/**
 	 * Extracts EMC from the itemstack
@@ -23,19 +23,19 @@ public interface IItemEmc
 	 * @param toRemove The maximum amount to remove
 	 * @return The amount that was actually extracted
 	 */
-	double extractEmc(ItemStack stack, double toRemove);
+	long extractEmc(ItemStack stack, long toRemove);
 
 	/**
 	 * Gets the current EMC this stack is showing to the public
 	 * @param stack The stack to query
 	 * @return The current publicly-accessible EMC stored in this stack
 	 */
-	double getStoredEmc(ItemStack stack);
+	long getStoredEmc(ItemStack stack);
 
 	/**
 	 * Gets the maximum EMC that is allowed to be stored in this stack
 	 * @param stack The stack to query
 	 * @return The maximum amount of publicly-accessible EMC that can be stored in this stack
 	 */
-	double getMaximumEmc(ItemStack stack);
+	long getMaximumEmc(ItemStack stack);
 }

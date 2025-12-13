@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import moze_intel.projecte.NumberFormatter;
 import org.lwjgl.opengl.GL11;
 
 public class GUICondenserMK2 extends GuiContainer
@@ -40,7 +41,7 @@ public class GUICondenserMK2 extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int var1, int var2)
 	{
-		int toDisplay = tile.displayEmc > tile.requiredEmc ? tile.requiredEmc : tile.displayEmc;
-		this.fontRendererObj.drawString(Integer.toString(toDisplay), 140, 10, 4210752);
+		long toDisplay = tile.displayEmc > tile.requiredEmc ? tile.requiredEmc : tile.displayEmc;
+		this.fontRendererObj.drawString(NumberFormatter.format(toDisplay), 140, 10, 4210752);
 	}
 }

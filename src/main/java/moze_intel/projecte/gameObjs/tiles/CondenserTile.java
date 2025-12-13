@@ -25,11 +25,11 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 	protected boolean loadChecks;
 	protected boolean isAcceptingEmc;
 	private int ticksSinceSync;
-	public int displayEmc;
+	public long displayEmc;
 	public float lidAngle;
 	public float prevLidAngle;
 	public int numPlayersUsing;
-	public int requiredEmc;
+	public long requiredEmc;
 
 	public CondenserTile()
 	{
@@ -54,7 +54,7 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 			loadChecks = true;
 		}
 
-		displayEmc = (int) this.getStoredEmc();
+		displayEmc = (long) this.getStoredEmc();
 
 		if (lock != null && requiredEmc != 0)
 		{
@@ -82,7 +82,7 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 
 		if (EMCHelper.doesItemHaveEmc(lock))
 		{
-			int lockEmc = EMCHelper.getEmcValue(lock);
+			long lockEmc = EMCHelper.getEmcValue(lock);
 
 			if (requiredEmc != lockEmc)
 			{
@@ -222,7 +222,7 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 			return Constants.MAX_CONDENSER_PROGRESS;
 		}
 		
-		return (displayEmc * Constants.MAX_CONDENSER_PROGRESS) / requiredEmc;
+		return (int) ((displayEmc * Constants.MAX_CONDENSER_PROGRESS) / requiredEmc);
 	}
 
 	@Override

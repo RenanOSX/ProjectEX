@@ -1,14 +1,14 @@
 [
 {
   "modid": "ProjectE",
-  "name": "ProjectE",
-  "description": "A complete rewrite of EE2 for modern Minecraft versions.",
+  "name": "ProjectEX",
+  "description": "A complete rewrite of EE2 for modern Minecraft versions. ProjectEX fix some bugs and add more content to the original ProjectE.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "logoFile": "assets/projecte/logo.png",
   "url": "http://minecraft.curseforge.com/mc-mods/226410-projecte",
   "updateUrl": "",
-  "authorList": [ "sinkillerj", "Moze_Intel" ],
+  "authorList": [ "sinkillerj", "Moze_Intel", "RenanOSX" ],
   "credits": "Thanks to:\nx3n0ph0b3 - EE2 creator. Allowed use of EE2 assets.\nMidnightLightning - EE2 GUI Textures.\nMagic Banana - Original ProjectE textures.\nMaPePeR - Assistant developer.\nWilliewillus - Assistant developer.\nLilylicious - Assistant developer.",
   "parent": "",
   "screenshots": [],

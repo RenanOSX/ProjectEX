@@ -45,25 +45,24 @@ public abstract class BlockDirection extends Block
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int noclue)
 	{
-		IInventory tile = (IInventory) world.getTileEntity(x, y, z);
-		
-		if (tile == null)
+		TileEntity tile = world.getTileEntity(x, y, z);
+
+		if (tile instanceof IInventory)
 		{
-			return;
-		}
-		
-		for (int i = 0; i < tile.getSizeInventory(); i++)
-		{
-			ItemStack stack = tile.getStackInSlot(i);
-			
-			if (stack == null)
+			IInventory inv = (IInventory) tile;
+			for (int i = 0; i < inv.getSizeInventory(); i++)
 			{
-				continue;
+				ItemStack stack = inv.getStackInSlot(i);
+
+				if (stack == null)
+				{
+					continue;
+				}
+
+				WorldHelper.spawnEntityItem(world, stack, x, y, z);
 			}
-			
-			WorldHelper.spawnEntityItem(world, stack, x, y, z);
 		}
-		
+
 		world.func_147453_f(x, y, z, block);
 		super.breakBlock(world, x, y, z, block, noclue);
 	}

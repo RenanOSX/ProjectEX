@@ -108,10 +108,10 @@ public class CustomConversionMapperTest
 						"}";
 		CustomConversionFile f = CustomConversionMapper.parseJson(new StringReader(simpleFile));
 		assertNotNull(f.values);
-		assertEquals(1, (int) f.values.setValueBefore.get("a"));
-		assertEquals(2, (int) f.values.setValueBefore.get("b"));
-		assertEquals(Integer.MIN_VALUE, (int) f.values.setValueBefore.get("c"));
-		assertEquals(3, (int) f.values.setValueAfter.get("d"));
+		assertEquals(1L, (long) f.values.setValueBefore.get("a"));
+		assertEquals(2L, (long) f.values.setValueBefore.get("b"));
+		assertEquals(Long.MIN_VALUE, (long) f.values.setValueBefore.get("c"));
+		assertEquals(3L, (long) f.values.setValueAfter.get("d"));
 
 	}
 

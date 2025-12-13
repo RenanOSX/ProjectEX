@@ -8,6 +8,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+import moze_intel.projecte.NumberFormatter;
 
 public class GUIMercurialEye extends GuiContainer
 {
@@ -34,10 +35,10 @@ public class GUIMercurialEye extends GuiContainer
 		ItemStack klein = inventory.getKleinStack();
 		
 		if (target != null)
-			this.fontRendererObj.drawString(Integer.toString(Utils.getEmcValue(target)), 124, 34, 4210752);
+			this.fontRendererObj.drawString(NumberFormatter.format(Utils.getEmcValue(target)), 124, 34, 4210752);
 		
 		if (klein != null)
-			this.fontRendererObj.drawString(Integer.toString((int) ItemBase.getEmc(klein)), 5, 34, 4210752);*/
+			this.fontRendererObj.drawString(NumberFormatter.format((long) ItemBase.getEmc(klein)), 5, 34, 4210752);*/
 	}
 
 	@Override

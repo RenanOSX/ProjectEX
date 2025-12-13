@@ -77,12 +77,12 @@ public class ManualPageHandler
         addBlock(ObjHandler.rmFurnaceOff, PageCategory.BLOCK);
         addBlock(ObjHandler.dmFurnaceOff, PageCategory.BLOCK);
         addBlock(ObjHandler.dmPedestal, PageCategory.BLOCK);
-        addBlock(ObjHandler.energyCollector, PageCategory.BLOCK);
-        addBlock(ObjHandler.collectorMK2, PageCategory.BLOCK);
-        addBlock(ObjHandler.collectorMK3, PageCategory.BLOCK);
-        addBlock(ObjHandler.relay, PageCategory.BLOCK);
-        addBlock(ObjHandler.relayMK2, PageCategory.BLOCK);
-        addBlock(ObjHandler.relayMK3, PageCategory.BLOCK);
+        for (Block b : ObjHandler.collectorBlocks) {
+            addBlock(b, PageCategory.BLOCK);
+        }
+        for (Block b : ObjHandler.relayBlocks) {
+            addBlock(b, PageCategory.BLOCK);
+        }
         addBlock(ObjHandler.novaCatalyst, PageCategory.BLOCK);
         addBlock(ObjHandler.novaCataclysm, PageCategory.BLOCK);
 

@@ -1,3 +1,18 @@
+###Version 1.7.10-PEX2.0.0
+* NEW: Added new Matters
+* NEW: Added Stars (Magnum, Colossal)
+* NEW: Added configs for stars, max emc and much more
+* NEW: Added more Power Flowers
+* CHANGE: Numbers are now formatted using k, M, G, T, P, E, Z
+* CHANGE: Max EMC for EVERYTHING changed from INT to LONG, now you can make your numbers go up to 9.223.372.036.854.775.807 (maybe more idk)
+
+###Version 1.7.10-PEX1.11.0
+* CHANGE: Relays and Collectors don't have GUIs and related features anymore for better optimization
+* CHANGE: Changed Gradle and dependencies to use GTNH mod versions
+* CHANGE: Added more config values for .cfg file
+* NEW: Added Power Flowers - They generate EMC each second (not tick) directly into the players EMC balance
+* NEW: Added GTNH Waila to the project for easier development
+
 ###Version 1.7.10-PE1.10.1
 * NOTICE: 1.7 is now a legacy build and will no longer be officially supported. Minor fixes may come in the future but are not guaranteed. Development and support will continue for 1.10 and above
 * NOTICE: As of PE1.9.3 legacy save conversion code has been removed. If you are upgrading from PE1.7.1 or below you will need to run PE1.9.2 once before upgrading further

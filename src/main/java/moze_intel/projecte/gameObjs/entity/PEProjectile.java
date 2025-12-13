@@ -45,7 +45,7 @@ public abstract class PEProjectile extends EntityThrowable
 
     protected abstract void apply(MovingObjectPosition mop);
 
-    protected final boolean tryConsumeEmc(ItemPE consumeFrom, double amount)
+    protected final boolean tryConsumeEmc(ItemPE consumeFrom, long amount)
     {
         EntityPlayer player = ((EntityPlayer) getThrower());
         ItemStack found = PlayerHelper.findFirstItem(player, consumeFrom);

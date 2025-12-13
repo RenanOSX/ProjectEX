@@ -28,7 +28,7 @@ public class HiddenFractionSpecificTest
 	@Before
 	public void setup()
 	{
-		SimpleGraphMapper<String, Fraction, IValueArithmetic<Fraction>> mapper = new SimpleGraphMapper(new HiddenFractionArithmetic());
+		SimpleGraphMapper<String, Fraction, IValueArithmetic<Fraction>> mapper = new SimpleGraphMapper<String, Fraction, IValueArithmetic<Fraction>>(new HiddenFractionArithmetic());
 		valueGenerator = new FractionToIntGenerator(mapper);
 		mappingCollector = new IntToFractionCollector(mapper);
 	}

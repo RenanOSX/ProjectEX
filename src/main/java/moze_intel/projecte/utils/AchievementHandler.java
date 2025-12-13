@@ -15,8 +15,8 @@ public final class AchievementHandler
 	public final static Achievement ALCH_BAG = new Achievement("alch_bag", "alch_bag", 0, -4, ObjHandler.alchBag, ALCH_CHEST).registerStat();
 	public final static Achievement TRANSMUTATION = new Achievement("transmutation", "transmutation", 0, 0, ObjHandler.transmuteStone, PHIL_STONE).registerStat();
 	public final static Achievement CONDENSER = new Achievement("condenser", "condenser", -2, -2, ObjHandler.condenser, ALCH_CHEST).setSpecial().registerStat();
-	public final static Achievement COLLECTOR = new Achievement("collector", "collector", -2, -4, ObjHandler.energyCollector, CONDENSER).setSpecial().registerStat();
-	public final static Achievement RELAY = new Achievement("relay", "relay", -4, -4, ObjHandler.relay, COLLECTOR).setSpecial().registerStat();
+	public final static Achievement COLLECTOR = new Achievement("collector", "collector", -2, -4, ObjHandler.collectorBlocks[0], CONDENSER).setSpecial().registerStat();
+	public final static Achievement RELAY = new Achievement("relay", "relay", -4, -4, ObjHandler.relayBlocks[0], COLLECTOR).setSpecial().registerStat();
 	public final static Achievement PORTABLE_TRANSMUTATION = new Achievement("portable_transmutation", "portable_transmutation", -2, 0, ObjHandler.transmutationTablet, TRANSMUTATION).setSpecial().registerStat();
 	public final static Achievement DARK_MATTER = new Achievement("dark_matter", "dark_matter", 2, 0, new ItemStack(ObjHandler.matter, 1, 0), null).initIndependentStat().registerStat();
 	public final static Achievement RED_MATTER = new Achievement("red_matter", "red_matter", 2, -2, new ItemStack(ObjHandler.matter, 1, 1), DARK_MATTER).setSpecial().registerStat();

@@ -20,6 +20,8 @@ import moze_intel.projecte.gameObjs.blocks.Relay;
 import moze_intel.projecte.gameObjs.blocks.TransmutationStone;
 import moze_intel.projecte.gameObjs.customRecipes.RecipeAlchemyBag;
 import moze_intel.projecte.gameObjs.customRecipes.RecipeShapedKleinStar;
+import moze_intel.projecte.gameObjs.customRecipes.RecipeShapedColossalStar;
+import moze_intel.projecte.gameObjs.customRecipes.RecipeShapedMagnumStar;
 import moze_intel.projecte.gameObjs.customRecipes.RecipeShapelessHidden;
 import moze_intel.projecte.gameObjs.customRecipes.RecipesCovalenceRepair;
 import moze_intel.projecte.gameObjs.entity.EntityFireProjectile;
@@ -44,6 +46,8 @@ import moze_intel.projecte.gameObjs.items.EvertideAmulet;
 import moze_intel.projecte.gameObjs.items.GemEternalDensity;
 import moze_intel.projecte.gameObjs.items.HyperkineticLens;
 import moze_intel.projecte.gameObjs.items.KleinStar;
+import moze_intel.projecte.gameObjs.items.ColossalStar;
+import moze_intel.projecte.gameObjs.items.MagnumStar;
 import moze_intel.projecte.gameObjs.items.Matter;
 import moze_intel.projecte.gameObjs.items.MercurialEye;
 import moze_intel.projecte.gameObjs.items.PEManual;
@@ -65,6 +69,7 @@ import moze_intel.projecte.gameObjs.items.itemBlocks.ItemCondenserBlock;
 import moze_intel.projecte.gameObjs.items.itemBlocks.ItemDMFurnaceBlock;
 import moze_intel.projecte.gameObjs.items.itemBlocks.ItemFuelBlock;
 import moze_intel.projecte.gameObjs.items.itemBlocks.ItemMatterBlock;
+import moze_intel.projecte.gameObjs.items.itemBlocks.ItemPowerFlowerBlock;
 import moze_intel.projecte.gameObjs.items.itemBlocks.ItemRMFurnaceBlock;
 import moze_intel.projecte.gameObjs.items.itemBlocks.ItemRelayBlock;
 import moze_intel.projecte.gameObjs.items.itemBlocks.ItemTransmutationBlock;
@@ -105,18 +110,14 @@ import moze_intel.projecte.gameObjs.items.tools.RedShovel;
 import moze_intel.projecte.gameObjs.items.tools.RedStar;
 import moze_intel.projecte.gameObjs.items.tools.RedSword;
 import moze_intel.projecte.gameObjs.tiles.AlchChestTile;
-import moze_intel.projecte.gameObjs.tiles.CollectorMK1Tile;
-import moze_intel.projecte.gameObjs.tiles.CollectorMK2Tile;
-import moze_intel.projecte.gameObjs.tiles.CollectorMK3Tile;
+import moze_intel.projecte.gameObjs.tiles.CollectorTile;
 import moze_intel.projecte.gameObjs.tiles.CondenserMK2Tile;
 import moze_intel.projecte.gameObjs.tiles.CondenserTile;
 import moze_intel.projecte.gameObjs.tiles.DMFurnaceTile;
 import moze_intel.projecte.gameObjs.tiles.DMPedestalTile;
 import moze_intel.projecte.gameObjs.tiles.InterdictionTile;
 import moze_intel.projecte.gameObjs.tiles.RMFurnaceTile;
-import moze_intel.projecte.gameObjs.tiles.RelayMK1Tile;
-import moze_intel.projecte.gameObjs.tiles.RelayMK2Tile;
-import moze_intel.projecte.gameObjs.tiles.RelayMK3Tile;
+import moze_intel.projecte.gameObjs.tiles.RelayTile;
 import moze_intel.projecte.utils.Constants;
 import moze_intel.projecte.utils.EnumArmorType;
 import net.minecraft.block.Block;
@@ -130,8 +131,12 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import moze_intel.projecte.gameObjs.tiles.PowerFlowerTile;
+import moze_intel.projecte.gameObjs.blocks.PowerFlower;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 public class ObjHandler
@@ -149,19 +154,35 @@ public class ObjHandler
 	public static Block dmPedestal = new Pedestal();
 	public static Block matterBlock = new MatterBlock();
 	public static Block fuelBlock = new FuelBlock();
-	public static Block energyCollector = new Collector(1);
-	public static Block collectorMK2 = new Collector(2);
-	public static Block collectorMK3 = new Collector(3);
-	public static Block relay = new Relay(1);
-	public static Block relayMK2 = new Relay(2);
-	public static Block relayMK3 = new Relay(3);
+	public static Block[] collectorBlocks;
+	public static Block[] relayBlocks;
+	public static Block[] powerFlowerBlocks;
 	public static Block novaCatalyst = new NovaCatalyst();
 	public static Block novaCataclysm = new NovaCataclysm();
+
+	static {
+		collectorBlocks = new Block[Constants.COLLECTOR_MK_MAX.length];
+		for (int i = 0; i < collectorBlocks.length; i++) {
+			collectorBlocks[i] = new Collector(i + 1);
+		}
+		
+		relayBlocks = new Block[Constants.RELAY_MK_MAX.length];
+		for (int i = 0; i < relayBlocks.length; i++) {
+			relayBlocks[i] = new Relay(i + 1);
+		}
+
+		powerFlowerBlocks = new Block[15];
+		for (int i = 0; i < powerFlowerBlocks.length; i++) {
+			powerFlowerBlocks[i] = new PowerFlower(i + 1);
+		}
+	}
 
 	public static Item philosStone = new PhilosophersStone();
 	public static Item alchBag = new AlchemicalBag();
 	public static Item repairTalisman = new RepairTalisman();
 	public static Item kleinStars = new KleinStar();
+	public static Item magnumStar = new MagnumStar();
+	public static Item colossalStar = new ColossalStar();
 	public static Item fuels = new AlchemicalFuel();
 	public static Item covalence = new CovalenceDust();
 	public static Item matter = new Matter();
@@ -257,18 +278,30 @@ public class ObjHandler
 		GameRegistry.registerBlock(dmFurnaceOff, ItemDMFurnaceBlock.class, "dm_furnace");
 		GameRegistry.registerBlock(matterBlock, ItemMatterBlock.class, "matter_block");
 		GameRegistry.registerBlock(fuelBlock, ItemFuelBlock.class, "fuel_block");
-		GameRegistry.registerBlock(energyCollector, ItemCollectorBlock.class, "collector_mk1");
-		GameRegistry.registerBlock(collectorMK2, ItemCollectorBlock.class, "collector_mk2");
-		GameRegistry.registerBlock(collectorMK3, ItemCollectorBlock.class, "collector_mk3");
-		GameRegistry.registerBlock(relay, ItemRelayBlock.class, "relay_mk1");
-		GameRegistry.registerBlock(relayMK2, ItemRelayBlock.class, "relay_mk2");
-		GameRegistry.registerBlock(relayMK3, ItemRelayBlock.class, "relay_mk3");
+		
+		for (int i = 0; i < collectorBlocks.length; i++) {
+			GameRegistry.registerBlock(collectorBlocks[i], ItemCollectorBlock.class, "collector_mk" + (i + 1));
+		}
+		for (int i = 0; i < relayBlocks.length; i++) {
+			GameRegistry.registerBlock(relayBlocks[i], ItemRelayBlock.class, "relay_mk" + (i + 1));
+		}
+
+		for (int i = 0; i < powerFlowerBlocks.length; i++) {
+			GameRegistry.registerBlock(powerFlowerBlocks[i], ItemPowerFlowerBlock.class, "power_flower_mk" + (i + 1));
+		}
+
+		// Power Flower TileEntity
+		for (int i = 1; i <= 15; i++) {
+			GameRegistry.registerTileEntityWithAlternatives(PowerFlowerTile.class, "PowerFlower_" + i + "Tile", "Power Flower " + i + " Tile");
+		}
 
 		//Items
 		GameRegistry.registerItem(philosStone, philosStone.getUnlocalizedName());
 		GameRegistry.registerItem(alchBag, alchBag.getUnlocalizedName());
 		GameRegistry.registerItem(repairTalisman, repairTalisman.getUnlocalizedName());
 		GameRegistry.registerItem(kleinStars, kleinStars.getUnlocalizedName());
+		GameRegistry.registerItem(colossalStar, colossalStar.getUnlocalizedName());
+		GameRegistry.registerItem(magnumStar, magnumStar.getUnlocalizedName());
 		GameRegistry.registerItem(fuels, fuels.getUnlocalizedName());
 		GameRegistry.registerItem(covalence, covalence.getUnlocalizedName());
 		GameRegistry.registerItem(matter, matter.getUnlocalizedName());
@@ -353,12 +386,30 @@ public class ObjHandler
 		GameRegistry.registerTileEntityWithAlternatives(CondenserMK2Tile.class, "CondenserMK2Tile", "Condenser MK2 Tile");
 		GameRegistry.registerTileEntityWithAlternatives(RMFurnaceTile.class, "RMFurnaceTile", "RM Furnace Tile");
 		GameRegistry.registerTileEntityWithAlternatives(DMFurnaceTile.class, "DMFurnaceTile", "DM Furnace Tile");
-		GameRegistry.registerTileEntityWithAlternatives(CollectorMK1Tile.class, "CollectorMK1Tile", "Energy Collector MK1 Tile");
-		GameRegistry.registerTileEntityWithAlternatives(CollectorMK2Tile.class, "CollectorMK2Tile", "Energy Collector MK2 Tile");
-		GameRegistry.registerTileEntityWithAlternatives(CollectorMK3Tile.class, "CollectorMK3Tile", "Energy Collector MK3 Tile");
-		GameRegistry.registerTileEntityWithAlternatives(RelayMK1Tile.class, "RelayMK1Tile", "AM Relay MK1 Tile");
-		GameRegistry.registerTileEntityWithAlternatives(RelayMK2Tile.class, "RelayMK2Tile", "AM Relay MK2 Tile");
-		GameRegistry.registerTileEntityWithAlternatives(RelayMK3Tile.class, "RelayMK3Tile", "AM Relay MK3 Tile");
+		
+		List<String> collectorNames = new ArrayList<>();
+		collectorNames.add("CollectorTile");
+		for (int i = 1; i <= collectorBlocks.length; i++) {
+			collectorNames.add("CollectorMK" + i + "Tile");
+			collectorNames.add("Energy Collector MK" + i + " Tile");
+		}
+		GameRegistry.registerTileEntityWithAlternatives(CollectorTile.class, collectorNames.get(0), collectorNames.subList(1, collectorNames.size()).toArray(new String[0]));
+		
+		List<String> relayNames = new ArrayList<>();
+		relayNames.add("RelayTile");
+		for (int i = 1; i <= relayBlocks.length; i++) {
+			relayNames.add("RelayMK" + i + "Tile");
+			relayNames.add("AM Relay MK" + i + " Tile");
+		}
+		GameRegistry.registerTileEntityWithAlternatives(RelayTile.class, relayNames.get(0), relayNames.subList(1, relayNames.size()).toArray(new String[0]));
+		
+		List<String> powerFlowerNames = new ArrayList<>();
+		powerFlowerNames.add("PowerFlowerTile");
+		for (int i = 1; i <= 15; i++) {
+			powerFlowerNames.add("PowerFlower_" + i + "Tile");
+		}
+		GameRegistry.registerTileEntityWithAlternatives(PowerFlowerTile.class, powerFlowerNames.get(0), powerFlowerNames.subList(1, powerFlowerNames.size()).toArray(new String[0]));
+
 		GameRegistry.registerTileEntityWithAlternatives(DMPedestalTile.class, "DMPedestalTile", "DM Pedestal Tile");
 
 		//Entities
@@ -399,11 +450,22 @@ public class ObjHandler
 
 		//Klein Star Ein
 		GameRegistry.addRecipe(new ItemStack(kleinStars, 1, 0), "MMM", "MDM", "MMM", 'M', new ItemStack(fuels, 1, 1), 'D', Items.diamond);
+		
+		//Magnum Star
+		GameRegistry.addShapelessRecipe(new ItemStack(magnumStar), new ItemStack(kleinStars, 0, 5), new ItemStack(kleinStars, 0, 5), new ItemStack(kleinStars, 0, 5), new ItemStack(kleinStars, 0, 5));
 
-		//Matter
+		//Colossal Star
+		GameRegistry.addShapelessRecipe(new ItemStack(colossalStar), new ItemStack(magnumStar, 0, 5), new ItemStack(magnumStar, 0, 5), new ItemStack(magnumStar, 0, 5), new ItemStack(magnumStar, 0, 5));
+
+		//Dark Matter (base tier uses diamond block and fuel)
 		GameRegistry.addRecipe(new ItemStack(matter, 1, 0), "AAA", "ADA", "AAA", 'D', Blocks.diamond_block, 'A', new ItemStack(fuels, 1, 2));
-		GameRegistry.addRecipe(new ItemStack(matter, 1, 1), "AAA", "DDD", "AAA", 'D', matter, 'A', new ItemStack(fuels, 1, 2));
-		GameRegistry.addRecipe(new ItemStack(matter, 1, 1), "ADA", "ADA", "ADA", 'D', matter, 'A', new ItemStack(fuels, 1, 2));
+
+		//Higher Matter tiers (each tier crafted from the previous tier + fuel)
+		for (int i = 1; i < Constants.MATTER_NAMES.length; i++) {
+			// Same shape variants as red matter used previously
+			GameRegistry.addRecipe(new ItemStack(matter, 1, i), "AAA", "DDD", "AAA", 'D', new ItemStack(matter, 1, i - 1), 'A', new ItemStack(fuels, 1, 2));
+			GameRegistry.addRecipe(new ItemStack(matter, 1, i), "ADA", "ADA", "ADA", 'D', new ItemStack(matter, 1, i - 1), 'A', new ItemStack(fuels, 1, 2));
+		}
 
 		//Alchemical Chest
 		GameRegistry.addRecipe(new ItemStack(alchChest), "LMH", "SDS", "ICI", 'D', diamondReplacement, 'L', new ItemStack(covalence, 1, 0), 'M', new ItemStack(covalence, 1, 1), 'H', new ItemStack(covalence, 1, 2), 'S', Blocks.stone, 'I', Items.iron_ingot, 'C', Blocks.chest);
@@ -423,9 +485,10 @@ public class ObjHandler
 		//Transmutation Table
 		GameRegistry.addRecipe(new ItemStack(transmuteStone), "OSO", "SPS", "OSO", 'S', Blocks.stone, 'O', Blocks.obsidian, 'P', philosStone);
 
-		//Matter Blocks
-		GameRegistry.addRecipe(new ItemStack(matterBlock, 1, 0), "DD", "DD", 'D', matter);
-		GameRegistry.addRecipe(new ItemStack(matterBlock, 1, 1), "DD", "DD", 'D', new ItemStack(matter, 1, 1));
+		//Matter Blocks (each block crafted from 2x2 of its corresponding matter tier)
+		for (int i = 0; i < Constants.MATTER_NAMES.length; i++) {
+			GameRegistry.addRecipe(new ItemStack(matterBlock, 1, i), "DD", "DD", 'D', new ItemStack(matter, 1, i));
+		}
 
 		//Matter Furnaces
 		GameRegistry.addRecipe(new ItemStack(dmFurnaceOff), "DDD", "DFD", "DDD", 'D', new ItemStack(matterBlock, 1, 0), 'F', Blocks.furnace);
@@ -435,14 +498,24 @@ public class ObjHandler
 		GameRegistry.addRecipe(new ItemStack(dmPedestal), "RDR", "RDR", "DDD", 'R', new ItemStack(matter, 1, 1), 'D', new ItemStack(matterBlock, 1, 0));
 
 		//Collectors
-		GameRegistry.addRecipe(new ItemStack(energyCollector), "GTG", "GDG", "GFG", 'G', Blocks.glowstone, 'F', Blocks.furnace, 'D', diamondBlockReplacement, 'T', Blocks.glass);
-		GameRegistry.addRecipe(new ItemStack(collectorMK2), "GDG", "GCG", "GGG", 'G', Blocks.glowstone, 'C', energyCollector, 'D', matter);
-		GameRegistry.addRecipe(new ItemStack(collectorMK3), "GRG", "GCG", "GGG", 'G', Blocks.glowstone, 'C', collectorMK2, 'R', new ItemStack(matter, 1, 1));
+		GameRegistry.addRecipe(new ItemStack(collectorBlocks[0]), "GTG", "GDG", "GFG", 'G', Blocks.glowstone, 'F', Blocks.furnace, 'D', diamondBlockReplacement, 'T', Blocks.glass);
+		for (int i = 1; i < collectorBlocks.length; i++) {
+			ItemStack upgradeItem = new ItemStack(matter, 1, Math.min(i - 1, 13));
+			GameRegistry.addRecipe(new ItemStack(collectorBlocks[i]), "GMG", "GCG", "GGG", 'G', Blocks.glowstone, 'C', collectorBlocks[i - 1], 'M', upgradeItem);
+		}
+
+		//Power Flowers
+		for (int i = 1; i < powerFlowerBlocks.length; i++) {
+			ItemStack upgradeItem = new ItemStack(matter, 1, Math.min(i - 1, 13));
+			GameRegistry.addRecipe(new ItemStack(powerFlowerBlocks[i]), "GMG", "GCG", "GGG", 'G', Blocks.glowstone, 'C', powerFlowerBlocks[i - 1], 'M', upgradeItem);
+		}
 
 		//AM Relays
-		GameRegistry.addRecipe(new ItemStack(relay), "OSO", "ODO", "OOO", 'S', Blocks.glass, 'D', Blocks.diamond_block, 'O', Blocks.obsidian);
-		GameRegistry.addRecipe(new ItemStack(relayMK2), "ODO", "OAO", "OOO", 'A', relay, 'D', matter, 'O', Blocks.obsidian);
-		GameRegistry.addRecipe(new ItemStack(relayMK3), "ORO", "OAO", "OOO", 'A', relayMK2, 'R', new ItemStack(matter, 1, 1), 'O', Blocks.obsidian);
+		GameRegistry.addRecipe(new ItemStack(relayBlocks[0]), "OSO", "ODO", "OOO", 'S', Blocks.glass, 'D', Blocks.diamond_block, 'O', Blocks.obsidian);
+		for (int i = 1; i < relayBlocks.length; i++) {
+			ItemStack upgradeItem = new ItemStack(matter, 1, Math.min(i - 1, 13));
+			GameRegistry.addRecipe(new ItemStack(relayBlocks[i]), "OMO", "OAO", "OOO", 'A', relayBlocks[i - 1], 'M', upgradeItem, 'O', Blocks.obsidian);
+		}
 
 		//DM Tools
 		GameRegistry.addRecipe(new ItemStack(dmPick), "MMM", "XDX", "XDX", 'D', Items.diamond, 'M', matter);
@@ -556,6 +629,14 @@ public class ObjHandler
 		{
 			ItemStack input = new ItemStack(kleinStars, 1, i - 1);
 			ItemStack output = new ItemStack(kleinStars, 1, i);
+			GameRegistry.addRecipe(new RecipeShapelessHidden(output, input, input, input, input));
+
+			input = new ItemStack(magnumStar, 1, i - 1);
+			output = new ItemStack(magnumStar, 1, i);
+			GameRegistry.addRecipe(new RecipeShapelessHidden(output, input, input, input, input));
+
+			input = new ItemStack(colossalStar, 1, i - 1);
+			output = new ItemStack(colossalStar, 1, i);
 			GameRegistry.addRecipe(new RecipeShapelessHidden(output, input, input, input, input));
 		}
 

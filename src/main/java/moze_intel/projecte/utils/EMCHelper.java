@@ -26,7 +26,7 @@ public final class EMCHelper
 	 * Consumes EMC from fuel items or Klein Stars
 	 * Any extra EMC is discarded !!! To retain remainder EMC use ItemPE.consumeFuel()
 	 */
-	public static double consumePlayerFuel(EntityPlayer player, double minFuel)
+	public static long consumePlayerFuel(EntityPlayer player, long minFuel)
 	{
 		if (player.capabilities.isCreativeMode)
 		{
@@ -36,7 +36,7 @@ public final class EMCHelper
 		IInventory inv = player.inventory;
 		LinkedHashMap<Integer, Integer> map = Maps.newLinkedHashMap();
 		boolean metRequirement = false;
-		int emcConsumed = 0;
+		long emcConsumed = 0;
 
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
@@ -60,8 +60,8 @@ public final class EMCHelper
 			{
 				if(FuelMapper.isStackFuel(stack))
 				{
-					int emc = getEmcValue(stack);
-					int toRemove = ((int) Math.ceil((minFuel - emcConsumed) / (float) emc));
+					long emc = getEmcValue(stack);
+					int toRemove = ((int) Math.ceil((minFuel - emcConsumed) / (double) emc));
 
 					if (stack.stackSize >= toRemove)
 					{
@@ -140,7 +140,7 @@ public final class EMCHelper
 		return doesItemHaveEmc(new ItemStack(item));
 	}
 
-	public static int getEmcValue(Block Block)
+	public static long getEmcValue(Block Block)
 	{
 		SimpleStack stack = new SimpleStack(new ItemStack(Block));
 
@@ -152,7 +152,7 @@ public final class EMCHelper
 		return 0;
 	}
 
-	public static int getEmcValue(Item item)
+	public static long getEmcValue(Item item)
 	{
 		SimpleStack stack = new SimpleStack(new ItemStack(item));
 
@@ -167,7 +167,7 @@ public final class EMCHelper
 	/**
 	 * Does not consider stack size
 	 */
-	public static int getEmcValue(ItemStack stack)
+	public static long getEmcValue(ItemStack stack)
 	{
 		if (stack == null)
 		{
@@ -188,7 +188,7 @@ public final class EMCHelper
 
 			if (EMCMapper.mapContains(iStack))
 			{
-				int emc = EMCMapper.getEmcValue(iStack);
+				long emc = EMCMapper.getEmcValue(iStack);
 
 				int relDamage = (stack.getMaxDamage() - stack.getItemDamage());
 
@@ -211,33 +211,28 @@ public final class EMCHelper
 
 				result += getStoredEMCBonus(stack);
 
-				if (result > Integer.MAX_VALUE)
-				{
-					return emc;
-				}
-
 				if (result <= 0)
 				{
 					return 1;
 				}
 
-				return (int) result;
+				return result;
 			}
 		}
 		else
 		{
 			if (EMCMapper.mapContains(iStack))
 			{
-				return EMCMapper.getEmcValue(iStack) + getEnchantEmcBonus(stack) + (int)getStoredEMCBonus(stack);
+				return EMCMapper.getEmcValue(iStack) + getEnchantEmcBonus(stack) + (long)getStoredEMCBonus(stack);
 			}
 		}
 
 		return 0;
 	}
 
-	public static int getEnchantEmcBonus(ItemStack stack)
+	public static long getEnchantEmcBonus(ItemStack stack)
 	{
-		int result = 0;
+		long result = 0;
 
 		Map<Integer, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
 
@@ -259,14 +254,14 @@ public final class EMCHelper
 		return result;
 	}
 
-	public static int getKleinStarMaxEmc(ItemStack stack)
+	public static long getKleinStarMaxEmc(ItemStack stack)
 	{
 		return Constants.MAX_KLEIN_EMC[stack.getItemDamage()];
 	}
 
-	public static double getStoredEMCBonus(ItemStack stack) {
+	public static long getStoredEMCBonus(ItemStack stack) {
 		if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("StoredEMC")) {
-			return stack.stackTagCompound.getDouble("StoredEMC");
+			return stack.stackTagCompound.getLong("StoredEMC");
 		}
 		return 0;
 	}

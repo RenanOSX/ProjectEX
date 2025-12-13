@@ -13,7 +13,7 @@ import org.apache.commons.lang3.math.Fraction;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
-
+import java.util.concurrent.TimeUnit;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -33,13 +33,13 @@ public class GraphMapperTest {
 	@Before
 	public void setup() {
 		//mappingCollector = new SimpleGraphMapper<String, Integer>(new IntArithmetic());
-		SimpleGraphMapper<String, Fraction, IValueArithmetic<Fraction>> mapper = new SimpleGraphMapper(new HiddenFractionArithmetic());
+		SimpleGraphMapper<String, Fraction, IValueArithmetic<Fraction>> mapper = new SimpleGraphMapper<String, Fraction, IValueArithmetic<Fraction>>(new HiddenFractionArithmetic());
 		valueGenerator = new FractionToIntGenerator(mapper);
 		mappingCollector = new IntToFractionCollector(mapper);
 	}
 
 	@Rule
-	public Timeout timeout = new Timeout(6000);
+	public Timeout timeout = new Timeout(6, TimeUnit.SECONDS);
 	public IValueGenerator<String, Integer> valueGenerator;
 	public IExtendedMappingCollector<String, Integer, IValueArithmetic<Fraction>> mappingCollector;
 

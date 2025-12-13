@@ -12,15 +12,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraft.util.MathHelper;
 
 import java.util.List;
 
 public class MatterBlock extends Block
 {
 	@SideOnly(Side.CLIENT)
-	private IIcon dmIcon;
-	@SideOnly(Side.CLIENT)
-	private IIcon rmIcon;
+	private IIcon[] icons;
 	
 	public MatterBlock() 
 	{
@@ -34,14 +33,12 @@ public class MatterBlock extends Block
 	{
 		int meta = world.getBlockMetadata(x, y, z);
 		
-		if (meta == 0) 
+		if (meta == 0)
 		{
 			return 1000000.0F;
 		}
-		else
-		{
-			return 2000000.0F;
-		}
+
+		return 2000000.0F;
 	}
 	
 	@Override
@@ -51,13 +48,13 @@ public class MatterBlock extends Block
 		
 		if (stack != null)
 		{
-			if (meta == 1)
+			if (meta == 0)
 			{
-				return stack.getItem() == ObjHandler.rmPick || stack.getItem() == ObjHandler.rmStar;
+				return stack.getItem() == ObjHandler.rmPick || stack.getItem() == ObjHandler.dmPick || stack.getItem() == ObjHandler.rmStar;
 			}
 			else
 			{
-				return stack.getItem() == ObjHandler.rmPick || stack.getItem() == ObjHandler.dmPick || stack.getItem() == ObjHandler.rmStar;
+				return stack.getItem() == ObjHandler.rmPick || stack.getItem() == ObjHandler.rmStar;
 			}
 		}
 		
@@ -74,7 +71,7 @@ public class MatterBlock extends Block
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item matterBlock, CreativeTabs cTab, List list)
 	{
-		for (int i = 0; i <= 1; i++)
+		for (int i = 0; i < moze_intel.projecte.utils.Constants.MATTER_NAMES.length; i++)
 		{
 			list.add(new ItemStack(matterBlock , 1, i));
 		}
@@ -84,19 +81,27 @@ public class MatterBlock extends Block
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register)
 	{
-		dmIcon = register.registerIcon("projecte:dm");
-		rmIcon = register.registerIcon("projecte:rm");
+		icons = new IIcon[moze_intel.projecte.utils.Constants.MATTER_NAMES.length];
+		String[] shortNames = new String[]{"dm", "rm", "mm", "pm", "ppm", "vm", "bm", "cm", "gm", "lm", "ym", "om", "wm", "fm"};
+		for (int i = 0; i < icons.length; i++)
+		{
+			if (i < shortNames.length)
+			{
+				icons[i] = register.registerIcon("projecte:" + shortNames[i]);
+			}
+			else
+			{
+				icons[i] = register.registerIcon("projecte:dm");
+			}
+		}
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)
 	{
-		if (meta == 0) 
-		{
-			return dmIcon;
-		}
-		else return rmIcon;
+		int idx = MathHelper.clamp_int(meta, 0, icons.length - 1);
+		return icons[idx];
 	}
 	
 }

@@ -1,6 +1,7 @@
 package moze_intel.projecte.gameObjs.items.itemBlocks;
 
 import moze_intel.projecte.utils.AchievementHandler;
+import moze_intel.projecte.utils.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -19,14 +20,23 @@ public class ItemMatterBlock extends ItemBlock
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
 	{
-		if (stack.getItemDamage() == 0)
+		int meta = stack.getItemDamage();
+
+		if (meta == 0)
 		{
 			return "tile.pe_dm_block";
 		}
-		else
+		else if (meta == 1)
 		{
 			return "tile.pe_rm_block";
 		}
+
+		if (meta >= Constants.MATTER_NAMES.length || meta < 0)
+		{
+			meta = 0;
+		}
+
+		return "item.pe_matter_" + Constants.MATTER_NAMES[meta];
 	}
 	
 	@Override

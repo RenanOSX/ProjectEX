@@ -50,27 +50,12 @@ public class KleinStar extends ItemPE implements IItemEmc
 		
 		return 1.0D - starEmc / (double) EMCHelper.getKleinStarMaxEmc(stack);
 	}
-
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
-		/*if (!world.isRemote)
-		{
-			this.setEmc(stack, Utils.GetKleinStarMaxEmc(stack));
-		}*/
-		
 		return stack;
 	}
-	
-	/*@Override
-	public void onCreated(ItemStack stack, World world, EntityPlayer player) 
-	{
-		if (!world.isRemote)
-		{
-			stack.stackTagCompound = new NBTTagCompound();
-		}
-	}*/
 	
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) 
@@ -140,29 +125,29 @@ public class KleinStar extends ItemPE implements IItemEmc
 	// -- IItemEmc -- //
 
 	@Override
-	public double addEmc(ItemStack stack, double toAdd)
+	public long addEmc(ItemStack stack, long toAdd)
 	{
-		double add = Math.min(getMaximumEmc(stack) - getStoredEmc(stack), toAdd);
+		long add = Math.min(getMaximumEmc(stack) - getStoredEmc(stack), toAdd);
 		ItemPE.addEmcToStack(stack, add);
 		return add;
 	}
 
 	@Override
-	public double extractEmc(ItemStack stack, double toRemove)
+	public long extractEmc(ItemStack stack, long toRemove)
 	{
-		double sub = Math.min(getStoredEmc(stack), toRemove);
+		long sub = Math.min(getStoredEmc(stack), toRemove);
 		ItemPE.removeEmc(stack, sub);
 		return sub;
 	}
 
 	@Override
-	public double getStoredEmc(ItemStack stack)
+	public long getStoredEmc(ItemStack stack)
 	{
 		return ItemPE.getEmc(stack);
 	}
 
 	@Override
-	public double getMaximumEmc(ItemStack stack)
+	public long getMaximumEmc(ItemStack stack)
 	{
 		return EMCHelper.getKleinStarMaxEmc(stack);
 	}

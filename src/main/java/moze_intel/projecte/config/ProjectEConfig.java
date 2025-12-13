@@ -1,5 +1,6 @@
 package moze_intel.projecte.config;
 
+import moze_intel.projecte.utils.Constants;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraftforge.common.config.Configuration;
 
@@ -108,6 +109,80 @@ public final class ProjectEConfig
 			pickaxeAoeVeinMining = config.getBoolean("pickaxeAoeVeinMining", "items", false, "Instead of vein mining the ore you right click with your Dark/Red Matter Pick/Star it vein mines all ores in an AOE around you like it did in ProjectE before version 1.4.4.");
 			harvBandGrass = config.getBoolean("harvBandGrass", "items", false, "Allows the Harvest Goddess Band to passively grow tall grass, flowers, etc, on top of grass blocks.");
 			disableAllRadiusMining = config.getBoolean("disableAllRadiusMining", "items", false, "If set to true, disables all radius-based mining functionaliy (right click of tools)");
+
+			String maxEmc = config.getString("tileMaxEMC", "blocks", String.valueOf(Constants.TILE_MAX_EMC), "The maximum amount of EMC that can be stored in any ProjectE tile entity (Condensers, Furnaces, etc.).");
+
+			String[] maxKleinStarsEMC = config.getStringList("maxKleinStarsEMC", "items", new String[] {"50000", "200000", "800000", "3200000", "12800000", "51200000"}, "The maximum EMC storage for each tier of Klein Star. Must contain exactly 6 values corresponding to tiers Ein through Omega.");
+			if (maxKleinStarsEMC.length == 6) {
+				for (int i = 0; i < 6; i++) Constants.MAX_KLEIN_EMC[i] = Long.parseLong(maxKleinStarsEMC[i]);
+			}
+			
+			double[] collectorLightVals = config.get("blocks", "collectorLightVals", new double[] {0.4375, 0.6875, 1.0, 1.0}, "The light level efficiency factor for Collectors. Must contain exactly 4 values for MK1, MK2, MK3, and MK4.").getDoubleList();
+			if (collectorLightVals.length == 4) {
+				for (int i = 0; i < 4; i++) Constants.COLLECTOR_LIGHT_VALS[i] = (float) collectorLightVals[i];
+			}
+			
+			double[] explosiveLensRadius = config.get("items", "explosiveLensRadius", new double[] {4.0, 8.0, 12.0, 16.0, 16.0, 16.0, 16.0, 16.0}, "The blast radius for the Destruction Catalyst/Hyperkinetic Lens at different charge levels. Must contain exactly 8 values.").getDoubleList();
+			if (explosiveLensRadius.length == 8) {
+				for (int i = 0; i < 8; i++) Constants.EXPLOSIVE_LENS_RADIUS[i] = (float) explosiveLensRadius[i];
+			}
+
+			Constants.EXPLOSIVE_LENS_COST = config.get("items", "explosiveLensCost", Constants.EXPLOSIVE_LENS_COST, "The EMC cost for using the Destruction Catalyst/Hyperkinetic Lens at different charge levels. Must contain exactly 8 values.").getIntList();
+			
+			String[] collectorMkMax = config.getStringList("collectorMkMax", "blocks", new String[] {"10000", "30000", "60000", "120000"}, "The maximum EMC storage capacity for the Energy Collector MK1-MK4. Must contain exactly 4 values.");
+			if (collectorMkMax.length == 4) {
+				for (int i = 0; i < 4; i++) Constants.COLLECTOR_MK_MAX[i] = Long.parseLong(collectorMkMax[i]);
+			}
+
+			String[] collectorMkGen = config.getStringList("collectorMkGen", "blocks", new String[] {"4", "12", "40", "80"}, "The amount of EMC generated per tick (at maximum light) by the Energy Collector MK1-MK4. Must contain exactly 4 values.");
+			if (collectorMkGen.length == 4) {
+				for (int i = 0; i < 4; i++) Constants.COLLECTOR_MK_GEN[i] = Long.parseLong(collectorMkGen[i]);
+			}
+			
+			String[] defaultRelayOutput = new String[Constants.RELAY_MK_OUTPUT.length];
+			for(int i=0; i<Constants.RELAY_MK_OUTPUT.length; i++) defaultRelayOutput[i] = String.valueOf(Constants.RELAY_MK_OUTPUT[i]);
+			
+			String[] relayMkOutput = config.getStringList("relayMkOutput", "blocks", defaultRelayOutput, "The amount of EMC the Anti-Matter Relay MK1-MK15 can transfer to neighbors per tick. Must contain exactly 15 values.");
+			
+			if (relayMkOutput.length == Constants.RELAY_MK_OUTPUT.length) {
+				for (int i = 0; i < Constants.RELAY_MK_OUTPUT.length; i++) {
+					try {
+						Constants.RELAY_MK_OUTPUT[i] = Long.parseLong(relayMkOutput[i]);
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			String[] relayMkMax = config.getStringList("relayMkMax", "blocks", new String[] {"100000", "1000000", "10000000"}, "The maximum EMC storage capacity for the Anti-Matter Relay MK1-MK3. Must contain exactly 3 values.");
+			if (relayMkMax.length == 3) {
+				for (int i = 0; i < 3; i++) Constants.RELAY_MK_MAX[i] = Long.parseLong(relayMkMax[i]);
+			}
+
+			String[] defaultPowerFlowerGen = new String[Constants.POWER_FLOWER_GEN.length];
+			for(int i=0; i<Constants.POWER_FLOWER_GEN.length; i++) defaultPowerFlowerGen[i] = String.valueOf(Constants.POWER_FLOWER_GEN[i]);
+
+			String[] powerFlowerGen = config.getStringList("powerFlowerGen", "blocks", defaultPowerFlowerGen, "The amount of EMC per tick that Power Flowers generate. Must contain exactly 15 values for MK1 through MK15.");
+			
+			if (powerFlowerGen.length == Constants.POWER_FLOWER_GEN.length) {
+				for (int i = 0; i < Constants.POWER_FLOWER_GEN.length; i++) {
+					try {
+						Constants.POWER_FLOWER_GEN[i] = Long.parseLong(powerFlowerGen[i]);
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			Constants.COAL_BURN_TIME = config.getInt("coalBurnTime", "misc", Constants.COAL_BURN_TIME, 1, Integer.MAX_VALUE, "The burn time in ticks for standard Coal (used as a baseline).");
+			Constants.ALCH_BURN_TIME = config.getInt("alchBurnTime", "misc", Constants.ALCH_BURN_TIME, 1, Integer.MAX_VALUE, "The burn time in ticks for Alchemical Coal.");
+			Constants.MOBIUS_BURN_TIME = config.getInt("mobiusBurnTime", "misc", Constants.MOBIUS_BURN_TIME, 1, Integer.MAX_VALUE, "The burn time in ticks for Mobius Fuel.");
+			Constants.AETERNALIS_BUR_TIME = config.getInt("aeternalisBurnTime", "misc", Constants.AETERNALIS_BUR_TIME, 1, Integer.MAX_VALUE, "The burn time in ticks for Aeternalis Fuel.");
+			
+			Constants.MAX_CONDENSER_PROGRESS = config.getInt("maxCondenserProgress", "blocks", Constants.MAX_CONDENSER_PROGRESS, 1, Integer.MAX_VALUE, "The internal progress value required for the Energy Condenser to complete one operation. Higher values make it slower.");
+			Constants.MAX_VEIN_SIZE = config.getInt("maxVeinSize", "items", Constants.MAX_VEIN_SIZE, 1, Integer.MAX_VALUE, "The maximum number of blocks that can be mined in a single vein mining operation.");
+			Constants.ENCH_EMC_BONUS = config.getInt("enchEmcBonus", "misc", Constants.ENCH_EMC_BONUS, 0, Integer.MAX_VALUE, "The EMC value added to an item for each level of enchantment it has.");
+
 			PELogger.logInfo("Loaded configuration file.");
 		}
 		catch (Exception e)

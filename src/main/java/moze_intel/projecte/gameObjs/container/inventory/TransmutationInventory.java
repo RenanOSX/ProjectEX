@@ -30,7 +30,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class TransmutationInventory implements IInventory
 {
-	public double emc;
+	public long emc;
 	private EntityPlayer player = null;
 	private static final int LOCK_INDEX = 8;
 	private static final int[] MATTER_INDEXES = new int[] {12, 11, 13, 10, 14, 21, 15, 20, 16, 19, 17, 18};
@@ -120,10 +120,10 @@ public class TransmutationInventory implements IInventory
 	
 	public void checkForUpdates()
 	{
-		int matterEmc = EMCHelper.getEmcValue(inventory[MATTER_INDEXES[0]]);
-		int fuelEmc = EMCHelper.getEmcValue(inventory[FUEL_INDEXES[0]]);
+		long matterEmc = EMCHelper.getEmcValue(inventory[MATTER_INDEXES[0]]);
+		long fuelEmc = EMCHelper.getEmcValue(inventory[FUEL_INDEXES[0]]);
 		
-		int maxEmc = matterEmc > fuelEmc ? matterEmc : fuelEmc;
+		long maxEmc = matterEmc > fuelEmc ? matterEmc : fuelEmc;
 		
 		if (maxEmc > emc)
 		{
@@ -158,7 +158,7 @@ public class TransmutationInventory implements IInventory
 		ItemSearchHelper searchHelper = ItemSearchHelper.create(filter);
 		if (inventory[LOCK_INDEX] != null)
 		{
-			int reqEmc = EMCHelper.getEmcValue(inventory[LOCK_INDEX]);
+			long reqEmc = EMCHelper.getEmcValue(inventory[LOCK_INDEX]);
 			
 			if (this.emc < reqEmc)
 			{
@@ -377,7 +377,7 @@ public class TransmutationInventory implements IInventory
 	@Override
 	public void openInventory() 
 	{
-		emc = Transmutation.getEmc(player);
+		emc = (long) Transmutation.getEmc(player);
 		ItemStack[] inputLocks = Transmutation.getInputsAndLock(player);
 		System.arraycopy(inputLocks, 0, inventory, 0, 9);
 		if (this.player.worldObj.isRemote)
@@ -406,17 +406,17 @@ public class TransmutationInventory implements IInventory
 	@Override
 	public void markDirty() {}
 	
-	public void addEmc(double value)
+	public void addEmc(long value)
 	{
 		emc += value;
 		
 		if (emc >= Constants.TILE_MAX_EMC || emc < 0)
 		{
-			emc = Constants.TILE_MAX_EMC;
+			emc = (long) Constants.TILE_MAX_EMC;
 		}
 	}
 	
-	public void removeEmc(double value) 
+	public void removeEmc(long value) 
 	{
 		emc -= value;
 		

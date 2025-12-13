@@ -46,7 +46,7 @@ public class RecipeShapedKleinStar implements IRecipe
 	 */
 	public boolean matches(InventoryCrafting inv, World world)
 	{
-		double storedEMC = 0;
+		long storedEMC = 0;
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
 			ItemStack stack = inv.getStackInSlot(i);

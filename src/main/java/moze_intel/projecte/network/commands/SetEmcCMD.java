@@ -7,6 +7,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
+import moze_intel.projecte.NumberFormatter;
 import net.minecraft.util.EnumChatFormatting;
 
 public class SetEmcCMD extends ProjectEBaseCMD
@@ -112,7 +113,7 @@ public class SetEmcCMD extends ProjectEBaseCMD
 
 		if (CustomEMCParser.addToFile(name, meta, emc))
 		{
-			sender.addChatMessage(new ChatComponentTranslation("pe.command.set.success", name, emc));
+				sender.addChatMessage(new ChatComponentTranslation("pe.command.set.success", name, NumberFormatter.format(emc)));
 			sender.addChatMessage(new ChatComponentTranslation("pe.command.reload.notice"));
 		}
 		else

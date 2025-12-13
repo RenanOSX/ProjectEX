@@ -22,6 +22,7 @@ import moze_intel.projecte.gameObjs.tiles.AlchChestTile;
 import moze_intel.projecte.gameObjs.tiles.CondenserMK2Tile;
 import moze_intel.projecte.gameObjs.tiles.CondenserTile;
 import moze_intel.projecte.gameObjs.tiles.DMPedestalTile;
+import moze_intel.projecte.gameObjs.tiles.PowerFlowerTile;
 import moze_intel.projecte.manual.ManualPageHandler;
 import moze_intel.projecte.playerData.AlchBagProps;
 import moze_intel.projecte.playerData.Transmutation;
@@ -33,6 +34,8 @@ import moze_intel.projecte.rendering.CondenserMK2ItemRenderer;
 import moze_intel.projecte.rendering.CondenserMK2Renderer;
 import moze_intel.projecte.rendering.CondenserRenderer;
 import moze_intel.projecte.rendering.NovaCataclysmRenderer;
+import moze_intel.projecte.rendering.PowerFlowerRenderer;
+import moze_intel.projecte.rendering.PowerFlowerItemRenderer;
 import moze_intel.projecte.rendering.NovaCatalystRenderer;
 import moze_intel.projecte.rendering.PedestalItemRenderer;
 import moze_intel.projecte.rendering.PedestalRenderer;
@@ -86,8 +89,12 @@ public class ClientProxy implements IProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(CondenserTile.class, new CondenserRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(CondenserMK2Tile.class, new CondenserMK2Renderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(DMPedestalTile.class, new PedestalRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(PowerFlowerTile.class, new PowerFlowerRenderer());
 		
 		//Entities
+		for (int i = 0; i < ObjHandler.powerFlowerBlocks.length; i++) {
+			MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ObjHandler.powerFlowerBlocks[i]), new PowerFlowerItemRenderer(i + 1));
+		}
 		RenderingRegistry.registerEntityRenderingHandler(EntityWaterProjectile.class, new RenderSnowball(ObjHandler.waterOrb));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLavaProjectile.class, new RenderSnowball(ObjHandler.lavaOrb));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLootBall.class, new RenderSnowball(ObjHandler.lootBall));

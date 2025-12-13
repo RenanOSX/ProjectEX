@@ -49,7 +49,7 @@ public abstract class TileEmc extends TileEmcBase
 		double emcPer = emc / tiles.size();
 		for (Map.Entry<ForgeDirection, TileEntity> entry : tiles.entrySet())
 		{
-			if (this instanceof RelayMK1Tile && entry.getValue() instanceof RelayMK1Tile)
+			if (this instanceof RelayTile && entry.getValue() instanceof RelayTile)
 			{
 				continue;
 			}

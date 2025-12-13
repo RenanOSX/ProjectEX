@@ -54,7 +54,7 @@ public class Ignition extends RingToggle implements IBauble, IPedestalItem, IFir
 			else 
 			{
 				WorldHelper.igniteNearby(world, player);
-				removeEmc(stack, 0.32F);
+				removeEmc(stack, 0);
 			}
 		}
 		else 

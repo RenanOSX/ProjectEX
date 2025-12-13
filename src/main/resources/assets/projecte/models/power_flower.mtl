@@ -1,0 +1,6 @@
+# Made in Blockbench 5.0.3
+newmtl m_1fb7f4c5-784e-5adf-6868-051ff632dcdf
+map_Kd #relay.png
+newmtl m_9bb9f9e0-4fb4-4f49-8a3f-9d7951e07e90
+map_Kd #collector.png
+newmtl none

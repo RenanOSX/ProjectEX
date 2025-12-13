@@ -100,7 +100,7 @@ tile.pe_fuel_block_1.name=Блок топлива Мёбиуса
 tile.pe_fuel_block_2.name=Блок эфирного топлива
 tile.pe_dmPedestal.name=Пьедестал из тёмной материи
 
-itemGroup.ProjectE=ProjectE
+itemGroup.ProjectE=ProjectEX
 
 achievement.phil_stone=Лучший друг алхимиков!
 achievement.phil_stone.desc=Давайте начнём! Сделайте философский камень

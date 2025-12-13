@@ -57,7 +57,7 @@ public class VolcaniteAmulet extends ItemPE implements IProjectileShooter, IBaub
 
 				if (FluidHelper.canFillTank(tank, FluidRegistry.LAVA, sideHit))
 				{
-					if (consumeFuel(player, stack, 32.0F, true))
+					if (consumeFuel(player, stack, 32, true))
 					{
 						FluidHelper.fillTank(tank, FluidRegistry.LAVA, sideHit, 1000);
 						return true;
