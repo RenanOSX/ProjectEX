@@ -1,4 +1,4 @@
-![](/src/main/resources/assets/projecte/logo.png?raw=true)
+![](/src/main/resources/assets/projecte/logo2.png?raw=true)
 
 ## About This Fork
 
