@@ -1,58 +1,118 @@
 ![](/src/main/resources/assets/projecte/logo.png?raw=true)
 
-Repository for ProjectE, a complete rewrite of EE2 (Equivalent Exchange 2) for modern Minecraft versions. Transmutation tables, collectors, condensers, flying rings, and all the other trinkets you love are here.
+## About This Fork
 
-Discover powerful alchemical tools, items, and devices. Break down unwanted items into EMC (Energy-Matter Covalence) and use that EMC to create new items.
+This is a **backport of ProjectEX** with personal tweaks focused on **multiplayer safety, server performance, and long-term progression**.  
+The goal is to stay close to ProjectEX while removing mechanics that can cause exploits or TPS issues.
 
+Some features are still a work in progress.
 
-#Can I include it in a modpack?
-This mod may be redistributed as part of a modpack, both public and private modpacks are allowed. You may not mirror the mod by itself or create a "mod installer", legal action will be taken against sites found violating this. It is requested that you credit the mod on any lists as ProjectE, there is no space in the name.
+## Fork-Specific Changes
 
-#I found a bug
-Bugs can be reported at: https://github.com/sinkillerj/ProjectE/issues
+- **Removed GUIs from Energy Collectors and Relays**
+  - EMC generation is fully automatic
+  - Removes common duplication and sync issues
 
-Please try the latest release build before reporting, be sure to also include any logs or steps to reproduce you may have, as well as your Forge version, and whether or not you are using a third party loader such as Cauldron. When submitting logs please use a service such as Pastebin, do not paste the log directly into the issue.
+- **Passive EMC Generation**
+  - Energy Collectors generate EMC passively
+  - EMC is automatically added to the player’s EMC network
 
-#Downloads
+- **No Practical EMC Cap**
+  - There is technically a cap, but reaching it would take years of gameplay
+
+- **New Tiers**
+  - Additional tiers for Energy Collectors
+  - Additional tiers for Energy Relays
+
+- **Expanded EMC Storage**
+  - New Klein Stars for higher portable EMC capacity
+
+- **New Matter Types**
+  - More progression layers and larger EMC values
+
+- **Power Plants (Major Feature)**
+  - Hyper-compressed EMC Stars
+  - Generate EMC directly into the player EMC network
+  - Designed to be **server-friendly**, with no major TPS impact
+
+- **GTNH Compatibility**
+  - Works with most GT New Horizons mods
+
+## About ProjectE
+
+ProjectE is a complete rewrite of **Equivalent Exchange 2** for modern Minecraft versions.
+
+Core features include:
+- EMC (Energy-Matter Covalence) system
+- Transmutation Tables
+- Collectors and Condensers
+- Alchemical items and tools
+
+Break down items into EMC and use that EMC to create new ones.
+
+## Modpack Usage
+
+You **may include this mod in public or private modpacks**.
+
+Restrictions:
+- Do not redistribute the mod by itself
+- Do not create installers or mirrors
+
+Please credit the mod as **ProjectE** (no space).
+
+## Bug Reports
+
+Report bugs here:  
+https://github.com/RenanOSX/ProjectEX/issues
+
+Before reporting:
+- Test the latest release
+- Include reproduction steps
+- Provide logs (use Pastebin or similar)
+- Include Forge version and any third-party loaders
+
+## Downloads
+
+Available only here for now.
+
+Original ProjectE:  
 http://minecraft.curseforge.com/mc-mods/226410-projecte/files
 
-#Support Development
+## Support Development
+
 ![](/patreon.png?raw=true)
 
-We accept donations via Patreon, visit the team members section to learn more.
+Donations are accepted via Patreon.  
+See team members for details.
 
-#Join the Conversation
-IRC Client: \#ProjectE on irc.esper.net
+## Community
 
-Webchat: http://webchat.esper.net/?nick=&channels=ProjectE
+- IRC: `#ProjectE` on irc.esper.net  
+- Webchat: http://webchat.esper.net/?nick=&channels=ProjectE
 
-#Current Team Members
-SinKillerJ - Head of Alchemical Studies - Main Project & Community Lead:
+## Team Members
 
-* Twitter: https://twitter.com/sinkillerj
-* Patreon: https://www.patreon.com/sinkillerj
+**SinKillerJ** – Main Project & Community Lead  
+- Twitter: https://twitter.com/sinkillerj  
+- Patreon: https://www.patreon.com/sinkillerj
 
-Williewillus - Lord of Lore and Refactors - Lead Assistant Developer & 1.8 Dev:
+**Williewillus** – Lead Assistant Developer  
+- Twitter: https://twitter.com/williewillus  
+- Patreon: https://www.patreon.com/williewillus
 
-* Twitter: https://twitter.com/williewillus
-* Patreon: https://www.patreon.com/williewillus
+**MaPePeR (Blubberbub)** – Assistant Developer  
+- Twitter: https://twitter.com/Blubb3rbub
 
-MaPePeR(Blubberbub) - Alchemical Value Archivist - Assistant Developer: 
+**Lilylicious** – Assistant Developer  
+- Twitter: https://twitter.com/Lilyliciously
 
-* Twitter: https://twitter.com/Blubb3rbub
+## Former Team Members
 
-Lilylicious - Lady of Little Big Things - Assistant Developer:
+- MozeIntel – Original lead developer  
+- Magic Banana – Former texture artist  
+- Kolatra – Former collaborator
 
-* Twitter: https://twitter.com/Lilyliciously
+## Credits
 
-#Former Team Members
-MozeIntel - Original lead developer: https://twitter.com/Moze_Intel
-
-Magic Banana - Former texture artist: https://twitter.com/Magic_Banana_
-
-Kolatra - Former collaborator: https://twitter.com/ItsKolatra
-
-#Thanks To
-x3n0ph0b3 - EE2 creator, Allowed use of EE2 assets: https://twitter.com/x3n0ph0b3x
-
-MidnightLightning - EE2 GUI Textures: https://github.com/MidnightLightning
+- x3n0ph0b3 – EE2 creator, asset permission  
+- MidnightLightning – EE2 GUI textures
