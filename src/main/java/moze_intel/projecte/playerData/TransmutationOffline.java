@@ -81,8 +81,8 @@ public class TransmutationOffline
         {
             File player = new File(playerData, playerUUID.toString() + ".dat");
             if (player.exists() && player.isFile()) {
-                try {
-                    NBTTagCompound props = CompressedStreamTools.readCompressed(new FileInputStream(player)).getCompoundTag(TransmutationProps.PROP_NAME);
+                try (FileInputStream in = new FileInputStream(player)) {
+                    NBTTagCompound props = CompressedStreamTools.readCompressed(in).getCompoundTag(TransmutationProps.PROP_NAME);
                     cachedEmc.put(playerUUID, props.getDouble("transmutationEmc"));
                     cachedFullKnowledge.put(playerUUID, props.getBoolean("tome"));
 

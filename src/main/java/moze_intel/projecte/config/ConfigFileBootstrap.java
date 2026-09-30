@@ -1,6 +1,5 @@
 package moze_intel.projecte.config;
 
-import moze_intel.projecte.utils.FileHelper;
 import moze_intel.projecte.utils.PELogger;
 
 import java.io.BufferedReader;
@@ -38,12 +37,8 @@ public final class ConfigFileBootstrap
 		}
 		else
 		{
-			BufferedReader reader = null;
-
-			try
+			try (BufferedReader reader = new BufferedReader(new FileReader(config)))
 			{
-				reader = new BufferedReader(new FileReader(config));
-
 				String line = reader.readLine();
 
 				if (line == null || !line.equals(version))
@@ -56,10 +51,6 @@ public final class ConfigFileBootstrap
 			{
 				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.");
 				e.printStackTrace();
-			}
-			finally
-			{
-				FileHelper.closeStream(reader);
 			}
 
 			return true;
