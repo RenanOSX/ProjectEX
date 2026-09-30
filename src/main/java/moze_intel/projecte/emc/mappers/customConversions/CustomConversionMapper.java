@@ -73,8 +73,7 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 								addMappingsFromFile(reader, mapper);
 								PELogger.logInfo("Collected Mappings from " + f.getName());
 							} catch (Exception e) {
-								PELogger.logFatal("Exception when reading file: " + f);
-								e.printStackTrace();
+								PELogger.logFatal("Exception when reading file: " + f, e);
 							}
 						}
 					}
@@ -108,8 +107,7 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 					mapper.addConversion(conversion.count, output, convertToNSSMap(conversion.ingredients, fakes));
 				}
 			} catch (Exception e) {
-				PELogger.logFatal(String.format("ERROR reading custom conversion from group %s!", entry.getKey()));
-				e.printStackTrace();
+				PELogger.logFatal(String.format("ERROR reading custom conversion from group %s!", entry.getKey()), e);
 			}
 		}
 
@@ -166,8 +164,7 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 				}
 			}
 		} catch (Exception e) {
-			PELogger.logFatal("ERROR reading custom conversion values!");
-			e.printStackTrace();
+			PELogger.logFatal("ERROR reading custom conversion values!", e);
 		}
 	}
 
@@ -235,7 +232,7 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 			copyDefaultFile(f, filename);
 		}
 		} catch (Exception e) {
-			e.printStackTrace();
+			PELogger.logFatal("Exception while writing default conversion file!", e);
 		}
 
 	}

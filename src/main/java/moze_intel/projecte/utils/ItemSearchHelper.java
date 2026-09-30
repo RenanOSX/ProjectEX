@@ -25,7 +25,7 @@ public abstract class ItemSearchHelper
 		try {
 			return this.doesItemMatchFilter_(itemStack);
 		} catch (Exception e) {
-			e.printStackTrace();
+			PELogger.logWarn("Exception in item search filter, showing item!", e);
 		}
 		return true;
 	}
@@ -48,7 +48,7 @@ public abstract class ItemSearchHelper
 				displayName = stack.getDisplayName().toLowerCase(Locale.ROOT);
 			} catch (Exception e)
 			{
-				e.printStackTrace();
+				PELogger.logWarn("Exception getting display name for search, showing item!", e);
 				//From old code... Not sure if intended to not remove items that crash on getDisplayName
 				return true;
 			}

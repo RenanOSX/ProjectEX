@@ -67,8 +67,7 @@ public class ThreadCheckUUID extends Thread
 		}
 		catch(Exception e)
 		{
-			PELogger.logFatal("Caught exception in UUID Checker thread!");
-			e.printStackTrace();
+			PELogger.logFatal("Caught exception in UUID Checker thread!", e);
 		}
 		finally
 		{

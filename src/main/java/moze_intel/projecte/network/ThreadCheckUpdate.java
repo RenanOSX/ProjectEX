@@ -108,8 +108,7 @@ public class ThreadCheckUpdate extends Thread
 		}
 		catch(Exception e)
 		{
-			PELogger.logFatal("Caught exception in Update Checker thread!");
-			e.printStackTrace();
+			PELogger.logFatal("Caught exception in Update Checker thread!", e);
 		}
 		finally
 		{

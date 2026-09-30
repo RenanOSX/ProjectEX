@@ -109,8 +109,7 @@ public final class EntityHelper
 		}
 		catch (Exception e)
 		{
-			PELogger.logFatal("Could not create new entity instance for: "+c.getCanonicalName());
-			e.printStackTrace();
+			PELogger.logFatal("Could not create new entity instance for: "+c.getCanonicalName(), e);
 		}
 
 		return null;

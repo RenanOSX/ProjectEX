@@ -75,8 +75,7 @@ public final class ProjectEConfig
 		}
 		catch (Exception e)
 		{
-			PELogger.logFatal("Caught exception while loading config file!");
-			e.printStackTrace();
+			PELogger.logFatal("Caught exception while loading config file!", e);
 		}
 		finally
 		{
@@ -197,7 +196,7 @@ public final class ProjectEConfig
 				try {
 					Constants.RELAY_MK_OUTPUT[i] = Long.parseLong(relayMkOutput[i]);
 				} catch (NumberFormatException e) {
-					e.printStackTrace();
+					PELogger.logWarn("Skipping malformed value in config array!", e);
 				}
 			}
 		}
@@ -220,7 +219,7 @@ public final class ProjectEConfig
 				try {
 					Constants.POWER_FLOWER_GEN[i] = Long.parseLong(powerFlowerGen[i]);
 				} catch (NumberFormatException e) {
-					e.printStackTrace();
+					PELogger.logWarn("Skipping malformed value in config array!", e);
 				}
 			}
 		}

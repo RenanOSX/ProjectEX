@@ -103,7 +103,7 @@ public final class CustomEMCParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while reading custom EMC data!", e);
 		}
 	}
 
@@ -168,7 +168,7 @@ public final class CustomEMCParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while writing custom EMC entry!", e);
 		}
 		finally
 		{
@@ -228,7 +228,7 @@ public final class CustomEMCParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while removing custom EMC entry!", e);
 		}
 		finally
 		{
@@ -255,7 +255,7 @@ public final class CustomEMCParser
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while reading custom EMC file!", e);
 		}
 
 		return Lists.newArrayList();
@@ -278,7 +278,7 @@ public final class CustomEMCParser
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while parsing custom EMC entries!", e);
 		}
 
 		return Lists.newArrayList();
@@ -316,7 +316,7 @@ public final class CustomEMCParser
 					}
 					catch (NumberFormatException e)
 					{
-						e.printStackTrace();
+						PELogger.logWarn("Skipping malformed custom EMC entry!", e);
 						continue;
 					}
 
@@ -337,7 +337,7 @@ public final class CustomEMCParser
 				}
 				catch (NumberFormatException e)
 				{
-					e.printStackTrace();
+					PELogger.logWarn("Skipping malformed custom EMC entry!", e);
 					continue;
 				}
 
@@ -378,7 +378,7 @@ public final class CustomEMCParser
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while writing default custom EMC file!", e);
 		}
 	}
 

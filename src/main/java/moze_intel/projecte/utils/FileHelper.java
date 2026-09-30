@@ -23,8 +23,7 @@ public final class FileHelper
 			}
 			catch (IOException e)
 			{
-				PELogger.logFatal("IO Error: couldn't close stream!");
-				e.printStackTrace();
+				PELogger.logFatal("IO Error: couldn't close stream!", e);
 			}
 		}
 	}
@@ -57,7 +56,7 @@ public final class FileHelper
 			}
 		} catch (Exception e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while writing default file!", e);
 		}
 
 	}

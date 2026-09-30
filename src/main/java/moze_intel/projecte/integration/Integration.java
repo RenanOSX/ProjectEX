@@ -29,7 +29,7 @@ public class Integration
 				TweakInit.init();
 			} catch (Throwable e)
 			{
-				e.printStackTrace();
+				PELogger.logWarn("Exception during MineTweaker integration!", e);
 			}
 		}
 
@@ -44,7 +44,7 @@ public class Integration
 				PELogger.logWarn("NEI integration not loaded due to server side being detected");
 			} catch (Throwable e)
 			{
-				e.printStackTrace();
+				PELogger.logWarn("Exception during NEI integration!", e);
 			}
 		}
 	}

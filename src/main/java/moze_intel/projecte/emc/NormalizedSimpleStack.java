@@ -51,8 +51,7 @@ public abstract class NormalizedSimpleStack {
 		{
 			identifier = GameRegistry.findUniqueIdentifierFor(block);
 		} catch (Exception e) {
-			PELogger.logFatal("Could not findUniqueIdentifierFor(%s)", block != null ? block.getClass().getName() : "null");
-			e.printStackTrace();
+			PELogger.logFatal(String.format("Could not findUniqueIdentifierFor(%s)", block != null ? block.getClass().getName() : "null"), e);
 			return null;
 		}
 		return identifier;
@@ -72,8 +71,7 @@ public abstract class NormalizedSimpleStack {
 		{
 			identifier = GameRegistry.findUniqueIdentifierFor(item);
 		} catch (Exception e) {
-			PELogger.logFatal("Could not findUniqueIdentifierFor(%s)", item != null ? item.getClass().getName() : "null");
-			e.printStackTrace();
+			PELogger.logFatal(String.format("Could not findUniqueIdentifierFor(%s)", item != null ? item.getClass().getName() : "null"), e);
 			return null;
 		}
 		return identifier;

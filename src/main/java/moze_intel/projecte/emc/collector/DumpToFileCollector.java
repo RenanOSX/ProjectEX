@@ -5,6 +5,7 @@ import moze_intel.projecte.emc.arithmetics.IValueArithmetic;
 import moze_intel.projecte.emc.mappers.customConversions.json.ConversionGroup;
 import moze_intel.projecte.emc.mappers.customConversions.json.CustomConversion;
 import moze_intel.projecte.emc.mappers.customConversions.json.CustomConversionFile;
+import moze_intel.projecte.utils.PELogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +66,7 @@ public class DumpToFileCollector<A extends IValueArithmetic> extends AbstractMap
 			out.write(file);
 		} catch (IOException e)
 		{
-			e.printStackTrace();
+			PELogger.logWarn("Failed to write EMC mapping dump!", e);
 		}
 		inner.finishCollection();
 	}

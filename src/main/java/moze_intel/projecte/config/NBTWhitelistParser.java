@@ -70,7 +70,7 @@ public final class NBTWhitelistParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while reading NBT whitelist data!", e);
 		}
 	}
 
@@ -89,7 +89,7 @@ public final class NBTWhitelistParser
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while writing default NBT whitelist file!", e);
 		}
 	}
 }

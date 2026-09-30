@@ -78,8 +78,7 @@ public final class EMCMapper
 					}
 				} catch (Exception e)
 				{
-					PELogger.logFatal(String.format("Exception during Mapping Collection from Mapper %s. PLEASE REPORT THIS! EMC VALUES MIGHT BE INCONSISTENT!", emcMapper.getClass().getName()));
-					e.printStackTrace();
+					PELogger.logFatal(String.format("Exception during Mapping Collection from Mapper %s. PLEASE REPORT THIS! EMC VALUES MIGHT BE INCONSISTENT!", emcMapper.getClass().getName()), e);
 				}
 			}
 			DumpToFileCollector.currentGroupName = "NSSHelper";
@@ -105,7 +104,7 @@ public final class EMCMapper
 					PELogger.logInfo("Wrote Pregen-file!");
 				} catch (IOException e)
 				{
-					e.printStackTrace();
+					PELogger.logWarn("Failed to write pregenerated EMC file!", e);
 				}
 			}
 		}

@@ -30,8 +30,7 @@ public final class ConfigFileBootstrap
 			}
 			catch (IOException e)
 			{
-				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.");
-				e.printStackTrace();
+				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.", e);
 				return false;
 			}
 		}
@@ -49,8 +48,7 @@ public final class ConfigFileBootstrap
 			}
 			catch (IOException e)
 			{
-				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.");
-				e.printStackTrace();
+				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.", e);
 			}
 
 			return true;

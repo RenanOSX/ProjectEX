@@ -30,6 +30,16 @@ public final class PELogger
 		logger.fatal(msg);
 	}
 
+	public static void logWarn(String msg, Throwable throwable)
+	{
+		logger.warn(msg, throwable);
+	}
+
+	public static void logFatal(String msg, Throwable throwable)
+	{
+		logger.fatal(msg, throwable);
+	}
+
 	public static void logDebug(String msg)
 	{
 		if (ProjectEConfig.enableDebugLog) // visible in main console
