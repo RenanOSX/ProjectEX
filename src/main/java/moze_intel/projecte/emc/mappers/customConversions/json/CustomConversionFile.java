@@ -66,10 +66,11 @@ public class CustomConversionFile
 
 	public void write(File file) throws IOException
 	{
-		FileWriter fileWriter = new FileWriter(file);
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
-		gson.toJson(this, fileWriter);
-		fileWriter.close();
+		try (FileWriter fileWriter = new FileWriter(file))
+		{
+			GsonBuilder builder = new GsonBuilder();
+			Gson gson = builder.setPrettyPrinting().disableHtmlEscaping().create();
+			gson.toJson(this, fileWriter);
+		}
 	}
 }

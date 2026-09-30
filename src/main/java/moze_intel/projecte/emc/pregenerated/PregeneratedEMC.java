@@ -32,18 +32,20 @@ public class PregeneratedEMC
 	public static Map<NormalizedSimpleStack, Long> read(File file) throws IOException
 	{
 		Type type = new TypeToken<Map<NormalizedSimpleStack, Long>>() {}.getType();
-		FileReader reader = new FileReader(file);
-		Map<NormalizedSimpleStack, Long> map = gson.fromJson(reader, type);
-		reader.close();
-		map.remove(null);
-		return map;
+		try (FileReader reader = new FileReader(file))
+		{
+			Map<NormalizedSimpleStack, Long> map = gson.fromJson(reader, type);
+			map.remove(null);
+			return map;
+		}
 	}
 
 	public static void write(File file, Map<NormalizedSimpleStack, Long> map) throws IOException
 	{
 		Type type = new TypeToken<Map<NormalizedSimpleStack, Long>>() {}.getType();
-		FileWriter writer = new FileWriter(file);
-		gson.toJson(map, type, writer);
-		writer.close();
+		try (FileWriter writer = new FileWriter(file))
+		{
+			gson.toJson(map, type, writer);
+		}
 	}
 }
