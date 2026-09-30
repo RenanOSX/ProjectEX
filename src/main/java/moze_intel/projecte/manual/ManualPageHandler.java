@@ -5,7 +5,6 @@ import com.google.common.collect.Maps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import moze_intel.projecte.gameObjs.ObjHandler;
-import moze_intel.projecte.gameObjs.gui.GUIManual;
 import moze_intel.projecte.utils.Comparators;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraft.block.Block;

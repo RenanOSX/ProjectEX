@@ -5,7 +5,7 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.LoaderState;
 import moze_intel.projecte.api.proxy.IBlacklistProxy;
 import moze_intel.projecte.gameObjs.items.TimeWatch;
-import moze_intel.projecte.utils.NBTWhitelist;
+import moze_intel.projecte.registry.NBTWhitelist;
 import moze_intel.projecte.utils.PELogger;
 import moze_intel.projecte.utils.WorldHelper;
 import net.minecraft.entity.Entity;

@@ -1,4 +1,4 @@
-package moze_intel.projecte.utils;
+package moze_intel.projecte.registry;
 
 import com.google.common.collect.Lists;
 import moze_intel.projecte.emc.SimpleStack;

@@ -1,6 +1,6 @@
 package moze_intel.projecte.gameObjs.blocks;
 
-import moze_intel.projecte.utils.AchievementHandler;
+import moze_intel.projecte.gameObjs.AchievementHandler;
 import moze_intel.projecte.utils.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

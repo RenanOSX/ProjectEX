@@ -1,4 +1,4 @@
-package moze_intel.projecte.utils;
+package moze_intel.projecte.model;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

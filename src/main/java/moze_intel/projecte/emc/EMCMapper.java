@@ -22,7 +22,7 @@ import moze_intel.projecte.emc.mappers.customConversions.CustomConversionMapper;
 import moze_intel.projecte.emc.pregenerated.PregeneratedEMC;
 import moze_intel.projecte.playerData.Transmutation;
 import moze_intel.projecte.utils.PELogger;
-import moze_intel.projecte.utils.PrefixConfiguration;
+import moze_intel.projecte.config.PrefixConfiguration;
 
 import com.google.common.collect.Maps;
 import cpw.mods.fml.common.registry.GameRegistry;

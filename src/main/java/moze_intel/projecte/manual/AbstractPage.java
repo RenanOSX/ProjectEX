@@ -3,7 +3,6 @@ package moze_intel.projecte.manual;
 import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import moze_intel.projecte.gameObjs.gui.GUIManual;
 import moze_intel.projecte.utils.CollectionHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

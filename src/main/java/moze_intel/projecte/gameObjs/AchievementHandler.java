@@ -1,4 +1,4 @@
-package moze_intel.projecte.utils;
+package moze_intel.projecte.gameObjs;
 
 import com.google.common.collect.ImmutableList;
 import moze_intel.projecte.gameObjs.ObjHandler;

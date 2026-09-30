@@ -37,7 +37,7 @@ import moze_intel.projecte.network.commands.ProjectECMD;
 import moze_intel.projecte.playerData.Transmutation;
 import moze_intel.projecte.playerData.TransmutationOffline;
 import moze_intel.projecte.proxies.IProxy;
-import moze_intel.projecte.utils.AchievementHandler;
+import moze_intel.projecte.gameObjs.AchievementHandler;
 import moze_intel.projecte.utils.Constants;
 import moze_intel.projecte.gameObjs.gui.GuiHandler;
 import moze_intel.projecte.utils.PELogger;

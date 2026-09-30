@@ -1,6 +1,7 @@
-package moze_intel.projecte.utils;
+package moze_intel.projecte.registry;
 
 import com.google.common.collect.Maps;
+import moze_intel.projecte.model.MetaBlock;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;

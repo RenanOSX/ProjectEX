@@ -1,4 +1,4 @@
-package moze_intel.projecte.gameObjs.gui;
+package moze_intel.projecte.manual;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;

@@ -1,4 +1,4 @@
-package moze_intel.projecte.utils;
+package moze_intel.projecte.model;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;

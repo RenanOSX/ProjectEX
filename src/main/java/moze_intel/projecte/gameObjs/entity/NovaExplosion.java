@@ -1,7 +1,8 @@
-package moze_intel.projecte.utils;
+package moze_intel.projecte.gameObjs.entity;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import moze_intel.projecte.utils.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -21,7 +22,7 @@ public class NovaExplosion extends Explosion
 {
 	private World worldObj;
 	
-	NovaExplosion(World world, Entity entity, double x, double y, double z, float radius)
+	public NovaExplosion(World world, Entity entity, double x, double y, double z, float radius)
 	{
 		super(world, entity, x, y, z, radius);
 		isFlaming = true;

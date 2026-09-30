@@ -50,7 +50,7 @@ import moze_intel.projecte.gameObjs.items.ColossalStar;
 import moze_intel.projecte.gameObjs.items.MagnumStar;
 import moze_intel.projecte.gameObjs.items.Matter;
 import moze_intel.projecte.gameObjs.items.MercurialEye;
-import moze_intel.projecte.gameObjs.items.PEManual;
+import moze_intel.projecte.manual.PEManual;
 import moze_intel.projecte.gameObjs.items.PhilosophersStone;
 import moze_intel.projecte.gameObjs.items.RepairTalisman;
 import moze_intel.projecte.gameObjs.items.TimeWatch;

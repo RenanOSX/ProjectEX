@@ -13,7 +13,7 @@ import moze_intel.projecte.utils.Constants;
 import moze_intel.projecte.utils.EMCHelper;
 import moze_intel.projecte.utils.ItemHelper;
 import moze_intel.projecte.utils.ItemSearchHelper;
-import moze_intel.projecte.utils.NBTWhitelist;
+import moze_intel.projecte.registry.NBTWhitelist;
 import moze_intel.projecte.utils.PELogger;
 
 import com.google.common.collect.Queues;
