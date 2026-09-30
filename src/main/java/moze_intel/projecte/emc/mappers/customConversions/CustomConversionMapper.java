@@ -26,6 +26,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
@@ -67,9 +68,9 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 				if (f.isFile() && f.canRead()) {
 					if (f.getName().toLowerCase().endsWith(".json")) {
 						if (config.getBoolean(f.getName().substring(0, f.getName().length() - 5), "", true, String.format("Read file: %s?", f.getName()))) {
-							try
+							try (FileReader reader = new FileReader(f))
 							{
-								addMappingsFromFile(new FileReader(f), mapper);
+								addMappingsFromFile(reader, mapper);
 								PELogger.logInfo("Collected Mappings from " + f.getName());
 							} catch (Exception e) {
 								PELogger.logFatal("Exception when reading file: " + f);
@@ -231,15 +232,19 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 		try {
 		if (f.createNewFile() && f.canWrite())
 		{
-			InputStream stream = CustomConversionMapper.class.getClassLoader().getResourceAsStream("defaultCustomConversions/" + filename + ".json");
-			OutputStream outputStream = new FileOutputStream(f);
-			IOUtils.copy(stream, outputStream);
-			stream.close();
-			outputStream.close();
+			copyDefaultFile(f, filename);
 		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	private static void copyDefaultFile(File f, String filename) throws IOException {
+		try (InputStream stream = CustomConversionMapper.class.getClassLoader().getResourceAsStream("defaultCustomConversions/" + filename + ".json");
+				OutputStream outputStream = new FileOutputStream(f))
+		{
+			IOUtils.copy(stream, outputStream);
+		}
 	}
 }
