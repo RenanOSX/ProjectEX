@@ -170,20 +170,22 @@ public final class EMCMapper
 		}
 	}
 
+	/**
+	 * @deprecated Use {@link EmcValueStore#mapContains(SimpleStack)} instead.
+	 */
+	@Deprecated
 	public static boolean mapContains(SimpleStack key)
 	{
-		SimpleStack copy = key.copy();
-		copy.qnty = 1;
-
-		return emc.containsKey(copy);
+		return EmcValueStore.mapContains(key);
 	}
 
+	/**
+	 * @deprecated Use {@link EmcValueStore#getEmcValue(SimpleStack)} instead.
+	 */
+	@Deprecated
 	public static long getEmcValue(SimpleStack stack)
 	{
-		SimpleStack copy = stack.copy();
-		copy.qnty = 1;
-
-		return emc.get(copy);
+		return EmcValueStore.getEmcValue(stack);
 	}
 
 	public static void clearMaps() {

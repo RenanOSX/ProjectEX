@@ -1,6 +1,5 @@
 package moze_intel.projecte.emc;
 
-import moze_intel.projecte.emc.EMCMapper;
 import moze_intel.projecte.emc.SimpleStack;
 import moze_intel.projecte.utils.Constants;
 import net.minecraft.block.Block;
@@ -41,7 +40,7 @@ public final class EmcLookup
 			iStack.damage = 0;
 		}
 
-		return EMCMapper.mapContains(iStack);
+		return EmcValueStore.mapContains(iStack);
 	}
 
 	public static boolean doesItemHaveEmc(Item item)
@@ -58,9 +57,9 @@ public final class EmcLookup
 	{
 		SimpleStack stack = new SimpleStack(new ItemStack(Block));
 
-		if (stack.isValid() && EMCMapper.mapContains(stack))
+		if (stack.isValid() && EmcValueStore.mapContains(stack))
 		{
-			return EMCMapper.getEmcValue(stack);
+			return EmcValueStore.getEmcValue(stack);
 		}
 
 		return 0;
@@ -70,9 +69,9 @@ public final class EmcLookup
 	{
 		SimpleStack stack = new SimpleStack(new ItemStack(item));
 
-		if (stack.isValid() && EMCMapper.mapContains(stack))
+		if (stack.isValid() && EmcValueStore.mapContains(stack))
 		{
-			return EMCMapper.getEmcValue(stack);
+			return EmcValueStore.getEmcValue(stack);
 		}
 
 		return 0;
@@ -96,14 +95,14 @@ public final class EmcLookup
 			return 0;
 		}
 
-		if (!EMCMapper.mapContains(iStack) && !stack.getHasSubtypes() && stack.getMaxDamage() != 0)
+		if (!EmcValueStore.mapContains(iStack) && !stack.getHasSubtypes() && stack.getMaxDamage() != 0)
 		{
 			//We don't have an emc value for id:metadata, so lets check if we have a value for id:0 and apply a damage multiplier based on that emc value.
 			iStack.damage = 0;
 
-			if (EMCMapper.mapContains(iStack))
+			if (EmcValueStore.mapContains(iStack))
 			{
-				long emc = EMCMapper.getEmcValue(iStack);
+				long emc = EmcValueStore.getEmcValue(iStack);
 
 				int relDamage = (stack.getMaxDamage() - stack.getItemDamage());
 
@@ -136,9 +135,9 @@ public final class EmcLookup
 		}
 		else
 		{
-			if (EMCMapper.mapContains(iStack))
+			if (EmcValueStore.mapContains(iStack))
 			{
-				return EMCMapper.getEmcValue(iStack) + getEnchantEmcBonus(stack) + (long)getStoredEMCBonus(stack);
+				return EmcValueStore.getEmcValue(iStack) + getEnchantEmcBonus(stack) + (long)getStoredEMCBonus(stack);
 			}
 		}
 

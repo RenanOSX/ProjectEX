@@ -2,7 +2,7 @@ package moze_intel.projecte.playerData;
 
 import com.google.common.collect.Lists;
 import moze_intel.projecte.api.event.PlayerKnowledgeChangeEvent;
-import moze_intel.projecte.emc.EMCMapper;
+import moze_intel.projecte.emc.EmcValueStore;
 import moze_intel.projecte.emc.SimpleStack;
 import moze_intel.projecte.network.PacketHandler;
 import moze_intel.projecte.network.s2c.KnowledgeSyncPKT;
@@ -28,7 +28,7 @@ public final class Transmutation
 
 	public static void cacheFullKnowledge()
 	{
-		for (SimpleStack stack : EMCMapper.emc.keySet())
+		for (SimpleStack stack : EmcValueStore.keySet())
 		{
 			if (!stack.isValid())
 			{

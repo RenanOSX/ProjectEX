@@ -1,13 +1,12 @@
 package moze_intel.projecte.network;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
-import moze_intel.projecte.emc.EMCMapper;
+import moze_intel.projecte.emc.EmcValueStore;
 import moze_intel.projecte.emc.SimpleStack;
 import moze_intel.projecte.network.s2c.CheckUpdatePKT;
 import moze_intel.projecte.network.s2c.CondenserSyncPKT;
@@ -102,7 +101,7 @@ public final class PacketHandler
 		ArrayList<Object[]> list = Lists.newArrayList();
 		int counter = 0;
 
-		for (Map.Entry<SimpleStack, Long> entry : Maps.newLinkedHashMap(EMCMapper.emc).entrySet()) // Copy constructor to prevent race condition CME in SP
+		for (Map.Entry<SimpleStack, Long> entry : EmcValueStore.snapshot().entrySet()) // Copy constructor to prevent race condition CME in SP
 		{
 			SimpleStack stack = entry.getKey();
 

@@ -5,6 +5,7 @@ import cpw.mods.fml.common.event.FMLServerStoppedEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import moze_intel.projecte.config.CustomEMCParser;
 import moze_intel.projecte.emc.EMCMapper;
+import moze_intel.projecte.emc.EmcValueStore;
 import moze_intel.projecte.network.ThreadCheckUUID;
 import moze_intel.projecte.network.ThreadCheckUpdate;
 import moze_intel.projecte.network.commands.ProjectECMD;
@@ -42,7 +43,7 @@ public final class ServerLifecycle
 
 		EMCMapper.map();
 
-		PELogger.logInfo("Registered " + EMCMapper.emc.size() + " EMC values. (took " + (System.currentTimeMillis() - start) + " ms)");
+		PELogger.logInfo("Registered " + EmcValueStore.size() + " EMC values. (took " + (System.currentTimeMillis() - start) + " ms)");
 
 		File dir = new File(event.getServer().getEntityWorld().getSaveHandler().getWorldDirectory(), "ProjectE");
 
