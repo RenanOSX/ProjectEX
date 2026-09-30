@@ -35,13 +35,13 @@ public class ToolTipEvent
 	public void tTipEvent(ItemTooltipEvent event)
 	{
 		ItemStack current = event.itemStack;
-		Item currentItem = current.getItem();
-		Block currentBlock = Block.getBlockFromItem(currentItem);
-
 		if (current == null)
 		{
 			return;
 		}
+
+		Item currentItem = current.getItem();
+		Block currentBlock = Block.getBlockFromItem(currentItem);
 
 		if (currentBlock == ObjHandler.dmPedestal)
 		{

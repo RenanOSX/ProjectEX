@@ -3,13 +3,11 @@ package moze_intel.projecte.gameObjs.tiles;
 import moze_intel.projecte.api.tile.IEmcProvider;
 import moze_intel.projecte.gameObjs.blocks.Collector;
 import moze_intel.projecte.utils.Constants;
-import moze_intel.projecte.utils.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.Map;
 
 public class CollectorTile extends AbstractTieredEmcTile implements IEmcProvider
 {
@@ -104,10 +102,9 @@ public class CollectorTile extends AbstractTieredEmcTile implements IEmcProvider
 
 	private void sendRelayBonus()
 	{
-		for (Map.Entry<ForgeDirection, TileEntity> entry: WorldHelper.getAdjacentTileEntitiesMapped(worldObj, this).entrySet())
+		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS)
 		{
-			ForgeDirection dir = entry.getKey();
-			TileEntity tile = entry.getValue();
+			TileEntity tile = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
 
 			if (tile instanceof RelayTile)
 			{

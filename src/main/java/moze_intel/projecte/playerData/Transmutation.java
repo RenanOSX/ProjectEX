@@ -152,6 +152,10 @@ public final class Transmutation
 
 	public static void sync(EntityPlayer player)
 	{
+		if (!(player instanceof EntityPlayerMP))
+		{
+			return;
+		}
 		PacketHandler.sendTo(new KnowledgeSyncPKT(TransmutationProps.getDataFor(player).saveForPacket()), (EntityPlayerMP) player);
 		PELogger.logDebug("** SENT TRANSMUTATION DATA **");
 	}

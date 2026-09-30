@@ -151,7 +151,7 @@ public class AlchChestTile extends TileEmcDirection implements IInventory
 	{
 		super.updateEntity();
 
-		if (++ticksSinceSync % 20 * 4 == 0)
+		if (++ticksSinceSync % (20 * 4) == 0)
 		{
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, ObjHandler.alchChest, 1, numPlayersUsing);
 		}

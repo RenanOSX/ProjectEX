@@ -68,6 +68,8 @@ public class RepairTalisman extends ItemPE implements IAlchBagItem, IAlchChestIt
 	public void repairAllItems(EntityPlayer player)
 	{
 		IInventory inv = player.inventory;
+		boolean chiselLoaded = Loader.isModLoaded("chisel");
+		ItemStack equippedItem = player.getCurrentEquippedItem();
 
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
@@ -78,12 +80,12 @@ public class RepairTalisman extends ItemPE implements IAlchBagItem, IAlchChestIt
 				continue;
 			}
 
-			if (Loader.isModLoaded("chisel"))
+			if (chiselLoaded)
 			{
 				if (chiselCheck(invStack)) continue;
 			}
 
-			if (invStack.equals(player.getCurrentEquippedItem()) && player.isSwingInProgress)
+			if (invStack.equals(equippedItem) && player.isSwingInProgress)
 			{
 				//Don't repair item that is currently used by the player.
 				continue;

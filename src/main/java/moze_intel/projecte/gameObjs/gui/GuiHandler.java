@@ -51,6 +51,8 @@ public class GuiHandler implements IGuiHandler
 					return new AlchChestContainer(player.inventory, (AlchChestTile) tile);
 				break;
 			case Constants.ALCH_BAG_GUI:
+				if (player.getHeldItem() == null)
+					return null;
 				return new AlchBagContainer(player.inventory, new AlchBagInventory(player, player.getHeldItem()));
 			case Constants.CONDENSER_GUI:
 				if (tile != null && tile instanceof CondenserTile)
@@ -65,17 +67,25 @@ public class GuiHandler implements IGuiHandler
 					return new DMFurnaceContainer(player.inventory, (DMFurnaceTile) tile);
 				break;
 			case Constants.MERCURIAL_GUI:
+				if (player.getHeldItem() == null)
+					return null;
 				return new MercurialEyeContainer(player.inventory, new MercurialEyeInventory(player.getHeldItem()));
 			case Constants.PHILOS_STONE_GUI:
 				return new PhilosStoneContainer(player.inventory);
 			case Constants.TRANSMUTATION_GUI:
 				return new TransmutationContainer(player.inventory, new TransmutationInventory(player));
 			case Constants.ETERNAL_DENSITY_GUI:
+				if (player.getHeldItem() == null)
+					return null;
 				return new EternalDensityContainer(player.inventory, new EternalDensityInventory(player.getHeldItem(), player));
 			case Constants.CONDENSER_MK2_GUI:
-				return new CondenserMK2Container(player.inventory, (CondenserMK2Tile) tile);
+				if (tile != null && tile instanceof CondenserMK2Tile)
+					return new CondenserMK2Container(player.inventory, (CondenserMK2Tile) tile);
+				break;
 			case Constants.PEDESTAL_GUI:
-				return new PedestalContainer(player.inventory, ((DMPedestalTile) tile));
+				if (tile != null && tile instanceof DMPedestalTile)
+					return new PedestalContainer(player.inventory, ((DMPedestalTile) tile));
+				break;
 		}
 		
 		return null;
@@ -93,6 +103,8 @@ public class GuiHandler implements IGuiHandler
 					return new GUIAlchChest(player.inventory, (AlchChestTile) tile);
 				break;
 			case Constants.ALCH_BAG_GUI:
+				if (player.getHeldItem() == null)
+					return null;
 				return new GUIAlchChest(player.inventory, new AlchBagInventory(player, player.getHeldItem()));
 			case Constants.CONDENSER_GUI:
 				if (tile != null && tile instanceof CondenserTile)
@@ -107,18 +119,25 @@ public class GuiHandler implements IGuiHandler
 					return new GUIDMFurnace(player.inventory, (DMFurnaceTile) tile);
 				break;
 			case Constants.MERCURIAL_GUI:
+				if (player.getHeldItem() == null)
+					return null;
 				return new GUIMercurialEye(player.inventory, new MercurialEyeInventory(player.getHeldItem()));
 			case Constants.PHILOS_STONE_GUI:
 				return new GUIPhilosStone(player.inventory);
 			case Constants.TRANSMUTATION_GUI:
 				return new GUITransmutation(player.inventory, new TransmutationInventory(player));
 			case Constants.ETERNAL_DENSITY_GUI:
-				player.getHeldItem();
+				if (player.getHeldItem() == null)
+					return null;
 				return new GUIEternalDensity(player.inventory, new EternalDensityInventory(player.getHeldItem(), player));
 			case Constants.CONDENSER_MK2_GUI:
-				return new GUICondenserMK2(player.inventory, (CondenserMK2Tile) tile);
+				if (tile != null && tile instanceof CondenserMK2Tile)
+					return new GUICondenserMK2(player.inventory, (CondenserMK2Tile) tile);
+				break;
 			case Constants.PEDESTAL_GUI:
-				return new GUIPedestal(player.inventory, ((DMPedestalTile) tile));
+				if (tile != null && tile instanceof DMPedestalTile)
+					return new GUIPedestal(player.inventory, ((DMPedestalTile) tile));
+				break;
 		}
 		
 		return null;

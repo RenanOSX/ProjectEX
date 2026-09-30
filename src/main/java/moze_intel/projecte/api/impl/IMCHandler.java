@@ -74,6 +74,8 @@ public class IMCHandler
             }
         } catch (ClassNotFoundException ex) {
             PELogger.logWarn("IMC tried to identify a class that couldn't be found: %s", name);
+        } catch (LinkageError err) {
+            PELogger.logWarn("IMC tried to identify a class with missing dependencies: %s", name);
         }
         return null;
     }

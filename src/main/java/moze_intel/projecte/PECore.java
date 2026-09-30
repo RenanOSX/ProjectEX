@@ -1,6 +1,5 @@
 package moze_intel.projecte;
 
-import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -37,6 +36,7 @@ import net.minecraftforge.common.MinecraftForge;
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Mod(modid = PECore.MODID, name = PECore.MODNAME, version = PECore.VERSION)
 public class PECore
@@ -54,7 +54,7 @@ public class PECore
 	@SidedProxy(clientSide = "moze_intel.projecte.proxies.ClientProxy", serverSide = "moze_intel.projecte.proxies.ServerProxy")
 	public static IProxy proxy;
 
-	public static final List<String> uuids = Lists.newArrayList();
+	public static final List<String> uuids = new CopyOnWriteArrayList<String>();
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)

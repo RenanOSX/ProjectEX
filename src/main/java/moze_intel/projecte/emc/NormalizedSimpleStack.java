@@ -302,6 +302,10 @@ public abstract class NormalizedSimpleStack {
 			{
 				throw new IllegalArgumentException(String.format("Could not parse '%s' to metadata-integer", itemDamageString), e);
 			}
+			if (itemDamage < 0)
+			{
+				throw new IllegalArgumentException(String.format("Metadata '%s' out of range", itemDamageString));
+			}
 		}
 
 		return NormalizedSimpleStack.getFor(itemName, itemDamage);

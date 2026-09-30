@@ -3,6 +3,7 @@ package moze_intel.projecte.emc.mappers;
 import moze_intel.projecte.emc.collector.IMappingCollector;
 import moze_intel.projecte.emc.IngredientMap;
 import moze_intel.projecte.emc.NormalizedSimpleStack;
+import moze_intel.projecte.utils.PELogger;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.config.Configuration;
@@ -17,6 +18,10 @@ public class SmeltingMapper implements IEMCMapper<NormalizedSimpleStack, Long> {
 			ItemStack input = entry.getKey();
 			ItemStack output = entry.getValue();
 			if (input == null || output == null) {
+				continue;
+			}
+			if (output.stackSize <= 0 || input.stackSize < 0) {
+				PELogger.logWarn("Ignoring smelting recipe with invalid stack sizes: " + input + " -> " + output);
 				continue;
 			}
 			IngredientMap<NormalizedSimpleStack> map = new IngredientMap<>();

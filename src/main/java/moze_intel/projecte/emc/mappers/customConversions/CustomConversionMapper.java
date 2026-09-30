@@ -64,7 +64,11 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 			{
 				tryToWriteDefaultFiles();
 			}
-			for (File f: customConversionFolder.listFiles()) {
+			File[] conversionFiles = customConversionFolder.listFiles();
+			if (conversionFiles == null) {
+				return;
+			}
+			for (File f: conversionFiles) {
 				if (f.isFile() && f.canRead()) {
 					if (f.getName().toLowerCase().endsWith(".json")) {
 						if (config.getBoolean(f.getName().substring(0, f.getName().length() - 5), "", true, String.format("Read file: %s?", f.getName()))) {

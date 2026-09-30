@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import moze_intel.projecte.api.item.IModeChanger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -25,12 +26,16 @@ public abstract class ItemMode extends ItemCharge implements IModeChanger
 	
 	public byte getMode(ItemStack stack)
 	{
+		if (!stack.hasTagCompound())
+		{
+			stack.setTagCompound(new NBTTagCompound());
+		}
 		return stack.stackTagCompound.getByte("Mode");
 	}
 	
 	public String getModeDescription(ItemStack stack)
 	{
-		return modes[stack.stackTagCompound.getByte("Mode")];
+		return modes[getMode(stack)];
 	}
 	
 	protected void changeMode(ItemStack stack)

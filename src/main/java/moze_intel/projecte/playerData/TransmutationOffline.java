@@ -42,11 +42,13 @@ public class TransmutationOffline
 
     public static List<ItemStack> getKnowledge(UUID playerUUID)
     {
-        if (!cachedKnowledge.containsKey(playerUUID))
+        List<ItemStack> knowledge = cachedKnowledge.get(playerUUID);
+        if (knowledge == null)
         {
             cacheOfflineData(playerUUID);
+            knowledge = cachedKnowledge.get(playerUUID);
         }
-        return cachedKnowledge.get(playerUUID);
+        return knowledge;
     }
 
     public static boolean hasKnowledgeForStack(ItemStack stack, UUID playerUUID)
@@ -67,11 +69,13 @@ public class TransmutationOffline
 
     public static double getEmc(UUID playerUUID)
     {
-        if (!cachedEmc.containsKey(playerUUID))
+        Double emc = cachedEmc.get(playerUUID);
+        if (emc == null && !cachedEmc.containsKey(playerUUID))
         {
             cacheOfflineData(playerUUID);
+            emc = cachedEmc.get(playerUUID);
         }
-        return cachedEmc.get(playerUUID) == null ? Double.NaN : cachedEmc.get(playerUUID);
+        return emc == null ? Double.NaN : emc;
     }
 
     private static void cacheOfflineData(UUID playerUUID) {

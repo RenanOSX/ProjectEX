@@ -5,6 +5,7 @@ import moze_intel.projecte.utils.ChatHelper;
 import moze_intel.projecte.utils.MathUtils;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import moze_intel.projecte.NumberFormatter;
@@ -45,6 +46,12 @@ public class SetEmcCMD extends ProjectEBaseCMD
 
 		if (params.length == 1)
 		{
+			if (!(sender instanceof EntityPlayer))
+			{
+				sendError(sender, new ChatComponentTranslation("pe.command.set.usage"));
+				return;
+			}
+
 			ItemStack heldItem = getCommandSenderAsPlayer(sender).getHeldItem();
 
 			if (heldItem == null)
@@ -60,6 +67,7 @@ public class SetEmcCMD extends ProjectEBaseCMD
 			if (emc < 0)
 			{
 				sendError(sender, new ChatComponentTranslation("pe.command.set.invalidemc", params[0]));
+				return;
 			}
 		}
 		else
@@ -84,7 +92,7 @@ public class SetEmcCMD extends ProjectEBaseCMD
 
 					if (emc < 0)
 					{
-						sendError(sender, new ChatComponentTranslation("pe.command.set.invalidemc", params[0]));
+						sendError(sender, new ChatComponentTranslation("pe.command.set.invalidemc", params[2]));
 						return;
 					}
 				}
@@ -94,7 +102,7 @@ public class SetEmcCMD extends ProjectEBaseCMD
 
 					if (emc < 0)
 					{
-						sendError(sender, new ChatComponentTranslation("pe.command.set.invalidemc", params[0]));
+						sendError(sender, new ChatComponentTranslation("pe.command.set.invalidemc", params[1]));
 						return;
 					}
 				}
@@ -105,7 +113,7 @@ public class SetEmcCMD extends ProjectEBaseCMD
 
 				if (emc < 0)
 				{
-					sendError(sender, new ChatComponentTranslation("pe.command.set.invalidemc", params[0]));
+					sendError(sender, new ChatComponentTranslation("pe.command.set.invalidemc", params[1]));
 					return;
 				}
 			}

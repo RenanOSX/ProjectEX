@@ -125,8 +125,10 @@ public abstract class MappingCollector<T, V extends Comparable<V>,  A extends IV
 		if (overwriteConversion.containsKey(something)) {
 			Conversion oldConversion = overwriteConversion.get(something);
 			PELogger.logWarn("Overwriting setValueFromConversion " + overwriteConversion.get(something) + " with " + conversion);
-			for (T ingredient: ingredientsWithAmount.keySet()) {
-				getUsesFor(ingredient).remove(oldConversion);
+			if (oldConversion.ingredientsWithAmount != null) {
+				for (T ingredient: oldConversion.ingredientsWithAmount.keySet()) {
+					getUsesFor(ingredient).remove(oldConversion);
+				}
 			}
 		}
 		addConversionToIngredientUsages(conversion);

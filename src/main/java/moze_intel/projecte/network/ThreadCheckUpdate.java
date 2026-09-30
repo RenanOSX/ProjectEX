@@ -42,6 +42,8 @@ public class ThreadCheckUpdate extends Thread
 		{
 			connection = (HttpURLConnection) new URL(changelogURL).openConnection();
 
+			connection.setConnectTimeout(5000);
+			connection.setReadTimeout(5000);
 			connection.connect();
 			
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream())))

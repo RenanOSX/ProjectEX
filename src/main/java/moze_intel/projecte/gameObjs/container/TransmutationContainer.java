@@ -93,7 +93,12 @@ public class TransmutationContainer extends Container
 		else if (slotIndex >= 10 && slotIndex <= 25) // Output Slots
 		{	
 			long emc = EMCHelper.getEmcValue(newStack);
-			
+
+			if (emc <= 0)
+			{
+				return null;
+			}
+
 			int stackSize = 0;
 			
 			while (transmutationInventory.emc >= emc && stackSize < newStack.getMaxStackSize() && ItemHelper.hasSpace(player.inventory.mainInventory, newStack))

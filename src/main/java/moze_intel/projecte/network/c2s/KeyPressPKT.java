@@ -35,7 +35,12 @@ public class KeyPressPKT implements IMessage
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
-		key = PEKeybind.values()[buf.readInt()];
+		int ordinal = buf.readInt();
+		PEKeybind[] values = PEKeybind.values();
+		if (ordinal >= 0 && ordinal < values.length)
+		{
+			key = values[ordinal];
+		}
 	}
 
 	@Override
@@ -49,6 +54,11 @@ public class KeyPressPKT implements IMessage
 		@Override
 		public IMessage onMessage(final KeyPressPKT message, final MessageContext ctx)
 		{
+			if (message.key == null)
+			{
+				return null;
+			}
+
 			EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 			ItemStack stack = player.getHeldItem();
 

@@ -5,6 +5,7 @@ import moze_intel.projecte.utils.ChatHelper;
 import moze_intel.projecte.utils.MathUtils;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
@@ -37,6 +38,12 @@ public class ResetEmcCMD extends ProjectEBaseCMD
 
 		if (params.length == 0)
 		{
+			if (!(sender instanceof EntityPlayer))
+			{
+				sendError(sender, new ChatComponentTranslation("pe.command.reset.usage"));
+				return;
+			}
+
 			ItemStack heldItem = getCommandSenderAsPlayer(sender).getHeldItem();
 
 			if (heldItem == null)

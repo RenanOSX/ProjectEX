@@ -154,7 +154,8 @@ public class EntityHomingArrow extends EntityArrow
 
 	private EntityLiving getTarget()
 	{
-		return ((EntityLiving) worldObj.getEntityByID(dataWatcher.getWatchableObjectInt(DW_TARGET_ID)));
+		Entity target = worldObj.getEntityByID(dataWatcher.getWatchableObjectInt(DW_TARGET_ID));
+		return target instanceof EntityLiving ? (EntityLiving) target : null;
 	}
 
 	private boolean hasTarget()

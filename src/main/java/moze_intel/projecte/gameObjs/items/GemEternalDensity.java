@@ -82,7 +82,12 @@ public class GemEternalDensity extends ItemPE implements IAlchBagItem, IAlchChes
 		List<ItemStack> whitelist = getWhitelist(gem);
 		
 		ItemStack target = getTarget(gem);
-		
+
+		if (target == null)
+		{
+			return hasChanged;
+		}
+
 		for (int i = 0; i < inv.length; i++)
 		{
 			ItemStack s = inv[i];
@@ -192,6 +197,10 @@ public class GemEternalDensity extends ItemPE implements IAlchBagItem, IAlchChes
 	
 	private static ItemStack getTarget(ItemStack stack)
 	{
+		if (!stack.hasTagCompound())
+		{
+			stack.setTagCompound(new NBTTagCompound());
+		}
 		switch (stack.stackTagCompound.getByte("Target"))
 		{
 			case 0:

@@ -165,13 +165,13 @@ public class KleinStar
 		@Override
 		public String describe()
 		{
-			return "Removing recipe for " + recipe.getRecipeOutput().getDisplayName() + " in a " + recipe.getClass();
+			return recipe == null ? "Removing recipe for unknown output" : "Removing recipe for " + recipe.getRecipeOutput().getDisplayName() + " in a " + recipe.getClass();
 		}
 
 		@Override
 		public String describeUndo()
 		{
-			return "Un-removing recipe for " + recipe.getRecipeOutput().getDisplayName() + " in a " + recipe.getClass();
+			return recipe == null ? "Un-removing recipe for unknown output" : "Un-removing recipe for " + recipe.getRecipeOutput().getDisplayName() + " in a " + recipe.getClass();
 		}
 
 		@Override

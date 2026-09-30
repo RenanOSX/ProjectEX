@@ -43,7 +43,7 @@ public class FluidMapper implements IEMCMapper<NormalizedSimpleStack, Long> {
 		}
 	}
 	static {
-		addMelting(Blocks.obsidian, "obisidan.molten", 288);
+		addMelting(Blocks.obsidian, "obsidian.molten", 288);
 		addMelting(Blocks.glass, "glass.molten", 1000);
 		addMelting(Blocks.glass_pane, "glass.molten", 250);
 		addMelting(Items.ender_pearl, "ender", 250);
@@ -105,9 +105,16 @@ public class FluidMapper implements IEMCMapper<NormalizedSimpleStack, Long> {
 		}
 
 		for (FluidContainerRegistry.FluidContainerData data : FluidContainerRegistry.getRegisteredFluidContainerData()) {
-			Fluid fluid = data.fluid.getFluid();
+			if (data.fluid == null || data.fluid.getFluid() == null) {
+				continue;
+			}
+			NormalizedSimpleStack empty = NormalizedSimpleStack.getFor(data.emptyContainer);
+			NormalizedSimpleStack fluid = NormalizedSimpleStack.getFor(data.fluid.getFluid());
+			if (empty == null || fluid == null) {
+				continue;
+			}
 			mapper.addConversion(1, NormalizedSimpleStack.getFor(data.filledContainer),
-					ImmutableMap.of(NormalizedSimpleStack.getFor(data.emptyContainer), 1, NormalizedSimpleStack.getFor(fluid), data.fluid.amount)
+					ImmutableMap.of(empty, 1, fluid, data.fluid.amount)
 			);
 		}
 	}

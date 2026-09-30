@@ -89,6 +89,7 @@ public class DiviningRodLow extends ItemPE implements IModeChanger
 							continue;
 						}
 
+						Map<ItemStack, ItemStack> smeltingMap = FurnaceRecipes.smelting().getSmeltingList();
 						List<ItemStack> drops = block.getDrops(world, i, j, k, world.getBlockMetadata(i, j, k), 0);
 
 						if (drops.size() == 0)
@@ -101,9 +102,7 @@ public class DiviningRodLow extends ItemPE implements IModeChanger
 
 						if (blockEmc == 0)
 						{
-							Map<ItemStack, ItemStack> map = FurnaceRecipes.smelting().getSmeltingList();
-
-							for (Entry<ItemStack, ItemStack> entry : map.entrySet())
+							for (Entry<ItemStack, ItemStack> entry : smeltingMap.entrySet())
 							{
 								if (entry == null || entry.getKey() == null)
 								{
@@ -198,6 +197,10 @@ player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.avgemc"
 	@Override
 	public byte getMode(ItemStack stack)
 	{
+		if (!stack.hasTagCompound())
+		{
+			stack.setTagCompound(new NBTTagCompound());
+		}
 		return stack.stackTagCompound.getByte("Mode");
 	}
 
@@ -208,13 +211,14 @@ player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.avgemc"
 		{
 			return;
 		}
-		if (getMode(stack) == modes.length - 1)
+		byte mode = getMode(stack);
+		if (mode == modes.length - 1)
 		{
 			stack.stackTagCompound.setByte("Mode", ((byte) 0));
 		}
 		else
 		{
-			stack.stackTagCompound.setByte("Mode", ((byte) (getMode(stack) + 1)));
+			stack.stackTagCompound.setByte("Mode", ((byte) (mode + 1)));
 		}
 
 		player.addChatComponentMessage(new ChatComponentTranslation("pe.item.mode_switch", modes[getMode(stack)]));

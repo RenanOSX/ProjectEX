@@ -11,7 +11,12 @@ public final class NbtInventoryCodec
 		for (int i = 0; i < list.tagCount(); i++)
 		{
 			NBTTagCompound entry = list.getCompoundTagAt(i);
-			dest[entry.getByte("index")] = ItemStack.loadItemStackFromNBT(entry);
+			int index = entry.getByte("index");
+			if (index < 0 || index >= dest.length)
+			{
+				continue;
+			}
+			dest[index] = ItemStack.loadItemStackFromNBT(entry);
 		}
 		return dest;
 	}

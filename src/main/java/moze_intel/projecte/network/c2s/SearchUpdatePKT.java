@@ -42,6 +42,11 @@ public class SearchUpdatePKT implements IMessage
 		@Override
 		public IMessage onMessage(final SearchUpdatePKT pkt, final MessageContext ctx)
 		{
+			if (pkt.slot < 10 || pkt.slot > 25)
+			{
+				return null;
+			}
+
 			if (ctx.getServerHandler().playerEntity.openContainer instanceof TransmutationContainer)
 			{
 				TransmutationContainer container = ((TransmutationContainer) ctx.getServerHandler().playerEntity.openContainer);

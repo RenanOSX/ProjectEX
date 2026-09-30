@@ -307,6 +307,7 @@ public final class PlayerChecks
 		gemArmorReadyChecks.clear();
 		hadFlightItem.clear();
 		projectileCooldowns.clear();
+		gemChestCooldowns.clear();
 	}
 
 	public static void removePlayerFromLists(EntityPlayerMP player)
@@ -315,5 +316,6 @@ public final class PlayerChecks
 		gemArmorReadyChecks.remove(player);
 		hadFlightItem.remove(player);
 		projectileCooldowns.remove(player);
+		gemChestCooldowns.remove(player);
 	}
 }

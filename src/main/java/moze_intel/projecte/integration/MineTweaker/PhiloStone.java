@@ -176,13 +176,13 @@ public class PhiloStone
 		@Override
 		public String describe()
 		{
-			return "Removing Philosopher's Stone Smelting Recipe for " + recipe.getRecipeOutput().getDisplayName();
+			return "Removing Philosopher's Stone Smelting Recipe for " + (recipe == null ? "unknown output" : recipe.getRecipeOutput().getDisplayName());
 		}
 
 		@Override
 		public String describeUndo()
 		{
-			return "Un-removing Philosopher's Stone Smelting Recipe for " + recipe.getRecipeOutput().getDisplayName();
+			return "Un-removing Philosopher's Stone Smelting Recipe for " + (recipe == null ? "unknown output" : recipe.getRecipeOutput().getDisplayName());
 		}
 
 		@Override
