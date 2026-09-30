@@ -2,7 +2,6 @@ package moze_intel.projecte.events;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import moze_intel.projecte.PECore;
-import moze_intel.projecte.gameObjs.ObjHandler;
 import moze_intel.projecte.gameObjs.container.AlchBagContainer;
 import moze_intel.projecte.gameObjs.items.AlchemicalBag;
 import moze_intel.projecte.server.PlayerChecks;
@@ -12,12 +11,9 @@ import moze_intel.projecte.playerData.Transmutation;
 import moze_intel.projecte.playerData.TransmutationOffline;
 import moze_intel.projecte.playerData.TransmutationProps;
 import moze_intel.projecte.utils.ChatHelper;
-import moze_intel.projecte.utils.ItemHelper;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
@@ -109,56 +105,15 @@ public class PlayerEvents
 		
 		if (player.openContainer instanceof AlchBagContainer)
 		{
-			IInventory inv = ((AlchBagContainer) player.openContainer).inventory;
-			
-			if (ItemHelper.invContainsItem(inv, new ItemStack(ObjHandler.blackHole, 1, 1)) || ItemHelper.invContainsItem(inv, new ItemStack(ObjHandler.voidRing, 1, 1))
-					&& ItemHelper.hasSpace(inv, event.item.getEntityItem()))
+			if (AlchemicalBags.tryVacuumIntoOpenContainer(player, (AlchBagContainer) player.openContainer, event.item))
 			{
-				ItemStack remain = ItemHelper.pushStackInInv(inv, event.item.getEntityItem());
-				
-				if (remain == null)
-				{
-					event.item.delayBeforeCanPickup = 10;
-					event.item.setDead();
-					world.playSoundAtEntity(player, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-				}
-				else 
-				{
-					event.item.setEntityItemStack(remain);
-				}
-				
 				event.setCanceled(true);
 			}
 		}
 		else
 		{
-			ItemStack bag = AlchemicalBag.getFirstBagWithSuctionItem(player, player.inventory.mainInventory);
-			
-			if (bag == null)
+			if (AlchemicalBags.tryVacuumIntoSuctionBag(player, event.item))
 			{
-				return;
-			}
-			
-			ItemStack[] inv = AlchemicalBags.get(player, (byte) bag.getItemDamage());
-			
-			if (ItemHelper.hasSpace(inv, event.item.getEntityItem()))
-			{
-				ItemStack remain = ItemHelper.pushStackInInv(inv, event.item.getEntityItem());
-				
-				if (remain == null)
-				{
-					event.item.delayBeforeCanPickup = 10;
-					event.item.setDead();
-					world.playSoundAtEntity(player, "random.pop", 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-				}
-				else 
-				{
-					event.item.setEntityItemStack(remain);
-				}
-				
-				AlchemicalBags.set(player, (byte) bag.getItemDamage(), inv);
-				AlchemicalBags.syncPartial(player, bag.getItemDamage());
-				
 				event.setCanceled(true);
 			}
 		}
