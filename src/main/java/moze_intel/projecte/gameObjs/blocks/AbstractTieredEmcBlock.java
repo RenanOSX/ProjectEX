@@ -93,4 +93,10 @@ public abstract class AbstractTieredEmcBlock extends BlockDirection
 	{
 		return true;
 	}
+
+	@Override
+	public boolean hasComparatorInputOverride()
+	{
+		return true;
+	}
 }
