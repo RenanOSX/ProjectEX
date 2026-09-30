@@ -8,17 +8,8 @@ import moze_intel.projecte.emc.collector.IExtendedMappingCollector;
 import moze_intel.projecte.emc.collector.LongToBigFractionCollector;
 import moze_intel.projecte.emc.generators.BigFractionToLongGenerator;
 import moze_intel.projecte.emc.generators.IValueGenerator;
-import moze_intel.projecte.emc.mappers.APICustomConversionMapper;
-import moze_intel.projecte.emc.mappers.Chisel2Mapper;
 import moze_intel.projecte.emc.arithmetics.BigFractionArithmetic;
-import moze_intel.projecte.emc.mappers.APICustomEMCMapper;
-import moze_intel.projecte.emc.mappers.CraftingMapper;
-import moze_intel.projecte.emc.mappers.CustomEMCMapper;
 import moze_intel.projecte.emc.mappers.IEMCMapper;
-import moze_intel.projecte.emc.mappers.LazyMapper;
-import moze_intel.projecte.emc.mappers.OreDictionaryMapper;
-import moze_intel.projecte.emc.mappers.SmeltingMapper;
-import moze_intel.projecte.emc.mappers.customConversions.CustomConversionMapper;
 import moze_intel.projecte.emc.pregenerated.PregeneratedEMC;
 import moze_intel.projecte.playerData.Transmutation;
 import moze_intel.projecte.utils.PELogger;
@@ -33,7 +24,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,18 +36,7 @@ public final class EMCMapper
 
 	public static void map()
 	{
-		List<IEMCMapper<NormalizedSimpleStack, Long>> emcMappers = Arrays.asList(
-				new OreDictionaryMapper(),
-				new LazyMapper(),
-				new Chisel2Mapper(),
-				APICustomEMCMapper.instance,
-				new CustomConversionMapper(),
-				new CustomEMCMapper(),
-				new CraftingMapper(),
-				new moze_intel.projecte.emc.mappers.FluidMapper(),
-				new SmeltingMapper(),
-				new APICustomConversionMapper()
-		);
+		List<IEMCMapper<NormalizedSimpleStack, Long>> emcMappers = EmcMapperRegistry.defaultMappers();
 		SimpleGraphMapper<NormalizedSimpleStack, BigFraction, IValueArithmetic<BigFraction>> mapper = new SimpleGraphMapper(new BigFractionArithmetic());
 		IValueGenerator<NormalizedSimpleStack, Long> valueGenerator = new BigFractionToLongGenerator(mapper);
 		IExtendedMappingCollector<NormalizedSimpleStack, Long, IValueArithmetic<BigFraction>> mappingCollector = new LongToBigFractionCollector(mapper);
