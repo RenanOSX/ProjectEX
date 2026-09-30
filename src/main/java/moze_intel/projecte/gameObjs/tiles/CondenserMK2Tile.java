@@ -47,43 +47,13 @@ public class CondenserMK2Tile extends CondenserTile
 	@Override
 	protected boolean hasSpace()
 	{
-		for (int i = OUTPUT_SLOTS_LOWER; i <= OUTPUT_SLOTS_UPPER; i++)
-		{
-			ItemStack stack = inventory[i];
-
-			if (stack == null)
-			{
-				return true;
-			}
-
-			if (isStackEqualToLock(stack) && stack.stackSize < stack.getMaxStackSize())
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return hasSpaceInRange(OUTPUT_SLOTS_LOWER, OUTPUT_SLOTS_UPPER);
 	}
 
 	@Override
 	protected int getSlotForStack()
 	{
-		for (int i = OUTPUT_SLOTS_LOWER; i <= OUTPUT_SLOTS_UPPER; i++)
-		{
-			ItemStack stack = inventory[i];
-
-			if (stack == null)
-			{
-				return i;
-			}
-
-			if (isStackEqualToLock(stack) && stack.stackSize < stack.getMaxStackSize())
-			{
-				return i;
-			}
-		}
-
-		return 0;
+		return getSlotForStackInRange(OUTPUT_SLOTS_LOWER, OUTPUT_SLOTS_UPPER);
 	}
 
 	@Override

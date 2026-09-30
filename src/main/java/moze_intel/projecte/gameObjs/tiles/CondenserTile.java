@@ -157,15 +157,20 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 	
 	protected int getSlotForStack()
 	{
-		for (int i = 1; i < inventory.length; i++)
+		return getSlotForStackInRange(1, inventory.length - 1);
+	}
+
+	protected final int getSlotForStackInRange(int lower, int upper)
+	{
+		for (int i = lower; i <= upper; i++)
 		{
 			ItemStack stack = inventory[i];
 
-			if (stack == null) 
+			if (stack == null)
 			{
 				return i;
 			}
-			
+
 			if (isStackEqualToLock(stack) && stack.stackSize < stack.getMaxStackSize())
 			{
 				return i;
@@ -177,16 +182,21 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 	
 	protected boolean hasSpace()
 	{
-		for (int i = 1; i < inventory.length; i++)
+		return hasSpaceInRange(1, inventory.length - 1);
+	}
+
+	protected final boolean hasSpaceInRange(int lower, int upper)
+	{
+		for (int i = lower; i <= upper; i++)
 		{
 			ItemStack stack = inventory[i];
-			
-			if (stack == null) 
+
+			if (stack == null)
 			{
 				return true;
 			}
-			
-			if (isStackEqualToLock(stack) && stack.stackSize < stack.getMaxStackSize()) 
+
+			if (isStackEqualToLock(stack) && stack.stackSize < stack.getMaxStackSize())
 			{
 				return true;
 			}
