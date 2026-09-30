@@ -1,13 +1,12 @@
 package moze_intel.projecte.utils;
 
-import moze_intel.projecte.api.item.IItemEmc;
+import moze_intel.projecte.api.tile.TileEmcBase;
 import moze_intel.projecte.gameObjs.tiles.AlchChestTile;
 import moze_intel.projecte.gameObjs.tiles.CollectorTile;
 import moze_intel.projecte.gameObjs.tiles.CondenserTile;
 import moze_intel.projecte.gameObjs.tiles.RMFurnaceTile;
 import moze_intel.projecte.gameObjs.tiles.RelayTile;
 import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 /**
@@ -22,8 +21,7 @@ public final class ComparatorHelper
 
 	public static int getForCollector(World world, int x, int y, int z)
 	{
-		CollectorTile tile = ((CollectorTile) world.getTileEntity(x, y, z));
-		return MathUtils.scaleToRedstone(tile.getStoredEmc(), tile.getMaximumEmc());
+		return getScaledForEmcTile(((CollectorTile) world.getTileEntity(x, y, z)));
 	}
 
 	public static int getForCondenser(World world, int x, int y, int z)
@@ -38,7 +36,11 @@ public final class ComparatorHelper
 
 	public static int getForRelay(World world, int x, int y, int z)
 	{
-		RelayTile relay = ((RelayTile) world.getTileEntity(x, y, z));
-		return MathUtils.scaleToRedstone(relay.getStoredEmc(), relay.getMaximumEmc());
+		return getScaledForEmcTile(((RelayTile) world.getTileEntity(x, y, z)));
+	}
+
+	private static int getScaledForEmcTile(TileEmcBase tile)
+	{
+		return MathUtils.scaleToRedstone(tile.getStoredEmc(), tile.getMaximumEmc());
 	}
 }
