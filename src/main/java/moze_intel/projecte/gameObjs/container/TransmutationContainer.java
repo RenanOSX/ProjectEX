@@ -8,7 +8,7 @@ import moze_intel.projecte.gameObjs.container.slots.transmutation.SlotLock;
 import moze_intel.projecte.gameObjs.container.slots.transmutation.SlotOutput;
 import moze_intel.projecte.gameObjs.container.slots.transmutation.SlotUnlearn;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.SearchUpdatePKT;
+import moze_intel.projecte.network.c2s.SearchUpdatePKT;
 import moze_intel.projecte.utils.EMCHelper;
 import moze_intel.projecte.utils.ItemHelper;
 

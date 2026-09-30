@@ -39,7 +39,7 @@ import moze_intel.projecte.playerData.TransmutationOffline;
 import moze_intel.projecte.proxies.IProxy;
 import moze_intel.projecte.utils.AchievementHandler;
 import moze_intel.projecte.utils.Constants;
-import moze_intel.projecte.utils.GuiHandler;
+import moze_intel.projecte.gameObjs.gui.GuiHandler;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

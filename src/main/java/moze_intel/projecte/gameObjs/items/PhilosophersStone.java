@@ -10,7 +10,7 @@ import moze_intel.projecte.gameObjs.ObjHandler;
 import moze_intel.projecte.gameObjs.entity.EntityMobRandomizer;
 import moze_intel.projecte.gameObjs.tiles.TileEmc;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.ParticlePKT;
+import moze_intel.projecte.network.s2c.ParticlePKT;
 import moze_intel.projecte.utils.AchievementHandler;
 import moze_intel.projecte.utils.ClientKeyHelper;
 import moze_intel.projecte.utils.Constants;

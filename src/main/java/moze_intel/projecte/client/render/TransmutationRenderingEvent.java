@@ -1,4 +1,4 @@
-package moze_intel.projecte.events;
+package moze_intel.projecte.client.render;
 
 import com.google.common.collect.Lists;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;

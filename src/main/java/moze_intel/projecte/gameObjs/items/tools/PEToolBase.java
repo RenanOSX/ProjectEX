@@ -8,7 +8,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.gameObjs.items.ItemMode;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.ParticlePKT;
+import moze_intel.projecte.network.s2c.ParticlePKT;
 import moze_intel.projecte.utils.Coordinates;
 import moze_intel.projecte.utils.ItemHelper;
 import moze_intel.projecte.utils.MathUtils;

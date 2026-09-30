@@ -1,4 +1,4 @@
-package moze_intel.projecte.network.packets;
+package moze_intel.projecte.network.s2c;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -9,13 +9,13 @@ import moze_intel.projecte.PECore;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class SyncBagDataPKT implements IMessage
+public class KnowledgeSyncPKT implements IMessage
 {
 	private NBTTagCompound nbt;
 
-	public SyncBagDataPKT() {}
+	public KnowledgeSyncPKT() {}
 
-	public SyncBagDataPKT(NBTTagCompound nbt)
+	public KnowledgeSyncPKT(NBTTagCompound nbt)
 	{
 		this.nbt = nbt;
 	}
@@ -32,13 +32,13 @@ public class SyncBagDataPKT implements IMessage
 		ByteBufUtils.writeTag(buf, nbt);
 	}
 
-	public static class Handler implements IMessageHandler<SyncBagDataPKT, IMessage>
+	public static class Handler implements IMessageHandler<KnowledgeSyncPKT, IMessage>
 	{
 		@Override
-		public IMessage onMessage(final SyncBagDataPKT message, MessageContext ctx)
+		public IMessage onMessage(final KnowledgeSyncPKT message, MessageContext ctx)
 		{
-			PECore.proxy.getClientBagProps().readFromPacket(message.nbt);
-			PELogger.logDebug("** RECEIVED BAGS CLIENTSIDE **");
+			PECore.proxy.getClientTransmutationProps().readFromPacket(message.nbt);
+			PELogger.logDebug("** RECEIVED TRANSMUTATION DATA CLIENTSIDE **");
 
 			return null;
 		}

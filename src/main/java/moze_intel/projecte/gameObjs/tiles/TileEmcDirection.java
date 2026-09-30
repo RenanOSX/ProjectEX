@@ -1,7 +1,7 @@
 package moze_intel.projecte.gameObjs.tiles;
 
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.OrientationSyncPKT;
+import moze_intel.projecte.network.s2c.OrientationSyncPKT;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;

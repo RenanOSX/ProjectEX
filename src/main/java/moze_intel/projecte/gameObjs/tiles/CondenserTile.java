@@ -5,7 +5,7 @@ import moze_intel.projecte.api.tile.IEmcAcceptor;
 import moze_intel.projecte.gameObjs.ObjHandler;
 import moze_intel.projecte.handlers.TileEntityHandler;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.CondenserSyncPKT;
+import moze_intel.projecte.network.s2c.CondenserSyncPKT;
 import moze_intel.projecte.utils.Constants;
 import moze_intel.projecte.utils.EMCHelper;
 import moze_intel.projecte.utils.ItemHelper;

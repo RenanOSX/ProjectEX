@@ -1,11 +1,11 @@
-package moze_intel.projecte.events;
+package moze_intel.projecte.client.input;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.KeyPressPKT;
+import moze_intel.projecte.network.c2s.KeyPressPKT;
 import moze_intel.projecte.utils.ClientKeyHelper;
 import net.minecraft.client.settings.KeyBinding;
 

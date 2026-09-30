@@ -1,4 +1,4 @@
-package moze_intel.projecte.events;
+package moze_intel.projecte.client.tooltip;
 
 import com.google.common.math.LongMath;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;

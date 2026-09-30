@@ -2,7 +2,7 @@ package moze_intel.projecte.playerData;
 
 import com.google.common.collect.Maps;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.SyncBagDataPKT;
+import moze_intel.projecte.network.s2c.SyncBagDataPKT;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

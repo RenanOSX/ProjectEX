@@ -1,4 +1,4 @@
-package moze_intel.projecte.network.packets;
+package moze_intel.projecte.network.c2s;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

@@ -1,4 +1,4 @@
-package moze_intel.projecte.network.packets;
+package moze_intel.projecte.network.s2c;
 
 import com.google.common.collect.Maps;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

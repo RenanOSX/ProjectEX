@@ -1,4 +1,4 @@
-package moze_intel.projecte.events;
+package moze_intel.projecte.client.render;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

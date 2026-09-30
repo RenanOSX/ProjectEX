@@ -1,4 +1,4 @@
-package moze_intel.projecte.utils;
+package moze_intel.projecte.gameObjs.gui;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import moze_intel.projecte.gameObjs.container.AlchBagContainer;
@@ -32,6 +32,7 @@ import moze_intel.projecte.gameObjs.tiles.CondenserTile;
 import moze_intel.projecte.gameObjs.tiles.DMFurnaceTile;
 import moze_intel.projecte.gameObjs.tiles.DMPedestalTile;
 import moze_intel.projecte.gameObjs.tiles.RMFurnaceTile;
+import moze_intel.projecte.utils.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

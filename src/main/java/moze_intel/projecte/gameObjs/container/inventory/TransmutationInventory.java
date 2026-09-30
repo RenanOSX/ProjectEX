@@ -6,7 +6,7 @@ import moze_intel.projecte.emc.EMCMapper;
 import moze_intel.projecte.emc.FuelMapper;
 import moze_intel.projecte.gameObjs.ObjHandler;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.SearchUpdatePKT;
+import moze_intel.projecte.network.c2s.SearchUpdatePKT;
 import moze_intel.projecte.playerData.Transmutation;
 import moze_intel.projecte.utils.Comparators;
 import moze_intel.projecte.utils.Constants;
