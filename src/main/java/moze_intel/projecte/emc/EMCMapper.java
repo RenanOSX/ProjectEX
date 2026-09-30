@@ -36,6 +36,7 @@ public final class EMCMapper
 
 	public static void map()
 	{
+		emc.clear();
 		List<IEMCMapper<NormalizedSimpleStack, Long>> emcMappers = EmcMapperRegistry.defaultMappers();
 		SimpleGraphMapper<NormalizedSimpleStack, BigFraction, IValueArithmetic<BigFraction>> mapper = new SimpleGraphMapper(new BigFractionArithmetic());
 		IValueGenerator<NormalizedSimpleStack, Long> valueGenerator = new BigFractionToLongGenerator(mapper);
@@ -89,8 +90,6 @@ public final class EMCMapper
 
 			PELogger.logInfo("Starting to generate Values:");
 
-			config.save();
-
 			graphMapperValues = valueGenerator.generateValues();
 			PELogger.logInfo("Generated Values...");
 
@@ -109,6 +108,7 @@ public final class EMCMapper
 			}
 		}
 
+		config.save();
 
 		for (Map.Entry<NormalizedSimpleStack, Long> entry: graphMapperValues.entrySet()) {
 			if (entry.getKey() instanceof NormalizedSimpleStack.NSSItem)

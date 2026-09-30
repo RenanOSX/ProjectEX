@@ -57,7 +57,7 @@ public final class FuelMapper
 	
 	public static boolean isStackMaxFuel(ItemStack stack)
 	{
-		return indexInMap(new SimpleStack(stack)) == FUEL_MAP.size() - 1;
+		return !FUEL_MAP.isEmpty() && indexInMap(new SimpleStack(stack)) == FUEL_MAP.size() - 1;
 	}
 	
 	public static ItemStack getFuelUpgrade(ItemStack stack)

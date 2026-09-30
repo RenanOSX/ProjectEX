@@ -48,6 +48,6 @@ public class BigFractionArithmetic implements IValueArithmetic<BigFraction>
 	@Override
 	public boolean isFree(BigFraction value)
 	{
-		return value.longValue() == Long.MIN_VALUE;
+		return value.equals(getFree());
 	}
 }

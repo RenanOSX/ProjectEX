@@ -375,7 +375,7 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 
 	public void updateChest()
 	{
-		if (++ticksSinceSync % 20 * 4 == 0)
+		if (++ticksSinceSync % (20 * 4) == 0)
 		{
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, ObjHandler.condenser, 1, numPlayersUsing);
 		}

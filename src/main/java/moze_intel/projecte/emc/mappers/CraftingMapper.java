@@ -231,7 +231,7 @@ public class CraftingMapper implements IEMCMapper<NormalizedSimpleStack, Long> {
 			ArrayList<ItemStack> fixedInputs = Lists.newArrayList();
 			for (Object recipeItem : recipeItems) {
 				if (recipeItem instanceof ItemStack) {
-					fixedInputs.add((ItemStack) recipeItem);
+					fixedInputs.add(((ItemStack) recipeItem).copy());
 				} else if (recipeItem instanceof Collection) {
 					List<ItemStack> recipeItemOptions = new LinkedList<>();
 					Collection recipeItemCollection = ((Collection) recipeItem);
@@ -290,7 +290,7 @@ public class CraftingMapper implements IEMCMapper<NormalizedSimpleStack, Long> {
 				if (o == null) continue;
 				if (o instanceof ItemStack) {
 					ItemStack recipeItem = (ItemStack) o;
-					inputs.add(recipeItem);
+					inputs.add(recipeItem.copy());
 				} else {
 					PELogger.logWarn("Illegal Ingredient in Crafting Recipe: " + o.toString());
 				}

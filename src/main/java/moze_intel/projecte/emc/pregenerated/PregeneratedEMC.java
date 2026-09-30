@@ -1,6 +1,7 @@
 package moze_intel.projecte.emc.pregenerated;
 
 import moze_intel.projecte.emc.NormalizedSimpleStack;
+import moze_intel.projecte.utils.PELogger;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -25,7 +26,8 @@ public class PregeneratedEMC
 			map.putAll(m);
 			return true;
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			PELogger.logWarn("Failed to read pregenerated EMC file, recomputing values!", e);
+			return false;
 		}
 	}
 

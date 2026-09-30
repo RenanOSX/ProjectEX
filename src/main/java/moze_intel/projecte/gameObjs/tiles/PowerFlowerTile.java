@@ -76,7 +76,7 @@ public class PowerFlowerTile extends TileEntity
 			return;
 		}
 
-		if (worldObj.getTotalWorldTime() % 20L != ((xCoord ^ zCoord) % 20))
+		if (worldObj.getTotalWorldTime() % 20L != Math.floorMod(xCoord ^ zCoord, 20))
 		{
 			return;
 		}
