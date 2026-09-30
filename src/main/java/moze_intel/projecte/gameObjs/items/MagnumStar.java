@@ -66,24 +66,6 @@ public class MagnumStar extends KleinStar
 		}
 	}
 	
-	// @Override
-	// public void onCreated(ItemStack stack, World world, EntityPlayer player) 
-	// {
-	// 	super.onCreated(stack, world, player);
-		
-	// 	if (!world.isRemote)
-	// 	{
-	// 		if (stack.getItemDamage() == 5)
-	// 		{
-	// 			player.addStat(AchievementHandler.KLEIN_MASTER, 1);
-	// 		}
-	// 		else
-	// 		{
-	// 			player.addStat(AchievementHandler.KLEIN_BASIC, 1);
-	// 		}
-	// 	}
-	// }
-	
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
 	{

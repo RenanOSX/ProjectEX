@@ -1,4 +1,4 @@
-package moze_intel.projecte.gameObjs.items.itemBlocks;
+package moze_intel.projecte.gameObjs.blocks;
 
 import moze_intel.projecte.utils.AchievementHandler;
 import net.minecraft.block.Block;

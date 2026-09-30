@@ -79,7 +79,6 @@ public class PhiloStone
 		IRecipe recipe;
 
 
-		//GameRegistry.addRecipe(new RecipeShapelessHidden(output, philosStone, input, input, input, input, input, input, input, new ItemStack(Items.coal, 1, OreDictionary.WILDCARD_VALUE)));
 		public AddRecipeAction(IItemStack output, IItemStack input)
 		{
 			this.output = MineTweakerMC.getItemStack(output);

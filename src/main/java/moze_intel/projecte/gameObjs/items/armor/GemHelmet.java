@@ -7,7 +7,6 @@ import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.handlers.PlayerTimers;
 import moze_intel.projecte.utils.ChatHelper;
 import moze_intel.projecte.utils.ClientKeyHelper;
-import moze_intel.projecte.utils.EnumArmorType;
 import moze_intel.projecte.utils.PEKeybind;
 import moze_intel.projecte.utils.PlayerHelper;
 import net.minecraft.block.Block;

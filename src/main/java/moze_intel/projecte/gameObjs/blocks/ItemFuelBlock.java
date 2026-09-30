@@ -1,4 +1,4 @@
-package moze_intel.projecte.gameObjs.items.itemBlocks;
+package moze_intel.projecte.gameObjs.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;

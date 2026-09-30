@@ -1,4 +1,4 @@
-package moze_intel.projecte.utils;
+package moze_intel.projecte.gameObjs.items.armor;
 
 public enum EnumArmorType
 {

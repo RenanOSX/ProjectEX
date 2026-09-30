@@ -1,4 +1,4 @@
-package moze_intel.projecte.gameObjs.items.itemBlocks;
+package moze_intel.projecte.gameObjs.blocks;
 
 import moze_intel.projecte.utils.AchievementHandler;
 import net.minecraft.block.Block;
@@ -7,9 +7,9 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemCollectorBlock extends ItemBlock
+public class ItemAlchemyChestBlock extends ItemBlock
 {
-	public ItemCollectorBlock(Block block)
+	public ItemAlchemyChestBlock(Block block)
 	{
 		super(block);
 	}
@@ -19,7 +19,7 @@ public class ItemCollectorBlock extends ItemBlock
 	{
 		if (world != null)
 		{
-			player.addStat(AchievementHandler.COLLECTOR, 1);
+			player.addStat(AchievementHandler.ALCH_CHEST, 1);
 		}
 	}
 }

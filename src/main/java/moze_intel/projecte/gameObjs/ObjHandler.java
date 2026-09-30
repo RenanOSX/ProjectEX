@@ -63,16 +63,16 @@ import moze_intel.projecte.gameObjs.items.armor.GemFeet;
 import moze_intel.projecte.gameObjs.items.armor.GemHelmet;
 import moze_intel.projecte.gameObjs.items.armor.GemLegs;
 import moze_intel.projecte.gameObjs.items.armor.RMArmor;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemAlchemyChestBlock;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemCollectorBlock;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemCondenserBlock;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemDMFurnaceBlock;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemFuelBlock;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemMatterBlock;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemPowerFlowerBlock;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemRMFurnaceBlock;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemRelayBlock;
-import moze_intel.projecte.gameObjs.items.itemBlocks.ItemTransmutationBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemAlchemyChestBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemCollectorBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemCondenserBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemDMFurnaceBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemFuelBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemMatterBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemPowerFlowerBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemRMFurnaceBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemRelayBlock;
+import moze_intel.projecte.gameObjs.blocks.ItemTransmutationBlock;
 import moze_intel.projecte.gameObjs.items.itemEntities.FireProjectile;
 import moze_intel.projecte.gameObjs.items.itemEntities.LavaOrb;
 import moze_intel.projecte.gameObjs.items.itemEntities.LensExplosive;
@@ -119,7 +119,7 @@ import moze_intel.projecte.gameObjs.tiles.InterdictionTile;
 import moze_intel.projecte.gameObjs.tiles.RMFurnaceTile;
 import moze_intel.projecte.gameObjs.tiles.RelayTile;
 import moze_intel.projecte.utils.Constants;
-import moze_intel.projecte.utils.EnumArmorType;
+import moze_intel.projecte.gameObjs.items.armor.EnumArmorType;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -591,11 +591,6 @@ public class ObjHandler
 		{
 			GameRegistry.addRecipe(new ItemStack(tome), "HML", "KBK", "LMH", 'L', new ItemStack(covalence, 1, 0), 'M', new ItemStack(covalence, 1, 1), 'H', new ItemStack(covalence, 1, 2), 'B', Items.book, 'K', new ItemStack(kleinStars, 1, 5));
 		}
-
-		//Manual
-		//GameRegistry.addShapelessRecipe(new ItemStack(manual, 1, 0), Items.book, new ItemStack(covalence, 1, 0));
-		//GameRegistry.addShapelessRecipe(new ItemStack(manual, 1, 0), Items.book, new ItemStack(covalence, 1, 1));
-		//GameRegistry.addShapelessRecipe(new ItemStack(manual, 1, 0), Items.book, new ItemStack(covalence, 1, 2));
 
 		//TransmutationTablet
 		GameRegistry.addRecipe(new ItemStack(transmutationTablet), "DSD", "STS", "DSD", 'D', new ItemStack(matterBlock, 1, 0), 'S', Blocks.stone, 'T', transmuteStone);

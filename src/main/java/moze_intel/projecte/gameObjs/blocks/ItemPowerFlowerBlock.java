@@ -1,4 +1,4 @@
-package moze_intel.projecte.gameObjs.items.itemBlocks;
+package moze_intel.projecte.gameObjs.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

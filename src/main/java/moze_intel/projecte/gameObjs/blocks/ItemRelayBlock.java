@@ -1,4 +1,4 @@
-package moze_intel.projecte.gameObjs.items.itemBlocks;
+package moze_intel.projecte.gameObjs.blocks;
 
 import moze_intel.projecte.utils.AchievementHandler;
 import net.minecraft.block.Block;
@@ -7,9 +7,9 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemTransmutationBlock extends ItemBlock
+public class ItemRelayBlock extends ItemBlock
 {
-	public ItemTransmutationBlock(Block block)
+	public ItemRelayBlock(Block block)
 	{
 		super(block);
 	}
@@ -19,7 +19,8 @@ public class ItemTransmutationBlock extends ItemBlock
 	{
 		if (world != null)
 		{
-			player.addStat(AchievementHandler.TRANSMUTATION, 1);
+			player.addStat(AchievementHandler.RELAY, 1);
 		}
 	}
 }
+

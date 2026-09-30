@@ -8,8 +8,8 @@ import moze_intel.projecte.api.item.IModeChanger;
 import moze_intel.projecte.api.item.IProjectileShooter;
 import moze_intel.projecte.gameObjs.entity.EntityFireProjectile;
 import moze_intel.projecte.gameObjs.entity.EntitySWRGProjectile;
-import moze_intel.projecte.gameObjs.items.IFireProtector;
-import moze_intel.projecte.gameObjs.items.IFlightProvider;
+import moze_intel.projecte.api.item.IFireProtector;
+import moze_intel.projecte.api.item.IFlightProvider;
 import moze_intel.projecte.gameObjs.items.ItemPE;
 import moze_intel.projecte.utils.PlayerHelper;
 import moze_intel.projecte.utils.WorldHelper;
@@ -254,7 +254,6 @@ public class Arcana extends ItemPE implements IBauble, IModeChanger, IFlightProv
 			case 3: // swrg
 				EntitySWRGProjectile lightning = new EntitySWRGProjectile(world, player);
 				world.spawnEntityInWorld(lightning);
-				// world.playSoundAtEntity(player, "projecte:item.pewindmagic", 1.0F, 1.0F);
 				break;
 		}
 		
