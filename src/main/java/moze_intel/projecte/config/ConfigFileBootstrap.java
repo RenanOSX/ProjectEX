@@ -18,6 +18,11 @@ public final class ConfigFileBootstrap
 
 	public static boolean bootstrap(File config, String version, String staleMessage, DefaultWriter writer)
 	{
+		if (config.getParentFile() != null)
+		{
+			config.getParentFile().mkdirs();
+		}
+
 		if (!config.exists())
 		{
 			try

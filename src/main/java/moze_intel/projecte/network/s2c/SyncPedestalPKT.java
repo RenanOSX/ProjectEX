@@ -52,6 +52,11 @@ public class SyncPedestalPKT implements IMessage
 		@Override
 		public IMessage onMessage(final SyncPedestalPKT message, MessageContext ctx)
 		{
+			if (Minecraft.getMinecraft().theWorld == null)
+			{
+				return null;
+			}
+
 			TileEntity te = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
 
 			if (te instanceof DMPedestalTile)

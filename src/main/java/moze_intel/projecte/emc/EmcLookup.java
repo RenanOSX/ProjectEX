@@ -154,9 +154,14 @@ public final class EmcLookup
 		{
 			for (Map.Entry<Integer, Integer> entry : enchants.entrySet())
 			{
+				if (entry.getKey() == null || entry.getKey() < 0 || entry.getKey() >= Enchantment.enchantmentsList.length)
+				{
+					continue;
+				}
+
 				Enchantment ench = Enchantment.enchantmentsList[entry.getKey()];
 
-				if (ench.getWeight() == 0)
+				if (ench == null || ench.getWeight() == 0)
 				{
 					continue;
 				}
@@ -170,7 +175,8 @@ public final class EmcLookup
 
 	public static long getKleinStarMaxEmc(ItemStack stack)
 	{
-		return Constants.MAX_KLEIN_EMC[stack.getItemDamage()];
+		int damage = Math.max(0, Math.min(stack.getItemDamage(), Constants.MAX_KLEIN_EMC.length - 1));
+		return Constants.MAX_KLEIN_EMC[damage];
 	}
 
 	public static long getStoredEMCBonus(ItemStack stack) {

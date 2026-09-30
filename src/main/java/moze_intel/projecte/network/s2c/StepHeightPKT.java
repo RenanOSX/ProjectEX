@@ -34,6 +34,10 @@ public class StepHeightPKT implements IMessage
 		@Override
 		public IMessage onMessage(final StepHeightPKT message, MessageContext ctx)
 		{
+			if (Minecraft.getMinecraft().thePlayer == null)
+			{
+				return null;
+			}
 			Minecraft.getMinecraft().thePlayer.stepHeight = message.value;
 			return null;
 		}

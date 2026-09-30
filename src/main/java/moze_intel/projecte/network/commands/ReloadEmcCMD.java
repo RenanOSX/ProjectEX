@@ -5,6 +5,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import moze_intel.projecte.config.CustomEMCParser;
 import moze_intel.projecte.emc.EMCMapper;
 import moze_intel.projecte.network.PacketHandler;
+import moze_intel.projecte.playerData.TransmutationOffline;
 import moze_intel.projecte.server.TileEntityHandler;
 
 public class ReloadEmcCMD extends ProjectEBaseCMD
@@ -30,6 +31,7 @@ public class ReloadEmcCMD extends ProjectEBaseCMD
 		CustomEMCParser.readUserData();
 		EMCMapper.map();
 		TileEntityHandler.checkAllCondensers();
+		TransmutationOffline.cleanAll();
 
 		sender.addChatMessage(new ChatComponentTranslation("pe.command.reload.success"));
 

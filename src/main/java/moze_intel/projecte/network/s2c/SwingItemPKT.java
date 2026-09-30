@@ -21,6 +21,10 @@ public class SwingItemPKT implements IMessage
 		@Override
 		public IMessage onMessage(SwingItemPKT message, MessageContext ctx)
 		{
+			if (Minecraft.getMinecraft().thePlayer == null)
+			{
+				return null;
+			}
 			Minecraft.getMinecraft().thePlayer.swingItem();
 			return null;
 		}

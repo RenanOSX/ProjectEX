@@ -37,6 +37,10 @@ public class SyncBagDataPKT implements IMessage
 		@Override
 		public IMessage onMessage(final SyncBagDataPKT message, MessageContext ctx)
 		{
+			if (message.nbt == null)
+			{
+				return null;
+			}
 			PECore.proxy.getClientBagProps().readFromPacket(message.nbt);
 			PELogger.logDebug("** RECEIVED BAGS CLIENTSIDE **");
 

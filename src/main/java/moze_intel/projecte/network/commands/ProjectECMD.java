@@ -93,6 +93,10 @@ public class ProjectECMD extends ProjectEBaseCMD
 				sendError(sender, new ChatComponentTranslation("commands.generic.permission"));
 			}
 		}
+		else
+		{
+			sendError(sender, new ChatComponentTranslation("pe.command.main.usage"));
+		}
 
 	}
 

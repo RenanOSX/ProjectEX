@@ -44,12 +44,19 @@ public class ClearKnowledgeCMD extends ProjectEBaseCMD
 		{
 			for (Object obj : sender.getEntityWorld().playerEntities)
 			{
+				if (!(obj instanceof EntityPlayer))
+				{
+					continue;
+				}
 				EntityPlayer player = (EntityPlayer) obj;
-				
+
 				if (player.getCommandSenderName().equalsIgnoreCase(params[0]))
 				{
 					Transmutation.clearKnowledge(player);
-					PacketHandler.sendTo(new KnowledgeClearPKT(), (EntityPlayerMP) player);
+					if (player instanceof EntityPlayerMP)
+					{
+						PacketHandler.sendTo(new KnowledgeClearPKT(), (EntityPlayerMP) player);
+					}
 					sendSuccess(sender, new ChatComponentTranslation("pe.command.clearknowledge.success", player.getCommandSenderName()));
 					
 					if (!player.getCommandSenderName().equals(sender.getCommandSenderName()))

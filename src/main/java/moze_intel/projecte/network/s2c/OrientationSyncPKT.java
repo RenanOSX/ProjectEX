@@ -50,6 +50,11 @@ public class OrientationSyncPKT implements IMessage
 		@Override
 		public IMessage onMessage(OrientationSyncPKT pkt, MessageContext ctx)
 		{
+			if (Minecraft.getMinecraft().theWorld == null)
+			{
+				return null;
+			}
+
 			TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(pkt.x, pkt.y, pkt.z);
 
 			if (tile instanceof TileEmcDirection)

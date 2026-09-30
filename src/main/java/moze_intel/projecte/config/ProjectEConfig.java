@@ -155,7 +155,13 @@ public final class ProjectEConfig
 
 		String[] maxKleinStarsEMC = config.getStringList("maxKleinStarsEMC", "items", new String[] {"50000", "200000", "800000", "3200000", "12800000", "51200000"}, "The maximum EMC storage for each tier of Klein Star. Must contain exactly 6 values corresponding to tiers Ein through Omega.");
 		if (maxKleinStarsEMC.length == 6) {
-			for (int i = 0; i < 6; i++) Constants.MAX_KLEIN_EMC[i] = Long.parseLong(maxKleinStarsEMC[i]);
+			for (int i = 0; i < 6; i++) {
+				try {
+					Constants.MAX_KLEIN_EMC[i] = Long.parseLong(maxKleinStarsEMC[i]);
+				} catch (NumberFormatException e) {
+					PELogger.logWarn("Skipping malformed value in config array!", e);
+				}
+			}
 		}
 		
 		double[] collectorLightVals = config.get("blocks", "collectorLightVals", new double[] {0.4375, 0.6875, 1.0, 1.0}, "The light level efficiency factor for Collectors. Must contain exactly 4 values for MK1, MK2, MK3, and MK4.").getDoubleList();
@@ -175,12 +181,24 @@ public final class ProjectEConfig
 	{
 		String[] collectorMkMax = config.getStringList("collectorMkMax", "blocks", new String[] {"10000", "30000", "60000", "120000"}, "The maximum EMC storage capacity for the Energy Collector MK1-MK4. Must contain exactly 4 values.");
 		if (collectorMkMax.length == 4) {
-			for (int i = 0; i < 4; i++) Constants.COLLECTOR_MK_MAX[i] = Long.parseLong(collectorMkMax[i]);
+			for (int i = 0; i < 4; i++) {
+				try {
+					Constants.COLLECTOR_MK_MAX[i] = Long.parseLong(collectorMkMax[i]);
+				} catch (NumberFormatException e) {
+					PELogger.logWarn("Skipping malformed value in config array!", e);
+				}
+			}
 		}
 
 		String[] collectorMkGen = config.getStringList("collectorMkGen", "blocks", new String[] {"4", "12", "40", "80"}, "The amount of EMC generated per tick (at maximum light) by the Energy Collector MK1-MK4. Must contain exactly 4 values.");
 		if (collectorMkGen.length == 4) {
-			for (int i = 0; i < 4; i++) Constants.COLLECTOR_MK_GEN[i] = Long.parseLong(collectorMkGen[i]);
+			for (int i = 0; i < 4; i++) {
+				try {
+					Constants.COLLECTOR_MK_GEN[i] = Long.parseLong(collectorMkGen[i]);
+				} catch (NumberFormatException e) {
+					PELogger.logWarn("Skipping malformed value in config array!", e);
+				}
+			}
 		}
 	}
 
@@ -203,7 +221,13 @@ public final class ProjectEConfig
 		
 		String[] relayMkMax = config.getStringList("relayMkMax", "blocks", new String[] {"100000", "1000000", "10000000"}, "The maximum EMC storage capacity for the Anti-Matter Relay MK1-MK3. Must contain exactly 3 values.");
 		if (relayMkMax.length == 3) {
-			for (int i = 0; i < 3; i++) Constants.RELAY_MK_MAX[i] = Long.parseLong(relayMkMax[i]);
+			for (int i = 0; i < 3; i++) {
+				try {
+					Constants.RELAY_MK_MAX[i] = Long.parseLong(relayMkMax[i]);
+				} catch (NumberFormatException e) {
+					PELogger.logWarn("Skipping malformed value in config array!", e);
+				}
+			}
 		}
 	}
 

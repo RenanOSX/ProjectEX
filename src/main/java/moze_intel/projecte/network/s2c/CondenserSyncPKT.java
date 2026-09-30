@@ -53,13 +53,18 @@ public class CondenserSyncPKT implements IMessage
 		@Override
 		public IMessage onMessage(CondenserSyncPKT pkt, MessageContext ctx)
 		{
+			if (Minecraft.getMinecraft().theWorld == null)
+			{
+				return null;
+			}
+
 			TileEntity tile = Minecraft.getMinecraft().theWorld.getTileEntity(pkt.x, pkt.y, pkt.z);
 
 			if (tile == null)
 			{
 				PELogger.logFatal("NULL tile entity reference in condenser update packet! Please report to dev!");
 			}
-			else
+			else if (tile instanceof CondenserTile)
 			{
 				CondenserTile cond = (CondenserTile) tile;
 				cond.displayEmc = pkt.displayEmc;
