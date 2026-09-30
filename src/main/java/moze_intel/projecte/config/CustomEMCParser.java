@@ -50,11 +50,9 @@ public final class CustomEMCParser
 		}
 
 		Entry entry;
-		LineNumberReader reader = null;
 		userValues.clear();
-		try
+		try (LineNumberReader reader = new LineNumberReader(new FileReader(CONFIG)))
 		{
-			reader = new LineNumberReader(new FileReader(CONFIG));
 
 			while ((entry = getNextEntry(reader)) != null)
 			{
@@ -106,10 +104,6 @@ public final class CustomEMCParser
 		catch (Exception e)
 		{
 			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(reader);
 		}
 	}
 
@@ -247,12 +241,9 @@ public final class CustomEMCParser
 	private static List<String> readAllFile()
 	{
 		List<String> list = Lists.newArrayList();
-		BufferedReader reader = null;
 
-		try
+		try (BufferedReader reader = new BufferedReader(new FileReader(CONFIG)))
 		{
-			reader = new BufferedReader(new FileReader(CONFIG));
-
 			String s;
 
 			while ((s = reader.readLine()) != null)
@@ -266,10 +257,6 @@ public final class CustomEMCParser
 		{
 			e.printStackTrace();
 		}
-		finally
-		{
-			FileHelper.closeStream(reader);
-		}
 
 		return Lists.newArrayList();
 	}
@@ -277,12 +264,9 @@ public final class CustomEMCParser
 	private static List<Entry> getAllEntries()
 	{
 		List<Entry> list = Lists.newArrayList();
-		LineNumberReader reader = null;
 
-		try
+		try (LineNumberReader reader = new LineNumberReader(new FileReader(CONFIG)))
 		{
-			reader = new LineNumberReader(new FileReader(CONFIG));
-
 			Entry e;
 
 			while ((e = getNextEntry(reader)) != null)
@@ -295,10 +279,6 @@ public final class CustomEMCParser
 		catch (IOException e)
 		{
 			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(reader);
 		}
 
 		return Lists.newArrayList();
@@ -389,12 +369,8 @@ public final class CustomEMCParser
 
 	private static void writeDefaultFile()
 	{
-		PrintWriter writer = null;
-
-		try
+		try (PrintWriter writer = new PrintWriter(CONFIG))
 		{
-			writer = new PrintWriter(CONFIG);
-
 			writer.println(VERSION);
 			writer.println("Custom EMC file");
 			writer.println("This file is used for custom EMC registration, it is recommended that you do not modify it manually.");
@@ -403,10 +379,6 @@ public final class CustomEMCParser
 		catch (IOException e)
 		{
 			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(writer);
 		}
 	}
 
