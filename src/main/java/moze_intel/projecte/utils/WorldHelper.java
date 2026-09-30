@@ -60,7 +60,12 @@ import net.minecraftforge.event.world.ExplosionEvent;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Helper class for anything that touches a World.

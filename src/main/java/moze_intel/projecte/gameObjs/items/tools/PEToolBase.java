@@ -506,7 +506,7 @@ public abstract class PEToolBase extends ItemMode
 			int offset = ((int) Math.pow(2, 2 + charge));
 
 			AxisAlignedBB bBox = player.boundingBox.expand(offset, offset / 2, offset);
-			List<Entity> list = world.getEntitiesWithinAABB(IShearable.class, bBox);
+			List<Entity> list = (List<Entity>) (List<?>) world.getEntitiesWithinAABB(IShearable.class, bBox);
 
 			List<ItemStack> drops = Lists.newArrayList();
 

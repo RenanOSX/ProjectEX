@@ -11,7 +11,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-import java.awt.*;
+import java.awt.Rectangle;
 import java.util.Map.Entry;
 
 public class NEIWorldTransmuteHandler extends TemplateRecipeHandler

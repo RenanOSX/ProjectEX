@@ -13,6 +13,7 @@ import moze_intel.projecte.utils.MetaBlock;
 import moze_intel.projecte.utils.WorldTransmutations;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 
@@ -168,7 +169,7 @@ public class TransmutationProxyImpl implements ITransmutationProxy
     @SuppressWarnings("unchecked")
     private EntityPlayer findOnlinePlayer(UUID playerUUID)
     {
-        for (EntityPlayer player : (List<EntityPlayer>) MinecraftServer.getServer().getConfigurationManager().playerEntityList)
+        for (EntityPlayerMP player : MinecraftServer.getServer().getConfigurationManager().playerEntityList)
         {
             if (player.getUniqueID().equals(playerUUID))
             {

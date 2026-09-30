@@ -25,7 +25,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
 
