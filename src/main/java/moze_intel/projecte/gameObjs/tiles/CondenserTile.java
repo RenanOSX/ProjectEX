@@ -3,7 +3,7 @@ package moze_intel.projecte.gameObjs.tiles;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import moze_intel.projecte.api.tile.IEmcAcceptor;
 import moze_intel.projecte.gameObjs.ObjHandler;
-import moze_intel.projecte.handlers.TileEntityHandler;
+import moze_intel.projecte.server.TileEntityHandler;
 import moze_intel.projecte.network.PacketHandler;
 import moze_intel.projecte.network.s2c.CondenserSyncPKT;
 import moze_intel.projecte.utils.Constants;

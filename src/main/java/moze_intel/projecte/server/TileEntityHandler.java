@@ -1,4 +1,4 @@
-package moze_intel.projecte.handlers;
+package moze_intel.projecte.server;
 
 import com.google.common.collect.Sets;
 import moze_intel.projecte.gameObjs.tiles.CondenserTile;

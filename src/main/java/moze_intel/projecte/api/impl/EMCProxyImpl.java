@@ -1,4 +1,4 @@
-package moze_intel.projecte.impl;
+package moze_intel.projecte.api.impl;
 
 import com.google.common.base.Preconditions;
 import cpw.mods.fml.common.Loader;

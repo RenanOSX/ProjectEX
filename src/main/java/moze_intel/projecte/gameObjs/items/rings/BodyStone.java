@@ -7,7 +7,7 @@ import cpw.mods.fml.common.Optional;
 import moze_intel.projecte.api.item.IPedestalItem;
 import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.gameObjs.tiles.DMPedestalTile;
-import moze_intel.projecte.handlers.PlayerTimers;
+import moze_intel.projecte.server.PlayerTimers;
 import moze_intel.projecte.utils.MathUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

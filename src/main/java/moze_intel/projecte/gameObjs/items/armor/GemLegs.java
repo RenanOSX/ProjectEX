@@ -2,7 +2,7 @@ package moze_intel.projecte.gameObjs.items.armor;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import moze_intel.projecte.handlers.PlayerChecks;
+import moze_intel.projecte.server.PlayerChecks;
 import moze_intel.projecte.utils.WorldHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

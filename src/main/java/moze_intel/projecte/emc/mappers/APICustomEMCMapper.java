@@ -2,7 +2,7 @@ package moze_intel.projecte.emc.mappers;
 
 import moze_intel.projecte.emc.NormalizedSimpleStack;
 import moze_intel.projecte.emc.collector.IMappingCollector;
-import moze_intel.projecte.impl.ConversionProxyImpl;
+import moze_intel.projecte.api.impl.ConversionProxyImpl;
 import moze_intel.projecte.utils.PELogger;
 
 import com.google.common.collect.Maps;

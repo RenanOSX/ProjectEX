@@ -1,4 +1,4 @@
-package moze_intel.projecte.impl;
+package moze_intel.projecte.api.impl;
 
 import moze_intel.projecte.api.proxy.IConversionProxy;
 import moze_intel.projecte.emc.IngredientMap;

@@ -11,7 +11,7 @@ import moze_intel.projecte.config.ProjectEConfig;
 import moze_intel.projecte.api.item.IFlightProvider;
 import moze_intel.projecte.gameObjs.items.ItemPE;
 import moze_intel.projecte.gameObjs.tiles.DMPedestalTile;
-import moze_intel.projecte.handlers.PlayerChecks;
+import moze_intel.projecte.server.PlayerChecks;
 import moze_intel.projecte.utils.MathUtils;
 import moze_intel.projecte.utils.WorldHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;

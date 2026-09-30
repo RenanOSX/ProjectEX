@@ -1,4 +1,4 @@
-package moze_intel.projecte.impl;
+package moze_intel.projecte.api.impl;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import moze_intel.projecte.utils.PELogger;
