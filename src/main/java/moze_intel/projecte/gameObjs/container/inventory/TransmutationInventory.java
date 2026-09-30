@@ -46,18 +46,23 @@ public class TransmutationInventory implements IInventory
 	{
 		this.player = player;
 	}
-	
-	public void handleKnowledge(ItemStack stack)
+
+	private static void normalizeStackForKnowledge(ItemStack stack)
 	{
 		if (stack.stackSize > 1)
 		{
 			stack.stackSize = 1;
 		}
-		
+
 		if (!stack.getHasSubtypes() && stack.getMaxDamage() != 0 && stack.getItemDamage() != 0)
 		{
 			stack.setItemDamage(0);
 		}
+	}
+	
+	public void handleKnowledge(ItemStack stack)
+	{
+		normalizeStackForKnowledge(stack);
 		
 		if (!Transmutation.hasKnowledgeForStack(stack, player))
 		{
@@ -88,15 +93,7 @@ public class TransmutationInventory implements IInventory
 
 	public void handleUnlearn(ItemStack stack)
 	{
-		if (stack.stackSize > 1)
-		{
-			stack.stackSize = 1;
-		}
-
-		if (!stack.getHasSubtypes() && stack.getMaxDamage() != 0 && stack.getItemDamage() != 0)
-		{
-			stack.setItemDamage(0);
-		}
+		normalizeStackForKnowledge(stack);
 		
 		if (Transmutation.hasKnowledgeForStack(stack, player))
 		{
