@@ -6,19 +6,15 @@ import moze_intel.projecte.utils.Constants;
 import moze_intel.projecte.utils.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.Map;
 
-public class CollectorTile extends TileEmc implements IEmcProvider
+public class CollectorTile extends AbstractTieredEmcTile implements IEmcProvider
 {
 	private long emcGen;
-	private int tier;
-	
+
 	public CollectorTile()
 	{
 		super();
@@ -26,56 +22,31 @@ public class CollectorTile extends TileEmc implements IEmcProvider
 
 	public CollectorTile(int tier)
 	{
-		this.tier = tier;
-		setupConfig();
-	}
-	
-	@Override
-	public void validate()
-	{
-		super.validate();
+		super(tier);
 	}
 
 	@Override
-	public Packet getDescriptionPacket()
-	{
-		NBTTagCompound tag = new NBTTagCompound();
-		tag.setInteger("Tier", tier);
-		tag.setDouble("EMC", this.getStoredEmc());
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-	{
-		this.readFromNBT(pkt.func_148857_g());
-	}
-
-	private void setupConfig()
+	protected void setupConfig()
 	{
 		// Default to MK1 if tier is out of bounds (shouldn't happen if config matches)
 		int tierIndex = Math.max(0, Math.min(tier - 1, Constants.COLLECTOR_MK_MAX.length - 1));
-		
+
 		this.setMaximumEMC(Constants.COLLECTOR_MK_MAX[tierIndex]);
 		this.emcGen = Constants.COLLECTOR_MK_GEN[tierIndex];
 	}
 
-	private void initTier()
+	@Override
+	protected boolean isOwnBlock(Block block)
 	{
-		Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
-		if (block instanceof Collector)
-		{
-			this.tier = ((Collector) block).getTier();
-			setupConfig();
-		}
-		else
-		{
-			// The block is not a Collector, this TileEntity is invalid.
-			// This can happen if the block was removed but the TE is still updating.
-			this.invalidate();
-		}
+		return block instanceof Collector;
 	}
-	
+
+	@Override
+	protected int getBlockTier(Block block)
+	{
+		return ((Collector) block).getTier();
+	}
+
 	@Override
 	public void updateEntity()
 	{
@@ -121,18 +92,6 @@ public class CollectorTile extends TileEmc implements IEmcProvider
 			return 16;
 		}
 		return worldObj.getBlockLightValue(xCoord, yCoord + 1, zCoord) + 1;
-	}
-	
-	@Override
-	public void readFromNBT(NBTTagCompound nbt)
-	{
-		super.readFromNBT(nbt);
-		
-		if (nbt.hasKey("Tier"))
-		{
-			this.tier = nbt.getInteger("Tier");
-			setupConfig();
-		}
 	}
 	
 	@Override
