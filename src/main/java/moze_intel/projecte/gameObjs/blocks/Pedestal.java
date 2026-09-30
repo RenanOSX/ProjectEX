@@ -34,12 +34,18 @@ public class Pedestal extends Block {
 
     public void breakBlock(World world, int x, int y, int z, Block block, int meta)
     {
-        DMPedestalTile tile = ((DMPedestalTile) world.getTileEntity(x, y, z));
-        if (tile.getItemStack() != null)
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if (!(tile instanceof DMPedestalTile))
         {
-            WorldHelper.spawnEntityItem(world, tile.getItemStack().copy(), x, y, z);
+            super.breakBlock(world, x, y, z, block, meta);
+            return;
         }
-        tile.invalidate();
+        DMPedestalTile pedestal = (DMPedestalTile) tile;
+        if (pedestal.getItemStack() != null)
+        {
+            WorldHelper.spawnEntityItem(world, pedestal.getItemStack().copy(), x, y, z);
+        }
+        pedestal.invalidate();
         super.breakBlock(world, x, y, z, block, meta);
     }
 
@@ -47,20 +53,25 @@ public class Pedestal extends Block {
     {
         if (!world.isRemote)
         {
-            DMPedestalTile tile = ((DMPedestalTile) world.getTileEntity(x, y, z));
+            TileEntity tile = world.getTileEntity(x, y, z);
+            if (!(tile instanceof DMPedestalTile))
+            {
+                return false;
+            }
+            DMPedestalTile pedestal = (DMPedestalTile) tile;
             if (player.isSneaking())
             {
                 player.openGui(PECore.instance, Constants.PEDESTAL_GUI, world, x, y, z);
             }
             else
             {
-                if (tile.getItemStack() != null && tile.getItemStack().getItem() instanceof IPedestalItem)
+                if (pedestal.getItemStack() != null && pedestal.getItemStack().getItem() instanceof IPedestalItem)
                 {
-                    tile.setActive(!tile.getActive());
+                    pedestal.setActive(!pedestal.getActive());
                 }
-                PELogger.logDebug("Pedestal: " + (tile.getActive() ? "ON" : "OFF"));
+                PELogger.logDebug("Pedestal: " + (pedestal.getActive() ? "ON" : "OFF"));
             }
-            PacketHandler.sendToAllAround(new SyncPedestalPKT(tile), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 32));
+            PacketHandler.sendToAllAround(new SyncPedestalPKT(pedestal), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 32));
         }
         return true;
     }

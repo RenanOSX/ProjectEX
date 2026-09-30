@@ -257,7 +257,11 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 		for (int i = 0; i < list.tagCount(); i++)
 		{
 			NBTTagCompound subNBT = list.getCompoundTagAt(i);
-			inventory[subNBT.getByte("Slot")] = ItemStack.loadItemStackFromNBT(subNBT);
+			int slot = subNBT.getByte("Slot");
+			if (slot >= 0 && slot < inventory.length)
+			{
+				inventory[slot] = ItemStack.loadItemStackFromNBT(subNBT);
+			}
 		}
 	}
 	

@@ -39,6 +39,10 @@ public class EternalDensityContainer extends Container
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotIndex)
 	{
 		Slot slot = getSlot(slotIndex);
+		if (slot == null || !slot.getHasStack())
+		{
+			return null;
+		}
 		if (slotIndex > 8)
 		{
 			int index = inventory.findFirstEmptySlot();

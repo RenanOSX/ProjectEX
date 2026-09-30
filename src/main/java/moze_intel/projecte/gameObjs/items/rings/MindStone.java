@@ -136,6 +136,10 @@ public class MindStone extends RingToggle implements IPedestalItem
 	
 	private int getStoredXP(ItemStack stack)
 	{
+		if (!stack.hasTagCompound())
+		{
+			stack.setTagCompound(new NBTTagCompound());
+		}
 		return stack.stackTagCompound.getInteger("StoredXP");
 	}
 	

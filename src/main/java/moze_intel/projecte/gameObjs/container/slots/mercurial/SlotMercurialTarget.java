@@ -23,6 +23,10 @@ public class SlotMercurialTarget extends Slot
 	@Override
 	public boolean isItemValid(ItemStack stack)
 	{
+		if (stack == null || stack.getItem() == null)
+		{
+			return false;
+		}
 		Block block = Block.getBlockFromItem(stack.getItem());
 		return block != null && !(block instanceof ITileEntityProvider) && EMCHelper.doesItemHaveEmc(stack);
 	}

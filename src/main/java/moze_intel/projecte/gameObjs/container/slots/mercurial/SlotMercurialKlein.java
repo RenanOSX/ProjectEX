@@ -15,6 +15,6 @@ public class SlotMercurialKlein extends Slot
 	@Override
 	public boolean isItemValid(ItemStack stack)
 	{
-		return stack.getItem() instanceof KleinStar;
+		return stack != null && stack.getItem() instanceof KleinStar;
 	}
 }

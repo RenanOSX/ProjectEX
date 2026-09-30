@@ -198,6 +198,10 @@ player.addChatComponentMessage(new ChatComponentTranslation("pe.divining.avgemc"
 	@Override
 	public byte getMode(ItemStack stack)
 	{
+		if (!stack.hasTagCompound())
+		{
+			stack.setTagCompound(new NBTTagCompound());
+		}
 		return stack.stackTagCompound.getByte("Mode");
 	}
 
