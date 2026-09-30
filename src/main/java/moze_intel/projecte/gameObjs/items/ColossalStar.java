@@ -121,34 +121,4 @@ public class ColossalStar extends KleinStar
 			icons[i] = register.registerIcon(this.getTexture("stars", "colossal_star_"+(i + 1)));
 		}
 	}
-
-	// -- IItemEmc -- //
-
-	@Override
-	public long addEmc(ItemStack stack, long toAdd)
-	{
-		long add = Math.min(getMaximumEmc(stack) - getStoredEmc(stack), toAdd);
-		ItemPE.addEmcToStack(stack, add);
-		return add;
-	}
-
-	@Override
-	public long extractEmc(ItemStack stack, long toRemove)
-	{
-		long sub = Math.min(getStoredEmc(stack), toRemove);
-		ItemPE.removeEmc(stack, sub);
-		return sub;
-	}
-
-	@Override
-	public long getStoredEmc(ItemStack stack)
-	{
-		return ItemPE.getEmc(stack);
-	}
-
-	@Override
-	public long getMaximumEmc(ItemStack stack)
-	{
-		return EMCHelper.getKleinStarMaxEmc(stack);
-	}
 }
