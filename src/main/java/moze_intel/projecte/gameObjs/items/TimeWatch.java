@@ -103,28 +103,29 @@ public class TimeWatch extends ItemCharge implements IModeChanger, IBauble, IPed
 		}
 
 		byte timeControl = getTimeBoost(stack);
+		int charge = this.getCharge(stack);
 
 		if (world.getGameRules().getGameRuleBooleanValue("doDaylightCycle")) {
 			if (timeControl == 1)
             {
-                if (world.getWorldTime() + ((getCharge(stack) + 1) * 4) > Long.MAX_VALUE)
+                if (world.getWorldTime() + ((charge + 1) * 4) > Long.MAX_VALUE)
                 {
                     world.setWorldTime(Long.MAX_VALUE);
                 }
                 else
                 {
-                    world.setWorldTime((world.getWorldTime() + ((getCharge(stack) + 1) * 4)));
+                    world.setWorldTime((world.getWorldTime() + ((charge + 1) * 4)));
                 }
             }
             else if (timeControl == 2)
             {
-                if (world.getWorldTime() - ((getCharge(stack) + 1) * 4) < 0)
+                if (world.getWorldTime() - ((charge + 1) * 4) < 0)
                 {
                     world.setWorldTime(0);
                 }
                 else
                 {
-                    world.setWorldTime((world.getWorldTime() - ((getCharge(stack) + 1) * 4)));
+                    world.setWorldTime((world.getWorldTime() - ((charge + 1) * 4)));
                 }
             }
 		}
@@ -135,14 +136,13 @@ public class TimeWatch extends ItemCharge implements IModeChanger, IBauble, IPed
 		}
 
 		EntityPlayer player = (EntityPlayer) entity;
-		long reqEmc = getEmcPerTick(this.getCharge(stack));
+		long reqEmc = getEmcPerTick(charge);
 		
 		if (!consumeFuel(player, stack, reqEmc, true))
 		{
 			return;
 		}
 		
-		int charge = this.getCharge(stack);
 		int bonusTicks = 0;
 		float mobSlowdown = 0;
 		

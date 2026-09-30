@@ -148,6 +148,11 @@ public final class EmcLookup
 	{
 		long result = 0;
 
+		if (!stack.isItemEnchanted())
+		{
+			return result;
+		}
+
 		Map<Integer, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
 
 		if (!enchants.isEmpty())

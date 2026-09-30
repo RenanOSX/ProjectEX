@@ -547,8 +547,9 @@ private ToolAOEHelper() {}
 				for (int z = (int) box.minZ; z <= box.maxZ; z++)
 				{
 					Block block = world.getBlock(x, y, z);
+					int meta = world.getBlockMetadata(x, y, z);
 
-					if (ItemHelper.isOre(block, world.getBlockMetadata(x, y, z)) && block.getBlockHardness(player.worldObj, x, y, z) != -1 && (tool.canHarvestBlock(block, stack) || ForgeHooks.canToolHarvestBlock(block, world.getBlockMetadata(x, y, z), stack)))
+					if (ItemHelper.isOre(block, meta) && block.getBlockHardness(player.worldObj, x, y, z) != -1 && (tool.canHarvestBlock(block, stack) || ForgeHooks.canToolHarvestBlock(block, meta, stack)))
 					{
 						WorldHelper.harvestVein(world, player, stack, new Coordinates(x, y, z), block, drops, 0);
 					}

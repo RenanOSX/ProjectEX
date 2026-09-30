@@ -9,6 +9,7 @@ import moze_intel.projecte.utils.PELogger;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -44,9 +45,10 @@ public class PowerFlowerRenderer extends TileEntitySpecialRenderer
 
         if (tile.getWorldObj() != null)
         {
-            if (tile.getWorldObj().getBlock(tile.xCoord, tile.yCoord, tile.zCoord) instanceof PowerFlower)
+            Block block = tile.getWorldObj().getBlock(tile.xCoord, tile.yCoord, tile.zCoord);
+            if (block instanceof PowerFlower)
             {
-                PowerFlower p = (PowerFlower) tile.getWorldObj().getBlock(tile.xCoord, tile.yCoord, tile.zCoord);
+                PowerFlower p = (PowerFlower) block;
                 tier = p.getTier();
             }
         }
