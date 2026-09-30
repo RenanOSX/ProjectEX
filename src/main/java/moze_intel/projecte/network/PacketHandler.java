@@ -63,41 +63,41 @@ public final class PacketHandler
 
 	public static void sendFragmentedEmcPacket(EntityPlayerMP player)
 	{
-		ArrayList<Object[]> list = Lists.newArrayList();
-		int counter = 0;
-
-		for (Map.Entry<SimpleStack, Long> entry : Maps.newLinkedHashMap(EMCMapper.emc).entrySet()) // Copy constructor to prevent race condition CME in SP
+		final EntityPlayerMP target = player;
+		int counter = sendFragmentedEmcPackets(new EmcPacketSender()
 		{
-			SimpleStack stack = entry.getKey();
-
-			if (stack == null)
+			@Override
+			public void send(SyncEmcPKT packet)
 			{
-				continue;
+				PacketHandler.sendTo(packet, target);
 			}
-
-			Object[] data = new Object[] {stack.id, stack.qnty, stack.damage, entry.getValue()};
-			list.add(data);
-
-			if (list.size() >= MAX_PKT_SIZE)
-			{
-				PacketHandler.sendTo(new SyncEmcPKT(counter, list), player);
-				list.clear();
-				counter++;
-			}
-		}
-
-		if (list.size() > 0)
-		{
-			PacketHandler.sendTo(new SyncEmcPKT(-1, list), player);
-			list.clear();
-			counter++;
-		}
+		});
 
 		PELogger.logInfo("Sent EMC data packets to: " + player.getCommandSenderName());
 		PELogger.logDebug("Total packets: " + counter);
 	}
 
 	public static void sendFragmentedEmcPacketToAll()
+	{
+		int counter = sendFragmentedEmcPackets(new EmcPacketSender()
+		{
+			@Override
+			public void send(SyncEmcPKT packet)
+			{
+				PacketHandler.sendToAll(packet);
+			}
+		});
+
+		PELogger.logInfo("Sent EMC data packets to all players.");
+		PELogger.logDebug("Total packets per player: " + counter);
+	}
+
+	private interface EmcPacketSender
+	{
+		void send(SyncEmcPKT packet);
+	}
+
+	private static int sendFragmentedEmcPackets(EmcPacketSender sender)
 	{
 		ArrayList<Object[]> list = Lists.newArrayList();
 		int counter = 0;
@@ -116,7 +116,7 @@ public final class PacketHandler
 
 			if (list.size() >= MAX_PKT_SIZE)
 			{
-				PacketHandler.sendToAll(new SyncEmcPKT(counter, list));
+				sender.send(new SyncEmcPKT(counter, list));
 				list.clear();
 				counter++;
 			}
@@ -124,13 +124,12 @@ public final class PacketHandler
 
 		if (list.size() > 0)
 		{
-			PacketHandler.sendToAll(new SyncEmcPKT(-1, list));
+			sender.send(new SyncEmcPKT(-1, list));
 			list.clear();
 			counter++;
 		}
 
-		PELogger.logInfo("Sent EMC data packets to all players.");
-		PELogger.logDebug("Total packets per player: " + counter);
+		return counter;
 	}
 
 	/**

@@ -7,8 +7,10 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ProjectECMD extends ProjectEBaseCMD
 {
@@ -20,6 +22,16 @@ public class ProjectECMD extends ProjectEBaseCMD
 	RemoveEmcCMD removeemccmd = new RemoveEmcCMD();
 	ResetEmcCMD resetemccmd = new ResetEmcCMD();
 	ClearKnowledgeCMD clearknowledgecmd = new ClearKnowledgeCMD();
+
+	private final Map<String, ProjectEBaseCMD> subCommandMap = new LinkedHashMap<String, ProjectEBaseCMD>();
+	{
+		subCommandMap.put("changelog", changelogcmd);
+		subCommandMap.put("clearknowledge", clearknowledgecmd);
+		subCommandMap.put("setemc", setemccmd);
+		subCommandMap.put("reloademc", reloademccmd);
+		subCommandMap.put("removeemc", removeemccmd);
+		subCommandMap.put("resetemc", resetemccmd);
+	}
 
 	@Override
 	public String getCommandName() 
@@ -68,66 +80,13 @@ public class ProjectECMD extends ProjectEBaseCMD
 
 		String subName = params[0].toLowerCase(Locale.ROOT);
 
-		if ("setemc".equals(subName))
+		ProjectEBaseCMD subCommand = subCommandMap.get(subName);
+
+		if (subCommand != null)
 		{
-			if (setemccmd.canCommandSenderUseCommand(sender))
+			if (subCommand.canCommandSenderUseCommand(sender))
 			{
-				setemccmd.processCommand(sender, relayparams);
-			}
-			else
-			{
-				sendError(sender, new ChatComponentTranslation("commands.generic.permission"));
-			}
-		}
-		else if ("resetemc".equals(subName))
-		{
-			if (resetemccmd.canCommandSenderUseCommand(sender))
-			{
-				resetemccmd.processCommand(sender, relayparams);
-			}
-			else
-			{
-				sendError(sender, new ChatComponentTranslation("commands.generic.permission"));
-			}
-		}
-		else if ("removeemc".equals(subName))
-		{
-			if (removeemccmd.canCommandSenderUseCommand(sender))
-			{
-				removeemccmd.processCommand(sender, relayparams);
-			}
-			else
-			{
-				sendError(sender, new ChatComponentTranslation("commands.generic.permission"));
-			}
-		}
-		else if ("reloademc".equals(subName))
-		{
-			if (reloademccmd.canCommandSenderUseCommand(sender))
-			{
-				reloademccmd.processCommand(sender, relayparams);
-			}
-			else
-			{
-				sendError(sender, new ChatComponentTranslation("commands.generic.permission"));
-			}
-		}
-		else if ("clearknowledge".equals(subName))
-		{
-			if (clearknowledgecmd.canCommandSenderUseCommand(sender))
-			{
-				clearknowledgecmd.processCommand(sender, relayparams);
-			}
-			else
-			{
-				sendError(sender, new ChatComponentTranslation("commands.generic.permission"));
-			}
-		}
-		else if ("changelog".equals(subName))
-		{
-			if (changelogcmd.canCommandSenderUseCommand(sender))
-			{
-				changelogcmd.processCommand(sender, relayparams);
+				subCommand.processCommand(sender, relayparams);
 			}
 			else
 			{
