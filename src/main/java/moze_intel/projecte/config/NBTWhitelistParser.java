@@ -23,53 +23,14 @@ public final class NBTWhitelistParser
 	public static void init()
 	{
 		CONFIG = new File(PECore.CONFIG_DIR, "nbt_whitelist.cfg");
-		loaded = false;
-
-		if (!CONFIG.exists())
+		loaded = ConfigFileBootstrap.bootstrap(CONFIG, VERSION, "Found old NBT whitelist file: resetting.", new ConfigFileBootstrap.DefaultWriter()
 		{
-			try
+			@Override
+			public void write() throws IOException
 			{
-				if (CONFIG.createNewFile())
-				{
-					writeDefaultFile();
-					loaded = true;
-				}
+				writeDefaultFile();
 			}
-			catch (IOException e)
-			{
-				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.");
-				e.printStackTrace();
-				return;
-			}
-		}
-		else
-		{
-			BufferedReader reader = null;
-
-			try
-			{
-				reader = new BufferedReader(new FileReader(CONFIG));
-
-				String line = reader.readLine();
-
-				if (line == null || !line.equals(VERSION))
-				{
-					PELogger.logFatal("Found old NBT whitelist file: resetting.");
-					writeDefaultFile();
-				}
-			}
-			catch (IOException e)
-			{
-				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.");
-				e.printStackTrace();
-			}
-			finally
-			{
-				FileHelper.closeStream(reader);
-			}
-
-			loaded = true;
-		}
+		});
 	}
 
 	public static void readUserData()
