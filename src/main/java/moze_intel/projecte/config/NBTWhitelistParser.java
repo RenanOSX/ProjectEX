@@ -1,13 +1,11 @@
 package moze_intel.projecte.config;
 
 import moze_intel.projecte.PECore;
-import moze_intel.projecte.utils.FileHelper;
 import moze_intel.projecte.utils.ItemHelper;
 import moze_intel.projecte.registry.NBTWhitelist;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraft.item.ItemStack;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -41,11 +39,8 @@ public final class NBTWhitelistParser
 			return;
 		}
 
-		LineNumberReader reader = null;
-
-		try
+		try (LineNumberReader reader = new LineNumberReader(new FileReader(CONFIG)))
 		{
-			reader = new LineNumberReader(new FileReader(CONFIG));
 
 			String line;
 
@@ -77,20 +72,12 @@ public final class NBTWhitelistParser
 		{
 			e.printStackTrace();
 		}
-		finally
-		{
-			FileHelper.closeStream(reader);
-		}
 	}
 
 	private static void writeDefaultFile()
 	{
-		PrintWriter writer = null;
-
-		try
+		try (PrintWriter writer = new PrintWriter(CONFIG))
 		{
-			writer = new PrintWriter(CONFIG);
-
 			writer.println(VERSION);
 			writer.println("#Custom NBT whitelist file");
 			writer.println("#This file is used for items that should keep NBT data when condensed/transmuted.");
@@ -103,10 +90,6 @@ public final class NBTWhitelistParser
 		catch (IOException e)
 		{
 			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(writer);
 		}
 	}
 }
