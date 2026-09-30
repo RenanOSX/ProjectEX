@@ -6,6 +6,10 @@ import org.apache.commons.lang3.math.Fraction;
 
 import java.util.Map;
 
+/**
+ * @deprecated No production wiring. Production uses {@code LongToBigFractionCollector}.
+ */
+@Deprecated
 public class IntToFractionCollector<T, A extends IValueArithmetic> extends AbstractMappingCollector<T, Integer, A>
 {
 	IExtendedMappingCollector<T, Fraction, A> inner;

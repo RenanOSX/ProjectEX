@@ -12,7 +12,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import org.apache.commons.lang3.ClassUtils;
 
 import java.util.Arrays;
 import java.util.List;

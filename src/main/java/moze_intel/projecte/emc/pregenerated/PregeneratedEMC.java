@@ -2,11 +2,9 @@ package moze_intel.projecte.emc.pregenerated;
 
 import moze_intel.projecte.emc.NormalizedSimpleStack;
 
-import com.google.common.reflect.TypeToInstanceMap;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import scala.Int;
 
 import java.io.File;
 import java.io.FileReader;
