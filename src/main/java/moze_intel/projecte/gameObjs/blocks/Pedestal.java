@@ -8,7 +8,7 @@ import moze_intel.projecte.gameObjs.ObjHandler;
 import moze_intel.projecte.gameObjs.tiles.DMPedestalTile;
 import moze_intel.projecte.gameObjs.tiles.TileEmc;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.SyncPedestalPKT;
+import moze_intel.projecte.network.s2c.SyncPedestalPKT;
 import moze_intel.projecte.utils.Constants;
 import moze_intel.projecte.utils.PELogger;
 import moze_intel.projecte.utils.WorldHelper;

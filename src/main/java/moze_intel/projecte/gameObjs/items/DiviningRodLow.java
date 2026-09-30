@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import moze_intel.projecte.api.item.IModeChanger;
 import moze_intel.projecte.utils.Comparators;
-import moze_intel.projecte.utils.Coordinates;
+import moze_intel.projecte.model.Coordinates;
 import moze_intel.projecte.utils.EMCHelper;
 import moze_intel.projecte.utils.ItemHelper;
 import moze_intel.projecte.utils.PlayerHelper;

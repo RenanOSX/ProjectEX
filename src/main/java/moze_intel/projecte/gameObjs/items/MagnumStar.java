@@ -3,7 +3,7 @@ package moze_intel.projecte.gameObjs.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import moze_intel.projecte.api.item.IItemEmc;
-import moze_intel.projecte.utils.AchievementHandler;
+import moze_intel.projecte.gameObjs.AchievementHandler;
 import moze_intel.projecte.utils.EMCHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -66,24 +66,6 @@ public class MagnumStar extends KleinStar
 		}
 	}
 	
-	// @Override
-	// public void onCreated(ItemStack stack, World world, EntityPlayer player) 
-	// {
-	// 	super.onCreated(stack, world, player);
-		
-	// 	if (!world.isRemote)
-	// 	{
-	// 		if (stack.getItemDamage() == 5)
-	// 		{
-	// 			player.addStat(AchievementHandler.KLEIN_MASTER, 1);
-	// 		}
-	// 		else
-	// 		{
-	// 			player.addStat(AchievementHandler.KLEIN_BASIC, 1);
-	// 		}
-	// 	}
-	// }
-	
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
 	{
@@ -120,35 +102,5 @@ public class MagnumStar extends KleinStar
 		{
 			icons[i] = register.registerIcon(this.getTexture("stars", "magnum_star_"+(i + 1)));
 		}
-	}
-
-	// -- IItemEmc -- //
-
-	@Override
-	public long addEmc(ItemStack stack, long toAdd)
-	{
-		long add = Math.min(getMaximumEmc(stack) - getStoredEmc(stack), toAdd);
-		ItemPE.addEmcToStack(stack, add);
-		return add;
-	}
-
-	@Override
-	public long extractEmc(ItemStack stack, long toRemove)
-	{
-		long sub = Math.min(getStoredEmc(stack), toRemove);
-		ItemPE.removeEmc(stack, sub);
-		return sub;
-	}
-
-	@Override
-	public long getStoredEmc(ItemStack stack)
-	{
-		return ItemPE.getEmc(stack);
-	}
-
-	@Override
-	public long getMaximumEmc(ItemStack stack)
-	{
-		return EMCHelper.getKleinStarMaxEmc(stack);
 	}
 }

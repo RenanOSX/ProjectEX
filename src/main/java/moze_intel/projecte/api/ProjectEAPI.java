@@ -25,7 +25,7 @@ public final class ProjectEAPI
 		{
 			try
 			{
-				Class<?> clazz = Class.forName("moze_intel.projecte.impl.EMCProxyImpl");
+				Class<?> clazz = Class.forName("moze_intel.projecte.api.impl.EMCProxyImpl");
 				emcProxy = (IEMCProxy) clazz.getField("instance").get(null);
 			} catch (ReflectiveOperationException ex)
 			{
@@ -45,7 +45,7 @@ public final class ProjectEAPI
 		{
 			try
 			{
-				Class<?> clazz = Class.forName("moze_intel.projecte.impl.ConversionProxyImpl");
+				Class<?> clazz = Class.forName("moze_intel.projecte.api.impl.ConversionProxyImpl");
 				recipeProxy = (IConversionProxy) clazz.getField("instance").get(null);
 			} catch (ReflectiveOperationException ex)
 			{
@@ -65,7 +65,7 @@ public final class ProjectEAPI
 		{
 			try
 			{
-				Class<?> clazz = Class.forName("moze_intel.projecte.impl.TransmutationProxyImpl");
+				Class<?> clazz = Class.forName("moze_intel.projecte.api.impl.TransmutationProxyImpl");
 				transProxy = (ITransmutationProxy) clazz.getField("instance").get(null);
 			} catch (ReflectiveOperationException ex)
 			{
@@ -85,7 +85,7 @@ public final class ProjectEAPI
 		{
 			try
 			{
-				Class<?> clazz = Class.forName("moze_intel.projecte.impl.BlacklistProxyImpl");
+				Class<?> clazz = Class.forName("moze_intel.projecte.api.impl.BlacklistProxyImpl");
 				blacklistProxy = (IBlacklistProxy) clazz.getField("instance").get(null);
 			} catch (ReflectiveOperationException ex)
 			{

@@ -4,7 +4,7 @@ import moze_intel.projecte.PECore;
 import moze_intel.projecte.gameObjs.container.TransmutationContainer;
 import moze_intel.projecte.gameObjs.container.inventory.TransmutationInventory;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.SearchUpdatePKT;
+import moze_intel.projecte.network.c2s.SearchUpdatePKT;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;

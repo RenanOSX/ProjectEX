@@ -1,0 +1,65 @@
+package moze_intel.projecte.gameObjs.blocks;
+
+import moze_intel.projecte.gameObjs.AchievementHandler;
+import moze_intel.projecte.utils.Constants;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+public class ItemMatterBlock extends ItemBlock
+{
+	public ItemMatterBlock(Block block) 
+	{
+		super(block);
+		this.setMaxDamage(0);
+		this.hasSubtypes = true;
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack)
+	{
+		int meta = stack.getItemDamage();
+
+		if (meta == 0)
+		{
+			return "tile.pe_dm_block";
+		}
+		else if (meta == 1)
+		{
+			return "tile.pe_rm_block";
+		}
+
+		if (meta >= Constants.MATTER_NAMES.length || meta < 0)
+		{
+			meta = 0;
+		}
+
+		return "item.pe_matter_" + Constants.MATTER_NAMES[meta];
+	}
+	
+	@Override
+	public int getMetadata(int meta)
+	{
+		return meta;
+	}
+	
+	@Override
+	public void onCreated(ItemStack stack, World world, EntityPlayer player) 
+	{
+		super.onCreated(stack, world, player);
+		
+		if (!world.isRemote)
+		{
+			if (stack.getItemDamage() == 0)
+			{
+				player.addStat(AchievementHandler.DM_BLOCK, 1);
+			}
+			else
+			{
+				player.addStat(AchievementHandler.RM_BLOCK, 1);
+			}
+		}
+	}
+}

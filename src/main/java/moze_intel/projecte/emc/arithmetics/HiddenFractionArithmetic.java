@@ -2,6 +2,10 @@ package moze_intel.projecte.emc.arithmetics;
 
 import org.apache.commons.lang3.math.Fraction;
 
+/**
+ * @deprecated No production wiring. Production uses {@code BigFractionArithmetic}.
+ */
+@Deprecated
 public class HiddenFractionArithmetic implements IValueArithmetic<Fraction>
 {
 

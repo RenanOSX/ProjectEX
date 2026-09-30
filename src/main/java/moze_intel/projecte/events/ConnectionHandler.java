@@ -3,10 +3,10 @@ package moze_intel.projecte.events;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import moze_intel.projecte.handlers.PlayerChecks;
-import moze_intel.projecte.handlers.PlayerTimers;
+import moze_intel.projecte.server.PlayerChecks;
+import moze_intel.projecte.server.PlayerTimers;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.CheckUpdatePKT;
+import moze_intel.projecte.network.s2c.CheckUpdatePKT;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraft.entity.player.EntityPlayerMP;
 

@@ -5,6 +5,10 @@ import org.apache.commons.lang3.math.Fraction;
 
 import java.util.Map;
 
+/**
+ * @deprecated No production wiring. Production uses {@code BigFractionToLongGenerator}.
+ */
+@Deprecated
 public class FractionToIntGenerator<T> implements IValueGenerator<T, Integer>
 {
 	private final IValueGenerator<T, Fraction> inner;

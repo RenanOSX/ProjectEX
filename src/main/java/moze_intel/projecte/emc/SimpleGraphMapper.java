@@ -172,8 +172,7 @@ public class SimpleGraphMapper<T, V extends Comparable<V>, A extends IValueArith
 			PELogger.logWarn(String.format("Could not calculate value for %s: %s", conversion.toString(), e.toString()));
 			return ZERO;
 		} catch (Exception e) {
-			PELogger.logWarn(String.format("Could not calculate value for %s: %s", conversion.toString(), e.toString()));
-			e.printStackTrace();
+			PELogger.logWarn(String.format("Could not calculate value for %s: %s", conversion.toString(), e.toString()), e);
 			return ZERO;
 		}
 	}

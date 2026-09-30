@@ -2,13 +2,14 @@ package moze_intel.projecte.emc.pregenerated;
 
 import moze_intel.projecte.emc.NormalizedSimpleStack;
 
-import com.google.common.reflect.TypeToInstanceMap;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import scala.Int;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
 
@@ -31,18 +32,20 @@ public class PregeneratedEMC
 	public static Map<NormalizedSimpleStack, Long> read(File file) throws IOException
 	{
 		Type type = new TypeToken<Map<NormalizedSimpleStack, Long>>() {}.getType();
-		FileReader reader = new FileReader(file);
-		Map<NormalizedSimpleStack, Long> map = gson.fromJson(reader, type);
-		reader.close();
-		map.remove(null);
-		return map;
+		try (FileReader reader = new FileReader(file))
+		{
+			Map<NormalizedSimpleStack, Long> map = gson.fromJson(reader, type);
+			map.remove(null);
+			return map;
+		}
 	}
 
 	public static void write(File file, Map<NormalizedSimpleStack, Long> map) throws IOException
 	{
 		Type type = new TypeToken<Map<NormalizedSimpleStack, Long>>() {}.getType();
-		FileWriter writer = new FileWriter(file);
-		gson.toJson(map, type, writer);
-		writer.close();
+		try (FileWriter writer = new FileWriter(file))
+		{
+			gson.toJson(map, type, writer);
+		}
 	}
 }

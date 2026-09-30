@@ -7,6 +7,7 @@ import moze_intel.projecte.gameObjs.entity.EntityNovaCatalystPrimed;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
@@ -37,9 +38,14 @@ public class NovaCatalyst extends BlockTNT
 			entity = world.getClosestPlayer(x, y, z, 64);
 		}
 
-		EntityNovaCatalystPrimed ent = new EntityNovaCatalystPrimed(world, (double) ((float) x + 0.5F), (double) ((float) y + 0.5F), (double) ((float) z + 0.5F), entity); 
+		EntityTNTPrimed ent = createPrimedEntity(world, (double) ((float) x + 0.5F), (double) ((float) y + 0.5F), (double) ((float) z + 0.5F), entity);
 		world.spawnEntityInWorld(ent);
 		world.playSoundAtEntity(ent, "game.tnt.primed", 1.0F, 1.0F);
+	}
+
+	protected EntityTNTPrimed createPrimedEntity(World world, double x, double y, double z, EntityLivingBase placer)
+	{
+		return new EntityNovaCatalystPrimed(world, x, y, z, placer);
 	}
 	
 	@Override
@@ -57,8 +63,13 @@ public class NovaCatalyst extends BlockTNT
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register)
 	{
-		this.blockIcon = register.registerIcon("projecte:explosives/nova_side");
+		this.blockIcon = register.registerIcon(getSideTexture());
 		topIcon = register.registerIcon("projecte:explosives/top");
 		bottomIcon = register.registerIcon("projecte:explosives/bottom");
+	}
+
+	protected String getSideTexture()
+	{
+		return "projecte:explosives/nova_side";
 	}
 }

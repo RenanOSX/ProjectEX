@@ -52,6 +52,11 @@ public class EntityNovaCatalystPrimed extends EntityTNTPrimed
 	
 	private void explode()
 	{
-		WorldHelper.createNovaExplosion(worldObj, this, posX, posY, posZ, 16.0F);
+		WorldHelper.createNovaExplosion(worldObj, this, posX, posY, posZ, getBlastRadius());
+	}
+
+	protected float getBlastRadius()
+	{
+		return 16.0F;
 	}
 }

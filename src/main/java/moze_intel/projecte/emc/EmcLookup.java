@@ -1,0 +1,182 @@
+package moze_intel.projecte.emc;
+
+import moze_intel.projecte.emc.SimpleStack;
+import moze_intel.projecte.utils.Constants;
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import java.util.Map;
+
+public final class EmcLookup
+{
+	public static boolean doesBlockHaveEmc(Block block)
+	{
+		if (block == null)
+		{
+			return false;
+		}
+
+		return doesItemHaveEmc(new ItemStack(block));
+	}
+
+	public static boolean doesItemHaveEmc(ItemStack stack)
+	{
+		if (stack == null)
+		{
+			return false;
+		}
+
+		SimpleStack iStack = new SimpleStack(stack);
+
+		if (!iStack.isValid())
+		{
+			return false;
+		}
+
+		if (!stack.getHasSubtypes() && stack.getMaxDamage() != 0)
+		{
+			iStack.damage = 0;
+		}
+
+		return EmcValueStore.mapContains(iStack);
+	}
+
+	public static boolean doesItemHaveEmc(Item item)
+	{
+		if (item == null)
+		{
+			return false;
+		}
+
+		return doesItemHaveEmc(new ItemStack(item));
+	}
+
+	public static long getEmcValue(Block Block)
+	{
+		SimpleStack stack = new SimpleStack(new ItemStack(Block));
+
+		if (stack.isValid() && EmcValueStore.mapContains(stack))
+		{
+			return EmcValueStore.getEmcValue(stack);
+		}
+
+		return 0;
+	}
+
+	public static long getEmcValue(Item item)
+	{
+		SimpleStack stack = new SimpleStack(new ItemStack(item));
+
+		if (stack.isValid() && EmcValueStore.mapContains(stack))
+		{
+			return EmcValueStore.getEmcValue(stack);
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Does not consider stack size
+	 */
+
+	public static long getEmcValue(ItemStack stack)
+	{
+		if (stack == null)
+		{
+			return 0;
+		}
+
+		SimpleStack iStack = new SimpleStack(stack);
+
+		if (!iStack.isValid())
+		{
+			return 0;
+		}
+
+		if (!EmcValueStore.mapContains(iStack) && !stack.getHasSubtypes() && stack.getMaxDamage() != 0)
+		{
+			//We don't have an emc value for id:metadata, so lets check if we have a value for id:0 and apply a damage multiplier based on that emc value.
+			iStack.damage = 0;
+
+			if (EmcValueStore.mapContains(iStack))
+			{
+				long emc = EmcValueStore.getEmcValue(iStack);
+
+				int relDamage = (stack.getMaxDamage() - stack.getItemDamage());
+
+				if (relDamage <= 0)
+				{
+					//Not Impossible. Don't use durability or enchants for emc calculation if this happens.
+					return emc;
+				}
+
+				long result = emc * relDamage;
+
+				if (result <= 0)
+				{
+					//Congratulations, big number is big.
+					return emc;
+				}
+
+				result /= stack.getMaxDamage();
+				result += getEnchantEmcBonus(stack);
+
+				result += getStoredEMCBonus(stack);
+
+				if (result <= 0)
+				{
+					return 1;
+				}
+
+				return result;
+			}
+		}
+		else
+		{
+			if (EmcValueStore.mapContains(iStack))
+			{
+				return EmcValueStore.getEmcValue(iStack) + getEnchantEmcBonus(stack) + (long)getStoredEMCBonus(stack);
+			}
+		}
+
+		return 0;
+	}
+
+	public static long getEnchantEmcBonus(ItemStack stack)
+	{
+		long result = 0;
+
+		Map<Integer, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
+
+		if (!enchants.isEmpty())
+		{
+			for (Map.Entry<Integer, Integer> entry : enchants.entrySet())
+			{
+				Enchantment ench = Enchantment.enchantmentsList[entry.getKey()];
+
+				if (ench.getWeight() == 0)
+				{
+					continue;
+				}
+
+				result += Constants.ENCH_EMC_BONUS / ench.getWeight() * entry.getValue();
+			}
+		}
+
+		return result;
+	}
+
+	public static long getKleinStarMaxEmc(ItemStack stack)
+	{
+		return Constants.MAX_KLEIN_EMC[stack.getItemDamage()];
+	}
+
+	public static long getStoredEMCBonus(ItemStack stack) {
+		if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("StoredEMC")) {
+			return stack.stackTagCompound.getLong("StoredEMC");
+		}
+		return 0;
+	}
+}

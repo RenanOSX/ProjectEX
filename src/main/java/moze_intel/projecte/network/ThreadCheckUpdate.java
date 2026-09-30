@@ -37,7 +37,6 @@ public class ThreadCheckUpdate extends Thread
 	public void run()
 	{
 		HttpURLConnection connection = null;
-		BufferedReader reader = null; 
 		
 		try
 		{
@@ -45,86 +44,74 @@ public class ThreadCheckUpdate extends Thread
 
 			connection.connect();
 			
-			reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			
-			String line = reader.readLine();
-			
-			if (line == null)
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream())))
 			{
-				PELogger.logFatal("Update check failed!");
-				throw new IOException("No data from github changelog!");
-			}
-			
-			String latestVersion;
-			List<String> changes = Lists.newArrayList();
-			
-			latestVersion = line.substring(11);
-			latestVersion = latestVersion.trim();
-					
-			while ((line = reader.readLine()) != null)
-			{
-				if (line.startsWith("###Version"))
+
+				String line = reader.readLine();
+
+				if (line == null)
 				{
-					break;
+					PELogger.logFatal("Update check failed!");
+					throw new IOException("No data from github changelog!");
 				}
-						
-				if (!line.isEmpty())
+
+				String latestVersion;
+				List<String> changes = Lists.newArrayList();
+
+				latestVersion = line.substring(11);
+				latestVersion = latestVersion.trim();
+
+				while ((line = reader.readLine()) != null)
 				{
-					line = line.substring(1).trim();
-					changes.add(line);
+					if (line.startsWith("###Version"))
+					{
+						break;
+					}
+
+					if (!line.isEmpty())
+					{
+						line = line.substring(1).trim();
+						changes.add(line);
+					}
 				}
-			}
-			
-			if (!PECore.VERSION.equals(latestVersion))
-			{
-				PELogger.logInfo("Mod is outdated! Check " + curseURL + " to get the latest version (" + latestVersion + ").");
-				
-				for (String s : changes)
+
+				if (!PECore.VERSION.equals(latestVersion))
 				{
-					PELogger.logInfo(s);
-				}
-				
-				if (isServerSide)
-				{
-					ChangelogCMD.changelog.addAll(changes);
+					PELogger.logInfo("Mod is outdated! Check " + curseURL + " to get the latest version (" + latestVersion + ").");
+
+					for (String s : changes)
+					{
+						PELogger.logInfo(s);
+					}
+
+					if (isServerSide)
+					{
+						ChangelogCMD.changelog.addAll(changes);
+					}
+					else
+					{
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("pe.update.available"), latestVersion)));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("pe.update.getit")));
+
+						IChatComponent link = new ChatComponentText(curseURL);
+						link.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, curseURL));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(link);
+
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("pe.update.changelog")));
+					}
 				}
 				else
 				{
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("pe.update.available"), latestVersion)));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("pe.update.getit")));
-
-					IChatComponent link = new ChatComponentText(curseURL);
-					link.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, curseURL));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(link);
-
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("pe.update.changelog")));
+					PELogger.logInfo("Mod is updated.");
 				}
-			}
-			else
-			{
-				PELogger.logInfo("Mod is updated.");
 			}
 		}
 		catch(Exception e)
 		{
-			PELogger.logFatal("Caught exception in Update Checker thread!");
-			e.printStackTrace();
+			PELogger.logFatal("Caught exception in Update Checker thread!", e);
 		}
 		finally
 		{
-			if (reader != null)
-			{
-				try 
-				{
-					reader.close();
-				} 
-				catch (IOException e) 
-				{
-					PELogger.logFatal("Caught exception in Update Checker thread!");
-					e.printStackTrace();
-				}
-			}
-			
 			if (connection != null)
 			{
 				connection.disconnect();

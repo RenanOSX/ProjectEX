@@ -34,7 +34,7 @@ public interface IEMCMapper<T, V extends Comparable<V>> {
 	 * <br/>
 	 * Use the config object to generate a useful Configuration for your IEMCMapper.
 	 * <br/>
-	 * The Configuration Object will be a {@link moze_intel.projecte.utils.PrefixConfiguration},
+	 * The Configuration Object will be a {@link moze_intel.projecte.config.PrefixConfiguration},
 	 * so you can use {@code ""} (Empty String) as a Category to write into the root-Category that is created for your IEMCMapper.
 	 * @param mapper
 	 * @param config

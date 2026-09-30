@@ -4,14 +4,14 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import moze_intel.projecte.gameObjs.ObjHandler;
-import moze_intel.projecte.utils.MetaBlock;
-import moze_intel.projecte.utils.WorldTransmutations;
+import moze_intel.projecte.model.MetaBlock;
+import moze_intel.projecte.registry.WorldTransmutations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-import java.awt.*;
+import java.awt.Rectangle;
 import java.util.Map.Entry;
 
 public class NEIWorldTransmuteHandler extends TemplateRecipeHandler

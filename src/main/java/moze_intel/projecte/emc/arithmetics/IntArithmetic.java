@@ -1,5 +1,9 @@
 package moze_intel.projecte.emc.arithmetics;
 
+/**
+ * @deprecated No production wiring. Production uses {@code BigFractionArithmetic}.
+ */
+@Deprecated
 public class IntArithmetic implements IValueArithmetic<Integer>{
 	@Override
 	public boolean isZero(Integer value) {

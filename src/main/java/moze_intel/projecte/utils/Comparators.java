@@ -1,6 +1,6 @@
 package moze_intel.projecte.utils;
 
-import moze_intel.projecte.emc.EMCMapper;
+import moze_intel.projecte.emc.EmcValueStore;
 import moze_intel.projecte.emc.SimpleStack;
 import moze_intel.projecte.manual.AbstractPage;
 
@@ -77,8 +77,8 @@ public final class Comparators
 		@Override
 		public int compare(SimpleStack s1, SimpleStack s2)
 		{
-			long emc1 = EMCMapper.getEmcValue(s1);
-			long emc2 = EMCMapper.getEmcValue(s2);
+			long emc1 = EmcValueStore.getEmcValue(s1);
+			long emc2 = EmcValueStore.getEmcValue(s2);
 			
 			if (emc1 < emc2)
 			{

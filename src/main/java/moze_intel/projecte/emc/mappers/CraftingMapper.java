@@ -75,8 +75,7 @@ public class CraftingMapper implements IEMCMapper<NormalizedSimpleStack, Long> {
 											ingredientMap.addIngredient(NormalizedSimpleStack.getFor(stack), 0);
 										}
 									} catch (Exception e) {
-										PELogger.logFatal("Exception in CraftingMapper when parsing Recipe Ingredients: RecipeType: %s, Ingredient: %s", recipe.getClass().getName(), stack.toString());
-										e.printStackTrace();
+										PELogger.logFatal(String.format("Exception in CraftingMapper when parsing Recipe Ingredients: RecipeType: %s, Ingredient: %s", recipe.getClass().getName(), stack.toString()), e);
 										continue recipeloop;
 									}
 								}

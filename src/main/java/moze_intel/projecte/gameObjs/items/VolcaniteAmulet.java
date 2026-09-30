@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import moze_intel.projecte.api.item.IFireProtector;
 import moze_intel.projecte.api.item.IPedestalItem;
 import moze_intel.projecte.api.item.IProjectileShooter;
 import moze_intel.projecte.config.ProjectEConfig;
@@ -186,41 +187,9 @@ public class VolcaniteAmulet extends ItemPE implements IProjectileShooter, IBaub
 
 	@Override
 	@Optional.Method(modid = "Baubles")
-	public void onWornTick(ItemStack stack, EntityLivingBase ent) 
+	public void onWornTick(ItemStack stack, EntityLivingBase player) 
 	{
-		if (!(ent instanceof EntityPlayer)) 
-		{
-			return;
-		}
-		
-		EntityPlayer player = (EntityPlayer) ent;
-		World world = player.worldObj;
-
-		int x = (int) Math.floor(player.posX);
-		int y = (int) (player.posY - player.getYOffset());
-		int z = (int) Math.floor(player.posZ);
-		
-		if ((world.getBlock(x, y - 1, z) == Blocks.lava || world.getBlock(x, y - 1, z) == Blocks.flowing_lava) && world.getBlock(x, y, z) == Blocks.air)
-		{
-			if (!player.isSneaking())
-			{
-				player.motionY = 0.0D;
-				player.fallDistance = 0.0F;
-				player.onGround = true;
-			}
-				
-			if (!world.isRemote && player.capabilities.getWalkSpeed() < 0.25F)
-			{
-				PlayerHelper.setPlayerWalkSpeed(player, 0.25F);
-			}
-		}
-		else if (!world.isRemote)
-		{
-			if (player.capabilities.getWalkSpeed() != Constants.PLAYER_WALK_SPEED)
-			{
-				PlayerHelper.setPlayerWalkSpeed(player, Constants.PLAYER_WALK_SPEED);
-			}
-		}
+		this.onUpdate(stack, player.worldObj, player, 0, false);
 	}
 
 	@Override

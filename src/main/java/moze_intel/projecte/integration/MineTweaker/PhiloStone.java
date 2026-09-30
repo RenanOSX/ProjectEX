@@ -7,8 +7,8 @@ import minetweaker.api.item.IItemStack;
 import minetweaker.api.minecraft.MineTweakerMC;
 import moze_intel.projecte.gameObjs.ObjHandler;
 import moze_intel.projecte.gameObjs.customRecipes.RecipeShapelessHidden;
-import moze_intel.projecte.utils.MetaBlock;
-import moze_intel.projecte.utils.WorldTransmutations;
+import moze_intel.projecte.model.MetaBlock;
+import moze_intel.projecte.registry.WorldTransmutations;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -79,7 +79,6 @@ public class PhiloStone
 		IRecipe recipe;
 
 
-		//GameRegistry.addRecipe(new RecipeShapelessHidden(output, philosStone, input, input, input, input, input, input, input, new ItemStack(Items.coal, 1, OreDictionary.WILDCARD_VALUE)));
 		public AddRecipeAction(IItemStack output, IItemStack input)
 		{
 			this.output = MineTweakerMC.getItemStack(output);

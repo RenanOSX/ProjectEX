@@ -2,14 +2,13 @@ package moze_intel.projecte.emc.mappers;
 
 import moze_intel.projecte.emc.NormalizedSimpleStack;
 import moze_intel.projecte.emc.collector.IMappingCollector;
-import moze_intel.projecte.impl.ConversionProxyImpl;
+import moze_intel.projecte.emc.ConversionBuffer;
 import moze_intel.projecte.utils.PELogger;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
@@ -48,7 +47,7 @@ public class APICustomEMCMapper implements IEMCMapper<NormalizedSimpleStack, Lon
 	}
 
 	public void registerCustomEMC(Object o, long emcValue) {
-		NormalizedSimpleStack stack = ConversionProxyImpl.instance.objectToNSS(o);
+		NormalizedSimpleStack stack = ConversionBuffer.objectToNSS(o);
 		if (stack == null) return;
 		if (emcValue < 0) emcValue = 0;
 		ModContainer activeMod = Loader.instance().activeModContainer();

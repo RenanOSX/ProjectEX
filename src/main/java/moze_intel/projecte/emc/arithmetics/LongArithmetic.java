@@ -1,5 +1,9 @@
 package moze_intel.projecte.emc.arithmetics;
 
+/**
+ * @deprecated No production wiring. Production uses {@code BigFractionArithmetic}.
+ */
+@Deprecated
 public class LongArithmetic implements IValueArithmetic<Long> {
 	@Override
 	public boolean isZero(Long value) {

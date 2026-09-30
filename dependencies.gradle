@@ -1,0 +1,32 @@
+/*
+ * ProjectEX dependencies (GTNH fork of ProjectE for 1.7.10).
+ *
+ * Configurations (see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html):
+ *  - implementation("g:n:v:c"): internal use, available at runtime for dependents
+ *  - compileOnly("g:n:v:c"): compile-time only (optional integrations)
+ *  - runtimeOnlyNonPublishable("g:n:v:c"): only in runClient/runServer, not published
+ *  - devOnlyNonPublishable("g:n:v:c"): compile + runtime, not published (local testing)
+ *
+ * GTNH mods publish deobfuscated development jars under the `dev` classifier,
+ * which is what must be used for compilation against MCP names.
+ */
+dependencies {
+    // NEI integration (codechicken.nei API used by integration.NEI + ItemSearchHelperNEI)
+    implementation("com.github.GTNewHorizons:NotEnoughItems:2.8.152-GTNH:dev")
+    // Waila integration (tooltips / IMC handling at runtime)
+    implementation("com.github.GTNewHorizons:waila:1.19.34:dev")
+
+    // Transitive NEI requirements, pinned explicitly as in the previous setup
+    implementation("com.github.GTNewHorizons:CodeChickenCore:1.4.22:dev")
+    implementation("com.github.GTNewHorizons:CodeChickenLib:1.3.0:dev")
+
+    // General utility library used across GTNH mods
+    implementation("com.github.GTNewHorizons:GTNHLib:0.11.52:dev")
+
+    // Previously present content integrations, updated to current GTNH releases
+    implementation("com.github.GTNewHorizons:Chisel:2.17.33-GTNH:dev")
+    implementation("com.github.GTNewHorizons:CraftTweaker:3.4.8:dev")
+
+    // Unit tests (JUnit 4, as in the previous setup)
+    testImplementation("junit:junit:4.13.2")
+}

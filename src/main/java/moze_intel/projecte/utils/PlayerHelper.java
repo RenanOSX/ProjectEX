@@ -4,9 +4,9 @@ import baubles.api.BaublesApi;
 import cpw.mods.fml.common.Loader;
 import moze_intel.projecte.gameObjs.items.ItemPE;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.SetFlyPKT;
-import moze_intel.projecte.network.packets.StepHeightPKT;
-import moze_intel.projecte.network.packets.SwingItemPKT;
+import moze_intel.projecte.network.s2c.SetFlyPKT;
+import moze_intel.projecte.network.s2c.StepHeightPKT;
+import moze_intel.projecte.network.s2c.SwingItemPKT;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -52,10 +52,8 @@ public final class PlayerHelper
 			world.restoringBlockSnapshots = true;
 			before.restore(true, false);
 			world.restoringBlockSnapshots = false;
-			//PELogger.logInfo("Checked place block got canceled, restoring snapshot.");
 			return false;
 		}
-		//PELogger.logInfo("Checked place block passed!");
 		return true;
 	}
 

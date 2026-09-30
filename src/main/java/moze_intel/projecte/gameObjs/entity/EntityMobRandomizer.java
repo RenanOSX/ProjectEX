@@ -1,7 +1,7 @@
 package moze_intel.projecte.gameObjs.entity;
 
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.ParticlePKT;
+import moze_intel.projecte.network.s2c.ParticlePKT;
 import moze_intel.projecte.utils.EMCHelper;
 import moze_intel.projecte.utils.WorldHelper;
 

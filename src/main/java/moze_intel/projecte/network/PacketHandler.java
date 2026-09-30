@@ -1,29 +1,28 @@
 package moze_intel.projecte.network;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
-import moze_intel.projecte.emc.EMCMapper;
+import moze_intel.projecte.emc.EmcValueStore;
 import moze_intel.projecte.emc.SimpleStack;
-import moze_intel.projecte.network.packets.CheckUpdatePKT;
-import moze_intel.projecte.network.packets.CondenserSyncPKT;
-import moze_intel.projecte.network.packets.KeyPressPKT;
-import moze_intel.projecte.network.packets.KnowledgeClearPKT;
-import moze_intel.projecte.network.packets.KnowledgeSyncPKT;
-import moze_intel.projecte.network.packets.OrientationSyncPKT;
-import moze_intel.projecte.network.packets.ParticlePKT;
-import moze_intel.projecte.network.packets.SearchUpdatePKT;
-import moze_intel.projecte.network.packets.SetFlyPKT;
-import moze_intel.projecte.network.packets.StepHeightPKT;
-import moze_intel.projecte.network.packets.SwingItemPKT;
-import moze_intel.projecte.network.packets.SyncBagDataPKT;
-import moze_intel.projecte.network.packets.SyncEmcPKT;
-import moze_intel.projecte.network.packets.SyncPedestalPKT;
-import moze_intel.projecte.network.packets.UpdateGemModePKT;
+import moze_intel.projecte.network.s2c.CheckUpdatePKT;
+import moze_intel.projecte.network.s2c.CondenserSyncPKT;
+import moze_intel.projecte.network.c2s.KeyPressPKT;
+import moze_intel.projecte.network.s2c.KnowledgeClearPKT;
+import moze_intel.projecte.network.s2c.KnowledgeSyncPKT;
+import moze_intel.projecte.network.s2c.OrientationSyncPKT;
+import moze_intel.projecte.network.s2c.ParticlePKT;
+import moze_intel.projecte.network.c2s.SearchUpdatePKT;
+import moze_intel.projecte.network.s2c.SetFlyPKT;
+import moze_intel.projecte.network.s2c.StepHeightPKT;
+import moze_intel.projecte.network.s2c.SwingItemPKT;
+import moze_intel.projecte.network.s2c.SyncBagDataPKT;
+import moze_intel.projecte.network.s2c.SyncEmcPKT;
+import moze_intel.projecte.network.s2c.SyncPedestalPKT;
+import moze_intel.projecte.network.c2s.UpdateGemModePKT;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
@@ -63,35 +62,15 @@ public final class PacketHandler
 
 	public static void sendFragmentedEmcPacket(EntityPlayerMP player)
 	{
-		ArrayList<Object[]> list = Lists.newArrayList();
-		int counter = 0;
-
-		for (Map.Entry<SimpleStack, Long> entry : Maps.newLinkedHashMap(EMCMapper.emc).entrySet()) // Copy constructor to prevent race condition CME in SP
+		final EntityPlayerMP target = player;
+		int counter = sendFragmentedEmcPackets(new EmcPacketSender()
 		{
-			SimpleStack stack = entry.getKey();
-
-			if (stack == null)
+			@Override
+			public void send(SyncEmcPKT packet)
 			{
-				continue;
+				PacketHandler.sendTo(packet, target);
 			}
-
-			Object[] data = new Object[] {stack.id, stack.qnty, stack.damage, entry.getValue()};
-			list.add(data);
-
-			if (list.size() >= MAX_PKT_SIZE)
-			{
-				PacketHandler.sendTo(new SyncEmcPKT(counter, list), player);
-				list.clear();
-				counter++;
-			}
-		}
-
-		if (list.size() > 0)
-		{
-			PacketHandler.sendTo(new SyncEmcPKT(-1, list), player);
-			list.clear();
-			counter++;
-		}
+		});
 
 		PELogger.logInfo("Sent EMC data packets to: " + player.getCommandSenderName());
 		PELogger.logDebug("Total packets: " + counter);
@@ -99,10 +78,30 @@ public final class PacketHandler
 
 	public static void sendFragmentedEmcPacketToAll()
 	{
+		int counter = sendFragmentedEmcPackets(new EmcPacketSender()
+		{
+			@Override
+			public void send(SyncEmcPKT packet)
+			{
+				PacketHandler.sendToAll(packet);
+			}
+		});
+
+		PELogger.logInfo("Sent EMC data packets to all players.");
+		PELogger.logDebug("Total packets per player: " + counter);
+	}
+
+	private interface EmcPacketSender
+	{
+		void send(SyncEmcPKT packet);
+	}
+
+	private static int sendFragmentedEmcPackets(EmcPacketSender sender)
+	{
 		ArrayList<Object[]> list = Lists.newArrayList();
 		int counter = 0;
 
-		for (Map.Entry<SimpleStack, Long> entry : Maps.newLinkedHashMap(EMCMapper.emc).entrySet()) // Copy constructor to prevent race condition CME in SP
+		for (Map.Entry<SimpleStack, Long> entry : EmcValueStore.snapshot().entrySet()) // Copy constructor to prevent race condition CME in SP
 		{
 			SimpleStack stack = entry.getKey();
 
@@ -116,7 +115,7 @@ public final class PacketHandler
 
 			if (list.size() >= MAX_PKT_SIZE)
 			{
-				PacketHandler.sendToAll(new SyncEmcPKT(counter, list));
+				sender.send(new SyncEmcPKT(counter, list));
 				list.clear();
 				counter++;
 			}
@@ -124,13 +123,12 @@ public final class PacketHandler
 
 		if (list.size() > 0)
 		{
-			PacketHandler.sendToAll(new SyncEmcPKT(-1, list));
+			sender.send(new SyncEmcPKT(-1, list));
 			list.clear();
 			counter++;
 		}
 
-		PELogger.logInfo("Sent EMC data packets to all players.");
-		PELogger.logDebug("Total packets per player: " + counter);
+		return counter;
 	}
 
 	/**

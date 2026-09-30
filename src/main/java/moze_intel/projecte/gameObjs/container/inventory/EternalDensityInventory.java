@@ -1,7 +1,7 @@
 package moze_intel.projecte.gameObjs.container.inventory;
 
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.UpdateGemModePKT;
+import moze_intel.projecte.network.c2s.UpdateGemModePKT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

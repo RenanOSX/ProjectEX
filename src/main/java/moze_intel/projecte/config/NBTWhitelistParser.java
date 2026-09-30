@@ -1,13 +1,11 @@
 package moze_intel.projecte.config;
 
 import moze_intel.projecte.PECore;
-import moze_intel.projecte.utils.FileHelper;
 import moze_intel.projecte.utils.ItemHelper;
-import moze_intel.projecte.utils.NBTWhitelist;
+import moze_intel.projecte.registry.NBTWhitelist;
 import moze_intel.projecte.utils.PELogger;
 import net.minecraft.item.ItemStack;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,53 +21,14 @@ public final class NBTWhitelistParser
 	public static void init()
 	{
 		CONFIG = new File(PECore.CONFIG_DIR, "nbt_whitelist.cfg");
-		loaded = false;
-
-		if (!CONFIG.exists())
+		loaded = ConfigFileBootstrap.bootstrap(CONFIG, VERSION, "Found old NBT whitelist file: resetting.", new ConfigFileBootstrap.DefaultWriter()
 		{
-			try
+			@Override
+			public void write() throws IOException
 			{
-				if (CONFIG.createNewFile())
-				{
-					writeDefaultFile();
-					loaded = true;
-				}
+				writeDefaultFile();
 			}
-			catch (IOException e)
-			{
-				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.");
-				e.printStackTrace();
-				return;
-			}
-		}
-		else
-		{
-			BufferedReader reader = null;
-
-			try
-			{
-				reader = new BufferedReader(new FileReader(CONFIG));
-
-				String line = reader.readLine();
-
-				if (line == null || !line.equals(VERSION))
-				{
-					PELogger.logFatal("Found old NBT whitelist file: resetting.");
-					writeDefaultFile();
-				}
-			}
-			catch (IOException e)
-			{
-				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.");
-				e.printStackTrace();
-			}
-			finally
-			{
-				FileHelper.closeStream(reader);
-			}
-
-			loaded = true;
-		}
+		});
 	}
 
 	public static void readUserData()
@@ -80,11 +39,8 @@ public final class NBTWhitelistParser
 			return;
 		}
 
-		LineNumberReader reader = null;
-
-		try
+		try (LineNumberReader reader = new LineNumberReader(new FileReader(CONFIG)))
 		{
-			reader = new LineNumberReader(new FileReader(CONFIG));
 
 			String line;
 
@@ -114,22 +70,14 @@ public final class NBTWhitelistParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(reader);
+			PELogger.logFatal("Exception while reading NBT whitelist data!", e);
 		}
 	}
 
 	private static void writeDefaultFile()
 	{
-		PrintWriter writer = null;
-
-		try
+		try (PrintWriter writer = new PrintWriter(CONFIG))
 		{
-			writer = new PrintWriter(CONFIG);
-
 			writer.println(VERSION);
 			writer.println("#Custom NBT whitelist file");
 			writer.println("#This file is used for items that should keep NBT data when condensed/transmuted.");
@@ -141,11 +89,7 @@ public final class NBTWhitelistParser
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(writer);
+			PELogger.logFatal("Exception while writing default NBT whitelist file!", e);
 		}
 	}
 }

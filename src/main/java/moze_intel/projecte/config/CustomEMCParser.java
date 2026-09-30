@@ -29,53 +29,14 @@ public final class CustomEMCParser
 	public static void init()
 	{
 		CONFIG = new File(PECore.CONFIG_DIR, "custom_emc.cfg");
-		loaded = false;
-
-		if (!CONFIG.exists())
+		loaded = ConfigFileBootstrap.bootstrap(CONFIG, VERSION, "Found old custom EMC file: resetting.", new ConfigFileBootstrap.DefaultWriter()
 		{
-			try
+			@Override
+			public void write() throws IOException
 			{
-				if (CONFIG.createNewFile())
-				{
-					writeDefaultFile();
-					loaded = true;
-				}
+				writeDefaultFile();
 			}
-			catch (IOException e)
-			{
-				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.");
-				e.printStackTrace();
-				return;
-			}
-		}
-		else
-		{
-			BufferedReader reader = null;
-
-			try
-			{
-				reader = new BufferedReader(new FileReader(CONFIG));
-
-				String line = reader.readLine();
-
-				if (line == null || !line.equals(VERSION))
-				{
-					PELogger.logFatal("Found old custom EMC file: resetting.");
-					writeDefaultFile();
-				}
-			}
-			catch (IOException e)
-			{
-				PELogger.logFatal("Exception in file I/O: couldn't create custom configuration files.");
-				e.printStackTrace();
-			}
-			finally
-			{
-				FileHelper.closeStream(reader);
-			}
-
-			loaded = true;
-		}
+		});
 	}
 
 	public static Map<NormalizedSimpleStack, Long> userValues = Maps.newHashMap();
@@ -89,11 +50,9 @@ public final class CustomEMCParser
 		}
 
 		Entry entry;
-		LineNumberReader reader = null;
 		userValues.clear();
-		try
+		try (LineNumberReader reader = new LineNumberReader(new FileReader(CONFIG)))
 		{
-			reader = new LineNumberReader(new FileReader(CONFIG));
 
 			while ((entry = getNextEntry(reader)) != null)
 			{
@@ -144,11 +103,7 @@ public final class CustomEMCParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(reader);
+			PELogger.logFatal("Exception while reading custom EMC data!", e);
 		}
 	}
 
@@ -213,7 +168,7 @@ public final class CustomEMCParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while writing custom EMC entry!", e);
 		}
 		finally
 		{
@@ -273,7 +228,7 @@ public final class CustomEMCParser
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			PELogger.logFatal("Exception while removing custom EMC entry!", e);
 		}
 		finally
 		{
@@ -286,12 +241,9 @@ public final class CustomEMCParser
 	private static List<String> readAllFile()
 	{
 		List<String> list = Lists.newArrayList();
-		BufferedReader reader = null;
 
-		try
+		try (BufferedReader reader = new BufferedReader(new FileReader(CONFIG)))
 		{
-			reader = new BufferedReader(new FileReader(CONFIG));
-
 			String s;
 
 			while ((s = reader.readLine()) != null)
@@ -303,11 +255,7 @@ public final class CustomEMCParser
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(reader);
+			PELogger.logFatal("Exception while reading custom EMC file!", e);
 		}
 
 		return Lists.newArrayList();
@@ -316,12 +264,9 @@ public final class CustomEMCParser
 	private static List<Entry> getAllEntries()
 	{
 		List<Entry> list = Lists.newArrayList();
-		LineNumberReader reader = null;
 
-		try
+		try (LineNumberReader reader = new LineNumberReader(new FileReader(CONFIG)))
 		{
-			reader = new LineNumberReader(new FileReader(CONFIG));
-
 			Entry e;
 
 			while ((e = getNextEntry(reader)) != null)
@@ -333,11 +278,7 @@ public final class CustomEMCParser
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(reader);
+			PELogger.logFatal("Exception while parsing custom EMC entries!", e);
 		}
 
 		return Lists.newArrayList();
@@ -375,7 +316,7 @@ public final class CustomEMCParser
 					}
 					catch (NumberFormatException e)
 					{
-						e.printStackTrace();
+						PELogger.logWarn("Skipping malformed custom EMC entry!", e);
 						continue;
 					}
 
@@ -396,7 +337,7 @@ public final class CustomEMCParser
 				}
 				catch (NumberFormatException e)
 				{
-					e.printStackTrace();
+					PELogger.logWarn("Skipping malformed custom EMC entry!", e);
 					continue;
 				}
 
@@ -428,12 +369,8 @@ public final class CustomEMCParser
 
 	private static void writeDefaultFile()
 	{
-		PrintWriter writer = null;
-
-		try
+		try (PrintWriter writer = new PrintWriter(CONFIG))
 		{
-			writer = new PrintWriter(CONFIG);
-
 			writer.println(VERSION);
 			writer.println("Custom EMC file");
 			writer.println("This file is used for custom EMC registration, it is recommended that you do not modify it manually.");
@@ -441,11 +378,7 @@ public final class CustomEMCParser
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			FileHelper.closeStream(writer);
+			PELogger.logFatal("Exception while writing default custom EMC file!", e);
 		}
 	}
 

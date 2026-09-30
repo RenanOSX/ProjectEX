@@ -2,7 +2,7 @@ package moze_intel.projecte.gameObjs.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import moze_intel.projecte.utils.AchievementHandler;
+import moze_intel.projecte.gameObjs.AchievementHandler;
 import moze_intel.projecte.utils.Constants;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;

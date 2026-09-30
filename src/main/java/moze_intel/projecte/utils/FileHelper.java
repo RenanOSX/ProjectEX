@@ -23,8 +23,7 @@ public final class FileHelper
 			}
 			catch (IOException e)
 			{
-				PELogger.logFatal("IO Error: couldn't close stream!");
-				e.printStackTrace();
+				PELogger.logFatal("IO Error: couldn't close stream!", e);
 			}
 		}
 	}
@@ -33,7 +32,6 @@ public final class FileHelper
 	{
 		File folder = new File(directory);
 		File f = new File(folder, filename);
-		PrintWriter writer = null;
 
 		if (!folder.isDirectory())
 		{
@@ -48,20 +46,17 @@ public final class FileHelper
 		{
 			if (f.createNewFile() && f.canWrite())
 			{
-				writer = new PrintWriter(f);
-
-				for (String line : lines)
+				try (PrintWriter writer = new PrintWriter(f))
 				{
-					writer.println(line);
+					for (String line : lines)
+					{
+						writer.println(line);
+					}
 				}
-
 			}
 		} catch (Exception e)
 		{
-			e.printStackTrace();
-		} finally
-		{
-			closeStream(writer);
+			PELogger.logFatal("Exception while writing default file!", e);
 		}
 
 	}

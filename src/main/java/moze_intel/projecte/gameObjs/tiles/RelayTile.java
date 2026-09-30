@@ -6,16 +6,12 @@ import moze_intel.projecte.gameObjs.blocks.Relay;
 import moze_intel.projecte.utils.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class RelayTile extends TileEmc implements IEmcAcceptor, IEmcProvider
+public class RelayTile extends AbstractTieredEmcTile implements IEmcAcceptor, IEmcProvider
 {
 	private long chargeRate;
-	private int tier;
-	
+
 	public RelayTile()
 	{
 		super();
@@ -23,67 +19,44 @@ public class RelayTile extends TileEmc implements IEmcAcceptor, IEmcProvider
 
 	public RelayTile(int tier)
 	{
-		this.tier = tier;
-		setupConfig();
-	}
-	
-	@Override
-	public void validate()
-	{
-		super.validate();
+		super(tier);
 	}
 
 	@Override
-	public Packet getDescriptionPacket()
-	{
-		NBTTagCompound tag = new NBTTagCompound();
-		tag.setInteger("Tier", tier);
-		tag.setDouble("EMC", this.getStoredEmc());
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-	{
-		this.readFromNBT(pkt.func_148857_g());
-	}
-
-	private void setupConfig()
+	protected void setupConfig()
 	{
 		int tierIndex = Math.max(0, Math.min(tier - 1, Constants.RELAY_MK_MAX.length - 1));
-		
+
 		this.setMaximumEMC(Constants.RELAY_MK_MAX[tierIndex]);
 		this.chargeRate = Constants.RELAY_MK_OUTPUT[tierIndex];
 	}
 
-	private void initTier()
+	@Override
+	protected boolean isOwnBlock(Block block)
 	{
-		Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
-		if (block instanceof Relay)
-		{
-			this.tier = ((Relay) block).getTier();
-			setupConfig();
-		}
-		else
-		{
-			this.invalidate();
-		}
+		return block instanceof Relay;
 	}
-	
+
+	@Override
+	protected int getBlockTier(Block block)
+	{
+		return ((Relay) block).getTier();
+	}
+
 	public int getTier()
 	{
 		return tier;
 	}
-	
+
 	public double getBonus()
 	{
 		int tierIndex = Math.max(0, Math.min(tier - 1, Constants.RELAY_MK_BONUS.length - 1));
 		return Constants.RELAY_MK_BONUS[tierIndex];
 	}
-	
+
 	@Override
 	public void updateEntity()
-	{	
+	{
 		if (chargeRate == 0)
 		{
 			initTier();
@@ -108,18 +81,6 @@ public class RelayTile extends TileEmc implements IEmcAcceptor, IEmcProvider
 		else 
 		{
 			this.sendToAllAcceptors(chargeRate);
-		}
-	}
-	
-	@Override
-	public void readFromNBT(NBTTagCompound nbt)
-	{
-		super.readFromNBT(nbt);
-
-		if (nbt.hasKey("Tier"))
-		{
-			this.tier = nbt.getInteger("Tier");
-			setupConfig();
 		}
 	}
 	

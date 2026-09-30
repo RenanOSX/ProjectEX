@@ -26,6 +26,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
@@ -67,13 +68,12 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 				if (f.isFile() && f.canRead()) {
 					if (f.getName().toLowerCase().endsWith(".json")) {
 						if (config.getBoolean(f.getName().substring(0, f.getName().length() - 5), "", true, String.format("Read file: %s?", f.getName()))) {
-							try
+							try (FileReader reader = new FileReader(f))
 							{
-								addMappingsFromFile(new FileReader(f), mapper);
+								addMappingsFromFile(reader, mapper);
 								PELogger.logInfo("Collected Mappings from " + f.getName());
 							} catch (Exception e) {
-								PELogger.logFatal("Exception when reading file: " + f);
-								e.printStackTrace();
+								PELogger.logFatal("Exception when reading file: " + f, e);
 							}
 						}
 					}
@@ -107,8 +107,7 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 					mapper.addConversion(conversion.count, output, convertToNSSMap(conversion.ingredients, fakes));
 				}
 			} catch (Exception e) {
-				PELogger.logFatal(String.format("ERROR reading custom conversion from group %s!", entry.getKey()));
-				e.printStackTrace();
+				PELogger.logFatal(String.format("ERROR reading custom conversion from group %s!", entry.getKey()), e);
 			}
 		}
 
@@ -165,8 +164,7 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 				}
 			}
 		} catch (Exception e) {
-			PELogger.logFatal("ERROR reading custom conversion values!");
-			e.printStackTrace();
+			PELogger.logFatal("ERROR reading custom conversion values!", e);
 		}
 	}
 
@@ -231,15 +229,19 @@ public class CustomConversionMapper implements IEMCMapper<NormalizedSimpleStack,
 		try {
 		if (f.createNewFile() && f.canWrite())
 		{
-			InputStream stream = CustomConversionMapper.class.getClassLoader().getResourceAsStream("defaultCustomConversions/" + filename + ".json");
-			OutputStream outputStream = new FileOutputStream(f);
-			IOUtils.copy(stream, outputStream);
-			stream.close();
-			outputStream.close();
+			copyDefaultFile(f, filename);
 		}
 		} catch (Exception e) {
-			e.printStackTrace();
+			PELogger.logFatal("Exception while writing default conversion file!", e);
 		}
 
+	}
+
+	private static void copyDefaultFile(File f, String filename) throws IOException {
+		try (InputStream stream = CustomConversionMapper.class.getClassLoader().getResourceAsStream("defaultCustomConversions/" + filename + ".json");
+				OutputStream outputStream = new FileOutputStream(f))
+		{
+			IOUtils.copy(stream, outputStream);
+		}
 	}
 }

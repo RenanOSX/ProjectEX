@@ -1,7 +1,7 @@
 package moze_intel.projecte.gameObjs.items.tools;
 
 import moze_intel.projecte.gameObjs.ObjHandler;
-import moze_intel.projecte.utils.AchievementHandler;
+import moze_intel.projecte.gameObjs.AchievementHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;

@@ -3,13 +3,13 @@ package moze_intel.projecte.gameObjs.tiles;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import moze_intel.projecte.api.tile.IEmcAcceptor;
 import moze_intel.projecte.gameObjs.ObjHandler;
-import moze_intel.projecte.handlers.TileEntityHandler;
+import moze_intel.projecte.server.TileEntityHandler;
 import moze_intel.projecte.network.PacketHandler;
-import moze_intel.projecte.network.packets.CondenserSyncPKT;
+import moze_intel.projecte.network.s2c.CondenserSyncPKT;
 import moze_intel.projecte.utils.Constants;
 import moze_intel.projecte.utils.EMCHelper;
 import moze_intel.projecte.utils.ItemHelper;
-import moze_intel.projecte.utils.NBTWhitelist;
+import moze_intel.projecte.registry.NBTWhitelist;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -157,15 +157,20 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 	
 	protected int getSlotForStack()
 	{
-		for (int i = 1; i < inventory.length; i++)
+		return getSlotForStackInRange(1, inventory.length - 1);
+	}
+
+	protected final int getSlotForStackInRange(int lower, int upper)
+	{
+		for (int i = lower; i <= upper; i++)
 		{
 			ItemStack stack = inventory[i];
 
-			if (stack == null) 
+			if (stack == null)
 			{
 				return i;
 			}
-			
+
 			if (isStackEqualToLock(stack) && stack.stackSize < stack.getMaxStackSize())
 			{
 				return i;
@@ -177,16 +182,21 @@ public class CondenserTile extends TileEmcDirection implements IInventory, ISide
 	
 	protected boolean hasSpace()
 	{
-		for (int i = 1; i < inventory.length; i++)
+		return hasSpaceInRange(1, inventory.length - 1);
+	}
+
+	protected final boolean hasSpaceInRange(int lower, int upper)
+	{
+		for (int i = lower; i <= upper; i++)
 		{
 			ItemStack stack = inventory[i];
-			
-			if (stack == null) 
+
+			if (stack == null)
 			{
 				return true;
 			}
-			
-			if (isStackEqualToLock(stack) && stack.stackSize < stack.getMaxStackSize()) 
+
+			if (isStackEqualToLock(stack) && stack.stackSize < stack.getMaxStackSize())
 			{
 				return true;
 			}

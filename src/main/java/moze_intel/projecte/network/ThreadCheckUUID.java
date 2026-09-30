@@ -29,7 +29,6 @@ public class ThreadCheckUUID extends Thread
 	public void run()
 	{
 		HttpURLConnection connection = null;
-		BufferedReader reader = null; 
 		
 		try
 		{
@@ -37,53 +36,41 @@ public class ThreadCheckUUID extends Thread
 
 			connection.connect();
 			
-			reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			
-			String line = reader.readLine();
-			
-			if (line == null)
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream())))
 			{
-				PELogger.logFatal("UUID check failed!");
-				throw new IOException("No data from github UUID list!");
-			}
 
-			List<String> uuids = Lists.newArrayList();
-					
-			while ((line = reader.readLine()) != null)
-			{
-				if (line.startsWith("###UUID"))
-				{
-					break;
-				}
-						
-				if (!line.isEmpty())
-				{
-					uuids.add(line);
-				}
-			}
+				String line = reader.readLine();
 
-			PECore.uuids.addAll(uuids);
+				if (line == null)
+				{
+					PELogger.logFatal("UUID check failed!");
+					throw new IOException("No data from github UUID list!");
+				}
+
+				List<String> uuids = Lists.newArrayList();
+
+				while ((line = reader.readLine()) != null)
+				{
+					if (line.startsWith("###UUID"))
+					{
+						break;
+					}
+
+					if (!line.isEmpty())
+					{
+						uuids.add(line);
+					}
+				}
+
+				PECore.uuids.addAll(uuids);
+			}
 		}
 		catch(Exception e)
 		{
-			PELogger.logFatal("Caught exception in UUID Checker thread!");
-			e.printStackTrace();
+			PELogger.logFatal("Caught exception in UUID Checker thread!", e);
 		}
 		finally
 		{
-			if (reader != null)
-			{
-				try 
-				{
-					reader.close();
-				} 
-				catch (IOException e) 
-				{
-					PELogger.logFatal("Caught exception in UUID Checker thread!");
-					e.printStackTrace();
-				}
-			}
-			
 			if (connection != null)
 			{
 				connection.disconnect();
